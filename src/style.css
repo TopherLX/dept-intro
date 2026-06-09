@@ -60,3 +60,19 @@ body {
   .hover-wiggle:hover { animation: none; }
   html { scroll-behavior: auto; }
 }
+
+/* Custom scrollbar for member carousel */
+.member-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.member-scroll::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 3px;
+}
+.member-scroll::-webkit-scrollbar-thumb {
+  background: #8B5CF6;
+  border-radius: 3px;
+}
+.member-scroll::-webkit-scrollbar-thumb:hover {
+  background: #7C3AED;
+}

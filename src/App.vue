@@ -29,10 +29,12 @@ import TopicsSection from './components/knowledge/TopicsSection.vue'
 import TrainingSection from './components/knowledge/TrainingSection.vue'
 import EventsSection from './components/knowledge/EventsSection.vue'
 import TeamSection from './components/team/TeamSection.vue'
+import ShowcaseSection from './components/showcase/ShowcaseSection.vue'
 
 const sections = [
   { id: 'team', component: TeamSection },
   { id: 'members', component: MembersSection },
+  { id: 'showcase', component: ShowcaseSection },
   { id: 'events', component: EventsSection },
   { id: 'tech', component: TechSection },
   { id: 'workmode', component: WorkModeSection },

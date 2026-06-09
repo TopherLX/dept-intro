@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="200" height="200" shape-rendering="crispEdges">
+  <!-- Terminal border -->
+  <rect x="1" y="1" width="14" height="14" fill="#0F172A"/>
+  <rect x="1" y="1" width="14" height="1" fill="#475569"/>
+  <rect x="1" y="1" width="1" height="14" fill="#475569"/>
+  <rect x="14" y="1" width="1" height="14" fill="#475569"/>
+  <rect x="1" y="14" width="14" height="1" fill="#475569"/>
+
+  <!-- Title bar -->
+  <rect x="2" y="2" width="12" height="2" fill="#334155"/>
+  <!-- Close/Max/Min dots -->
+  <rect x="3" y="3" width="1" height="1" fill="#EF4444"/>
+  <rect x="5" y="3" width="1" height="1" fill="#FBBF24"/>
+  <rect x="7" y="3" width="1" height="1" fill="#34D399"/>
+
+  <!-- Prompt: $ -->
+  <rect x="3" y="6" width="1" height="1" fill="#34D399"/>
+  <rect x="2" y="7" width="1" height="1" fill="#34D399"/>
+  <rect x="3" y="7" width="1" height="1" fill="#34D399"/>
+  <rect x="4" y="6" width="1" height="2" fill="#34D399"/>
+  <rect x="3" y="8" width="1" height="1" fill="#34D399"/>
+  <rect x="2" y="9" width="1" height="1" fill="#34D399"/>
+  <rect x="3" y="9" width="1" height="1" fill="#34D399"/>
+
+  <!-- Command text -->
+  <rect x="6" y="7" width="1" height="1" fill="#94A3B8"/>
+  <rect x="8" y="7" width="2" height="1" fill="#94A3B8"/>
+  <rect x="11" y="7" width="1" height="1" fill="#94A3B8"/>
+  <rect x="13" y="7" width="1" height="1" fill="#94A3B8"/>
+
+  <!-- Second line -->
+  <rect x="3" y="10" width="1" height="1" fill="#64748B"/>
+  <rect x="5" y="10" width="3" height="1" fill="#64748B"/>
+  <rect x="9" y="10" width="1" height="1" fill="#64748B"/>
+  <rect x="11" y="10" width="2" height="1" fill="#64748B"/>
+
+  <!-- Blinking cursor -->
+  <rect x="14" y="10" width="1" height="1" fill="#3B82F6"/>
+
+  <!-- AI sparkle accent -->
+  <rect x="13" y="3" width="1" height="1" fill="#3B82F6"/>
+  <rect x="12" y="2" width="1" height="1" fill="#3B82F6"/>
+  <rect x="14" y="2" width="1" height="1" fill="#3B82F6"/>
+</svg>

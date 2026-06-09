@@ -40,6 +40,16 @@ export interface Responsibility {
   color: string
 }
 
+export interface Showcase {
+  title: string
+  description: string
+  image: string
+  borderRadius: string
+  badge: string
+  link?: string
+  padding?: string
+}
+
 export const members: Member[] = [
   {
     name: '张力弦',
@@ -181,5 +191,41 @@ export const responsibilities: Responsibility[] = [
     description:
       '保持跟进数据科学领域知识与技术，团队成员先行消化并转换为实际工作技能；通过部门内部技术培训分享编程技巧与工具使用经验，协助提升团队整体效率。',
     color: '#8B5CF6',
+  },
+]
+
+export const showcases: Showcase[] = [
+  {
+    title: 'ClinMatrix',
+    description: '自研Web平台，集成离群值检测、心电图智能编码、数据审核工作台',
+    image: 'showcase/clinmatrix-logo.svg',
+    borderRadius: 'rounded-[2rem] rounded-tr-none',
+    badge: '自研平台',
+    link: 'https://datapanel.cttq.com/',
+  },
+  {
+    title: 'Apache Superset',
+    description: 'BI 可视化平台，构建项目进度、数据质量等交互式仪表盘',
+    image: 'showcase/superset.svg',
+    borderRadius: 'rounded-t-full rounded-b-none',
+    badge: 'BI 平台',
+    link: 'https://superset.cttq.com/',
+    padding: 'object-contain p-4',
+  },
+  {
+    title: 'Viya Monitor',
+    description: 'SAS Viya 计算引擎监控平台，及时追踪计算资源使用',
+    image: 'showcase/viya-monitor-logo.svg',
+    borderRadius: 'rounded-[3rem] rounded-bl-none',
+    badge: '运维监控',
+    link: 'https://topherlx.github.io/viya-monitor-dashboard/',
+  },
+  {
+    title: 'Vibe Coding Tutorial',
+    description: 'AI 辅助编程培训教程，赋能各部门业务团队技术升级',
+    image: 'showcase/vibe-coding-logo.svg',
+    borderRadius: 'rounded-[2rem] rounded-tl-none',
+    badge: '内部培训',
+    link: 'https://ai-coding-tutorials.tech/',
   },
 ]

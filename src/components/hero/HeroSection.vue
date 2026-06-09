@@ -61,7 +61,7 @@
       <div class="flex-shrink-0 w-72 h-72 sm:w-96 sm:h-96 relative">
         <div class="relative z-10 rounded-[3rem] rounded-tl-none border-4 border-slate-800 bg-white p-2 shadow-[12px_12px_0px_0px_#F472B6]">
           <img
-            :src="`${baseUrl}members/张力弦.png`"
+            :src="`${baseUrl}hero/card.svg`"
             alt="团队"
             class="aspect-square w-full rounded-[2.5rem] rounded-tl-none object-cover"
           />

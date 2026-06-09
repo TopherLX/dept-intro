@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#06B6D4"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#06B6D4" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer ring -->
+  <circle cx="100" cy="100" r="90" fill="none" stroke="url(#g)" stroke-width="3" opacity="0.2"/>
+  <circle cx="100" cy="100" r="75" fill="url(#g2)" stroke="url(#g)" stroke-width="2.5"/>
+
+  <!-- Heartbeat / pulse line -->
+  <path
+    d="M 25 115 L 55 115 L 70 115 L 80 60 L 90 140 L 100 90 L 110 135 L 120 85 L 130 115 L 145 115 L 175 115"
+    fill="none" stroke="url(#g)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+  />
+
+  <!-- Small dots on nodes -->
+  <circle cx="80" cy="60" r="4" fill="#6366F1"/>
+  <circle cx="90" cy="140" r="3" fill="#06B6D4"/>
+  <circle cx="100" cy="90" r="3" fill="#8B5CF6"/>
+  <circle cx="110" cy="135" r="3" fill="#06B6D4"/>
+  <circle cx="120" cy="85" r="4" fill="#6366F1"/>
+
+  <!-- Viya dot accent -->
+  <circle cx="100" cy="40" r="5" fill="url(#g)"/>
+  <line x1="100" y1="45" x2="100" y2="60" stroke="url(#g)" stroke-width="2" stroke-linecap="round"/>
+</svg>

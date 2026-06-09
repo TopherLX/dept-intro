@@ -11,6 +11,9 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AppFooter: typeof import('./src/components/layout/AppFooter.vue')['default']
+    AppHeader: typeof import('./src/components/layout/AppHeader.vue')['default']
+    HeroSection: typeof import('./src/components/hero/HeroSection.vue')['default']
     SectionTitle: typeof import('./src/components/shared/SectionTitle.vue')['default']
   }
 }

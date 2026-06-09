@@ -14,7 +14,7 @@
       <!-- Cards container -->
       <div
         ref="galleryRef"
-        class="flex items-center gap-4 overflow-x-auto !overflow-y-visible scroll-smooth pb-8 snap-x snap-mandatory px-12"
+        class="flex items-center gap-4 overflow-x-auto !overflow-y-visible scroll-smooth py-8 snap-x snap-mandatory px-12"
         style="scrollbar-width: none; perspective: 800px;"
         @scroll="onScroll"
       >

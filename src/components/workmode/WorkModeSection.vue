@@ -14,7 +14,7 @@
           <span class="inline-block bg-pink-light text-pink font-bold text-xs px-3 py-1 rounded-full mb-4">
             CDM · 当前痛点
           </span>
-          <h3 class="font-heading text-xl font-extrabold text-slate-800 mb-4">数据管理者</h3>
+          <h3 class="font-heading text-xl font-extrabold text-slate-800 mb-4">数据管理专家</h3>
           <ul class="space-y-3 text-sm text-slate-600 leading-relaxed">
             <li class="flex items-start gap-2">
               <span class="text-pink mt-0.5 flex-shrink-0">·</span>

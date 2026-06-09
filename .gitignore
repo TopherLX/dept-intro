@@ -28,4 +28,3 @@ dist-ssr
 node_modules/
 dist/
 refs/
-public/posters/

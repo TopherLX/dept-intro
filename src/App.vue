@@ -9,7 +9,7 @@
         v-for="section in sections"
         :key="section.id"
         :id="section.id"
-        class="max-w-6xl mx-auto px-6"
+        class="max-w-6xl mx-auto px-6 scroll-mt-20"
       >
         <component :is="section.component" />
       </div>
@@ -28,7 +28,7 @@ import WorkModeSection from './components/workmode/WorkModeSection.vue'
 import TopicsSection from './components/knowledge/TopicsSection.vue'
 import TrainingSection from './components/knowledge/TrainingSection.vue'
 import EventsSection from './components/knowledge/EventsSection.vue'
-import TeamSection from './components/department/TeamSection.vue'
+import TeamSection from './components/team/TeamSection.vue'
 
 const sections = [
   { id: 'team', component: TeamSection },

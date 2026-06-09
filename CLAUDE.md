@@ -39,7 +39,7 @@ src/
 ├── components/
 │   ├── layout/   AppHeader.vue（sticky + 滚动高亮）, AppFooter.vue
 │   ├── hero/     HeroSection.vue（blob 装饰 + dot-grid + confetti）
-│   ├── department/ TeamSection.vue（团队简介 + 5 职责卡片 3+2 网格）, IntroCard.vue, ResponsibilityCard.vue
+│   ├── team/      TeamSection.vue（团队简介 + 5 职责卡片 3+2 网格）, IntroCard.vue, ResponsibilityCard.vue
 │   ├── members/  MembersSection.vue（横向滚动走马灯）, MemberCard.vue
 │   ├── tech/     TechSection.vue（SVG 内嵌 + 点击放大 + 滚轮缩放）
 │   ├── workmode/ WorkModeSection.vue（CDM/CDS 双卡 + 示意图 SVG + 放大缩放）

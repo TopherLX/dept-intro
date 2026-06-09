@@ -1,5 +1,5 @@
 <template>
-  <section id="tech" class="py-24 scroll-mt-16">
+  <section id="tech" class="pb-24 scroll-mt-16">
     <SectionTitle title="技术架构全景" color="#7C3AED" />
 
     <div class="relative group">

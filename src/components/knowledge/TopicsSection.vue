@@ -1,5 +1,5 @@
 <template>
-  <section id="topics" class="py-24 scroll-mt-16">
+  <section id="topics" class="pb-24 scroll-mt-16">
     <SectionTitle title="研究课题" color="#8B5CF6" />
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <div

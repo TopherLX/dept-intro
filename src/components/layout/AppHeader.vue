@@ -3,7 +3,7 @@
     <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
       <a href="#" class="flex items-center gap-2 no-underline">
         <span class="font-heading text-xl font-extrabold text-violet">CDS</span>
-        <span class="hidden sm:inline text-sm text-slate-500 font-medium">临床数据部 → 临床科学编程室</span>
+        <span class="hidden sm:inline text-sm text-slate-500 font-medium">临床数据部 · 临床科学编程室</span>
       </a>
 
       <ul class="flex gap-1 list-none m-0 p-0">
@@ -29,34 +29,32 @@ import { ref, onMounted, onUnmounted } from 'vue'
 const navItems = [
   { id: 'team', label: '团队简介' },
   { id: 'members', label: '成员' },
+  { id: 'events', label: '会议' },
   { id: 'tech', label: '架构' },
   { id: 'workmode', label: '模式' },
   { id: 'topics', label: '课题' },
   { id: 'training', label: '培训' },
-  { id: 'events', label: '会议' },
 ]
 
 const activeSection = ref('')
 
-let observer: IntersectionObserver | null = null
+function onScroll() {
+  const sections = navItems.map(item => document.getElementById(item.id)).filter(Boolean) as HTMLElement[]
+  for (let i = sections.length - 1; i >= 0; i--) {
+    const rect = sections[i].getBoundingClientRect()
+    if (rect.top <= 120) {
+      activeSection.value = navItems[i].id
+      return
+    }
+  }
+  activeSection.value = ''
+}
 
 onMounted(() => {
-  observer = new IntersectionObserver(
-    (entries) => {
-      const visible = entries.filter((e) => e.isIntersecting)
-      if (visible.length > 0) {
-        activeSection.value = visible[0].target.id
-      }
-    },
-    { rootMargin: '-80px 0px -60% 0px', threshold: 0 },
-  )
-  navItems.forEach((item) => {
-    const el = document.getElementById(item.id)
-    if (el) observer!.observe(el)
-  })
+  window.addEventListener('scroll', onScroll, { passive: true })
 })
 
 onUnmounted(() => {
-  observer?.disconnect()
+  window.removeEventListener('scroll', onScroll)
 })
 </script>

@@ -121,3 +121,15 @@ body {
 .member-scroll::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
 }
+
+/* Bio scrollbar — thin, subtle */
+.bio-scrollbar::-webkit-scrollbar {
+  width: 3px;
+}
+.bio-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.bio-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 2px;
+}

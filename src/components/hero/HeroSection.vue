@@ -1,5 +1,5 @@
 <template>
-  <section class="min-h-[85vh] flex items-center relative overflow-hidden dot-grid">
+  <section class="min-h-[85vh] flex items-center relative overflow-hidden dot-grid mb-48">
     <!-- Decorative confetti shapes -->
     <div class="absolute inset-0 select-none pointer-events-none overflow-hidden">
       <div
@@ -19,21 +19,21 @@
       />
     </div>
 
-    <div class="flex flex-col lg:flex-row items-center gap-12 w-full relative z-10">
+    <div class="flex flex-col lg:flex-row items-center gap-60 w-full relative z-10">
       <!-- Left: text -->
-      <div class="flex-1 text-center lg:text-left">
+      <div class="text-center lg:text-left">
         <span class="inline-block bg-amber-light text-amber-700 font-bold text-xs px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase">
           Clinical Data Science
         </span>
         <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-800 leading-tight mb-5">
-          用数据科学<br />赋能临床研究
+          用数据科学<br /> 赋能部门业务
         </h1>
         <p class="text-slate-500 text-lg max-w-md leading-relaxed mb-8">
-          以 AI 与自动化驱动数据洞察，构建从数据采集、治理到智能分析的完整技术生态。
+          探索从数据采集、治理到智能分析的完整技术生态
         </p>
-        <div class="flex gap-4 justify-center lg:justify-start flex-wrap">
+        <div class="flex gap-4 justify-center lg:justify-start flex-wrap p-1">
           <a
-            href="#members"
+            href="#team"
             class="candy-btn no-underline inline-flex items-center gap-2 bg-violet text-white font-bold text-sm px-6 py-3 rounded-full border-2 border-slate-800 shadow-pop"
           >
             了解团队
@@ -43,7 +43,7 @@
             href="#tech"
             class="secondary-btn no-underline inline-flex items-center gap-2 bg-white text-slate-800 font-bold text-sm px-6 py-3 rounded-full border-2 border-slate-200"
           >
-            浏览架构
+            技术架构
           </a>
         </div>
         <!-- Color dots row -->
@@ -57,20 +57,23 @@
         </div>
       </div>
 
-      <!-- Right: decorative blob -->
-      <div class="flex-shrink-0">
-        <div
-          class="w-56 h-56 sm:w-72 sm:h-72 rounded-blob border-2 border-slate-800 shadow-pop flex items-center justify-center text-7xl"
-          style="background: linear-gradient(135deg, #FCE7F3, #F472B6);"
-        >
-          🧬
+      <!-- Right: hero card -->
+      <div class="flex-shrink-0 w-72 h-72 sm:w-96 sm:h-96 relative">
+        <div class="relative z-10 rounded-[3rem] rounded-tl-none border-4 border-slate-800 bg-white p-2 shadow-[12px_12px_0px_0px_#F472B6]">
+          <img
+            :src="`${baseUrl}members/张力弦.png`"
+            alt="团队"
+            class="aspect-square w-full rounded-[2.5rem] rounded-tl-none object-cover"
+          />
         </div>
+        <div class="-bottom-10 -right-10 -z-10 absolute h-full w-full rounded-[3rem] rounded-br-none bg-[#8B5CF6] opacity-20" />
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+const baseUrl = import.meta.env.BASE_URL
 const colors = ['#8B5CF6', '#F472B6', '#FBBF24', '#34D399']
 const confetti = Array.from({ length: 15 }, (_, i) => ({
   key: i,

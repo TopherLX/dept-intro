@@ -1,5 +1,5 @@
 <template>
-  <section id="events" class="py-24 scroll-mt-16">
+  <section id="events" class="pb-24 scroll-mt-16">
     <SectionTitle title="会议宣发" color="#F59E0B" />
 
     <div class="relative max-w-5xl mx-auto">
@@ -14,7 +14,7 @@
       <!-- Cards container -->
       <div
         ref="galleryRef"
-        class="flex items-center gap-4 overflow-x-auto !overflow-y-visible scroll-smooth py-8 snap-x snap-mandatory px-12"
+        class="flex items-center gap-4 overflow-x-auto !overflow-y-visible scroll-smooth pb-8 snap-x snap-mandatory px-12"
         style="scrollbar-width: none; perspective: 800px;"
         @scroll="onScroll"
       >

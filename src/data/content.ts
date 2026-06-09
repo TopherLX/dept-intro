@@ -21,18 +21,6 @@ export interface Training {
   children?: Training[]
 }
 
-export interface TimelineEvent {
-  title: string
-  description: string
-  color: string
-}
-
-export interface TechLayer {
-  name: string
-  color: string
-  items: { name: string; desc: string }[]
-}
-
 export interface PosterEvent {
   date: string
   title: string
@@ -193,68 +181,5 @@ export const responsibilities: Responsibility[] = [
     description:
       '保持跟进数据科学领域知识与技术，团队成员先行消化并转换为实际工作技能；通过部门内部技术培训分享编程技巧与工具使用经验，协助提升团队整体效率。',
     color: '#8B5CF6',
-  },
-]
-
-export const timelineItems: TimelineEvent[] = [
-  {
-    title: '过去 · CDM 传统模式',
-    description: '人工从不同系统导出数据，格式与字段表述差异大，数据一致性核查复杂度高。CDM 忙于重复性导出、清洗与转换事务。',
-    color: '#F472B6',
-  },
-  {
-    title: '变革 · 基础设施重构',
-    description: '引入数据仓库（ClickHouse + PostgreSQL）将数据问题前置处理。搭建现代化 IDE 协作平台，集成 AI 模型与插件能力。建设 sFTPGo 等数据传输平台，实现高效外部数据交换。',
-    color: '#FBBF24',
-  },
-  {
-    title: '未来 · CDS 数据科学',
-    description: 'CDS 聚焦高维度数据分析：项目进展与质量分析、整体风险分析。依托生产级开发平台，利用 AI 将抽象想法落实为具体原型工具，最大化挖掘数据价值。',
-    color: '#8B5CF6',
-  },
-]
-
-export const techLayers: TechLayer[] = [
-  {
-    name: '应用层 Application',
-    color: '#8B5CF6',
-    items: [
-      { name: 'Apache Superset', desc: '交互式 BI 仪表盘' },
-      { name: 'SAS Visual Analytics', desc: '企业级可视化分析' },
-      { name: 'ClinMatrix (Vue3+Django)', desc: '自研 Web 应用平台' },
-      { name: 'SAS Viya 分析', desc: '云端统计计算引擎' },
-      { name: '定制报表 Custom', desc: '项目级定制报表' },
-      { name: '指标体系 Metrics', desc: '核心业务指标管理' },
-      { name: '飞书 API 集成', desc: '自动化消息与数据同步' },
-    ],
-  },
-  {
-    name: '管道层 Data Pipeline',
-    color: '#F59E0B',
-    items: [
-      { name: 'SAS Viya 计算引擎', desc: '分布式分析计算' },
-      { name: 'Dolphin Scheduler', desc: 'ELT 任务调度编排' },
-      { name: 'EDC/IRC/IRT', desc: '临床业务系统集成' },
-      { name: 'eCoding/eCOA/CTMS', desc: '多源数据接入' },
-    ],
-  },
-  {
-    name: '数据层 Data Storage',
-    color: '#10B981',
-    items: [
-      { name: 'ClickHouse 数仓', desc: '高性能列式 OLAP 引擎' },
-      { name: 'PostgreSQL', desc: '高可靠主数据与配置存储' },
-    ],
-  },
-  {
-    name: '工具链 Toolchain',
-    color: '#64748B',
-    items: [
-      { name: 'GitLab / GitHub', desc: '版本管理与 CI/CD' },
-      { name: 'VS Code / SAS Viya', desc: '开发环境' },
-      { name: 'Python / TypeScript / SAS', desc: '编程语言' },
-      { name: 'ECharts / Python Viz / GTL', desc: '可视化技术' },
-      { name: 'Claude Code', desc: 'AI 辅助编程' },
-    ],
   },
 ]

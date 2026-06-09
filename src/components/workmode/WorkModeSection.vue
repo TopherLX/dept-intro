@@ -1,5 +1,5 @@
 <template>
-  <section id="workmode" class="py-24 scroll-mt-16">
+  <section id="workmode" class="pb-24 scroll-mt-16">
     <SectionTitle title="工作模式变革" color="#D97706" />
 
     <p class="text-slate-500 text-center text-lg mb-12 max-w-2xl mx-auto">

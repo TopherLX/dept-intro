@@ -1,5 +1,5 @@
 <template>
-  <section id="training" class="py-24 scroll-mt-16">
+  <section id="training" class="pb-160 scroll-mt-16">
     <SectionTitle title="培训体系" color="#10B981" />
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <div

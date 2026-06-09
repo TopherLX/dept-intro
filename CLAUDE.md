@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-临床数据科学部（CDS）团队介绍单页网站。展示团队成员、技术架构、工作模式、研究课题、培训体系和会议宣发。
+临床科学编程室团队介绍单页网站。展示部门简介、团队成员、成果展示、技术架构、工作模式、研究课题、培训体系和会议宣发。
 
 **线上地址**: https://topherlx.github.io/team-intro/
 
@@ -35,7 +35,7 @@ pnpm preview          # 预览生产构建
 src/
 ├── App.vue                    # 主容器，各板块垂直排列
 ├── main.ts / style.css        # 入口 + 设计 Token（颜色/字体/阴影/动画）
-├── data/content.ts            # 全部静态数据（部门简介/成员/课题/培训/会议/时间线/技术层）
+├── data/content.ts            # 全部静态数据（部门简介/成员/成果/课题/培训/会议）
 ├── components/
 │   ├── layout/   AppHeader.vue（sticky + 滚动高亮）, AppFooter.vue
 │   ├── hero/     HeroSection.vue（blob 装饰 + dot-grid + confetti）
@@ -46,7 +46,7 @@ src/
 │   ├── workmode/ WorkModeSection.vue（CDM/CDS 双卡 + 示意图 SVG + 放大缩放）
 │   ├── knowledge/ TopicsSection.vue（成员头像 + 三色轮换）, TrainingSection.vue（头像 + 三色轮换 + 折叠）, EventsSection.vue（coverflow 画廊）
 │   └── shared/   SectionTitle.vue（圆点 + 标题 + 装饰线）
-└── public/       posters/（海报图片）, members/（成员照片）
+└── public/       posters/, members/, showcase/（成果 Logo）, hero/（Hero 卡片 SVG）
 ```
 
 ## 设计系统
@@ -60,11 +60,11 @@ src/
 
 ## 关键交互
 
-- **TencentSection**：rolling in inline SVG + click -> modal + soft scroll zoom (0.3x~3x)
-- **WorkModeSection**：rolling in inline SVG + click -> modal + soft scroll zoom
-- **MembersSection**：`requestAnimationFrame` 自动滚动到头回弹
+- **TechSection**：内嵌 SVG + click -> modal + 滚轮缩放 (0.3x~3x)
+- **WorkModeSection**：CDM/CDS 双卡 + 示意图 SVG + click -> modal + zoom
+- **MembersSection**：`setInterval` 自动滚动，到末尾停 5s 回弹，click 停止/恢复
 - **EventsSection**：coverflow 画廊 + 点击跳转 + snap 吸附
-- **AppHeader**：IntersectionObserver 滚动高亮
+- **AppHeader**：scroll 事件监听滚动高亮
 
 ## 组件命名 Conventions
 
@@ -82,7 +82,7 @@ src/
 - `topics[]` — 日期/作者/标题/标签
 - `trainings[]` — 日期/讲师/标题/系列子课程
 - `posterEvents[]` — 日期/标题/海报文件名/讲者
-- `timelineItems[]` — 工作模式时间线
+- `showcases[]` — 成果展示（标题/描述/图片/链接/样式）
 - `techLayers[]` — 技术架构四层
 
 ## refs/ 目录

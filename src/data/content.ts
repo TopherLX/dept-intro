@@ -37,6 +37,7 @@ export interface PosterEvent {
   date: string
   title: string
   poster: string
+  speaker?: string
 }
 
 export const members: Member[] = [
@@ -126,11 +127,11 @@ export const trainings: Training[] = [
 ]
 
 export const posterEvents: PosterEvent[] = [
-  { date: '2025-04', title: '数创未来 — SAS 生命科学行业会议', poster: '数创未来-SAS生命科学行业会议_SAS_20250420.JPG' },
-  { date: '2026-04', title: '首届临床试验 AI 场景秀', poster: '首届临床试验AI场景秀_dTrial_20260418.JPG' },
-  { date: '2026-06', title: 'Vibe Coding 在临床试验典型应用场景的渐进式培训', poster: 'Vibe Coding在临床试验典型应用场景的渐进式培训_CMAC_20260625.jpg' },
-  { date: '2026-03', title: '智能技术与 RBQM 的实战赋能与价值闭环', poster: '智能技术与RBQM的实战赋能与价值闭环_CMAC_20260320.jpg' },
-  { date: '2025-03', title: 'AI 赋能临床数据科学：机遇与挑战', poster: 'AI赋能临床数据科学：机遇与挑战_CSDG_20250314.jpg' },
+  { date: '2026-06', title: 'Vibe Coding 在临床试验典型应用场景的渐进式培训', poster: 'Vibe Coding在临床试验典型应用场景的渐进式培训_CMAC_20260625.jpg', speaker: "张力弦 · 张浩" },
+  { date: '2026-04', title: '首届临床试验 AI 场景秀', poster: '首届临床试验AI场景秀_dTrial_20260418.JPG', speaker: "张力弦" },
+  { date: '2026-03', title: '智能技术与 RBQM 的实战赋能与价值闭环', poster: '智能技术与RBQM的实战赋能与价值闭环_CMAC_20260320.jpg', speaker: "张浩" },
+  { date: '2025-04', title: '数创未来 — SAS 生命科学行业会议', poster: '数创未来-SAS生命科学行业会议_SAS_20250420.JPG', speaker: "张力弦" },
+  { date: '2025-03', title: 'AI 赋能临床数据科学：机遇与挑战', poster: 'AI赋能临床数据科学：机遇与挑战_CSDG_20250314.jpg', speaker: "张力弦" },
 ]
 
 export const timelineItems: TimelineEvent[] = [

@@ -3,23 +3,15 @@
     <SectionTitle title="团队成员" color="#8B5CF6" />
 
     <div class="relative">
-      <!-- Scroll container with visible scrollbar -->
       <div
         ref="scrollContainer"
-        class="flex gap-5 overflow-x-auto pb-6 scroll-smooth member-scroll"
+        class="flex gap-5 overflow-x-auto overflow-y-visible pb-6 pt-3 scroll-smooth member-scroll"
         @mouseenter="stopAutoScroll"
         @mouseleave="startAutoScroll"
       >
         <MemberCard
           v-for="(member, idx) in members"
           :key="member.name"
-          :member="member"
-          :shadow-color="shadowColors[idx % shadowColors.length]"
-        />
-        <!-- Duplicate cards for seamless infinite scroll -->
-        <MemberCard
-          v-for="(member, idx) in members"
-          :key="`dup-${member.name}`"
           :member="member"
           :shadow-color="shadowColors[idx % shadowColors.length]"
         />
@@ -37,25 +29,37 @@ import MemberCard from './MemberCard.vue'
 const shadowColors = ['#F472B6', '#8B5CF6', '#FBBF24', '#34D399']
 
 const scrollContainer = ref<HTMLElement | null>(null)
-let autoScrollTimer: ReturnType<typeof setInterval> | null = null
+let rafId: number | null = null
+let resetting = false
+
+function scroll() {
+  const el = scrollContainer.value
+  if (!el || resetting) {
+    rafId = requestAnimationFrame(scroll)
+    return
+  }
+
+  el.scrollLeft += 0.8
+
+  const maxScroll = el.scrollWidth - el.clientWidth
+  if (el.scrollLeft >= maxScroll) {
+    resetting = true
+    el.scrollTo({ left: 0, behavior: 'smooth' })
+    setTimeout(() => { resetting = false }, 600)
+  }
+
+  rafId = requestAnimationFrame(scroll)
+}
 
 function startAutoScroll() {
-  const el = scrollContainer.value
-  if (!el) return
-
-  autoScrollTimer = setInterval(() => {
-    if (el.scrollLeft >= el.scrollWidth / 2) {
-      el.scrollLeft = 0
-    } else {
-      el.scrollLeft += 1
-    }
-  }, 30)
+  if (rafId) return
+  rafId = requestAnimationFrame(scroll)
 }
 
 function stopAutoScroll() {
-  if (autoScrollTimer) {
-    clearInterval(autoScrollTimer)
-    autoScrollTimer = null
+  if (rafId) {
+    cancelAnimationFrame(rafId)
+    rafId = null
   }
 }
 

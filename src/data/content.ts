@@ -45,76 +45,84 @@ export const members: Member[] = [
     title: '主任助理',
     bio: '2020届中国药科大学药物分析学硕士，具备临床监查与数据管理的业务背景，现深耕临床试验数据科学领域。核心工作涵盖数据仓库搭建与ELT流水线设计，以及多维度临床数据挖掘与可视化呈现，并主导核心业务指标体系的建设。同时，独立负责部门内部 Web 应用的全栈开发，统筹管理 SAS Viya 等核心应用服务器，保障百余项目对应业务的高效流转。目前正积极推进 AI 技术在敏捷开发与自动化运维中的落地实践，赋能团队向智能化转型。',
     tags: ['Python', 'ClickHouse', 'Vue3+Django', 'SAS Viya', 'AI'],
-    photo: '/members/张力弦.png',
+    photo: 'members/张力弦.png',
   },
   {
     name: '张浩',
     title: '助理科学编程经理',
     bio: '2022届南京中医药大学医学信息工程，现任职助理科学编程经理。拥有4年临床数据科学工作经验，深耕临床数据中台搭建，赋能DM全流程智能化建设。主导完成集中化离群值核查、质疑批量管理、心电图智能编码等业务系统。深度探索机器学习、深度学习、Dify与Fastgpt LLM工作流平台、AI-Agent的业务落地。受邀2025CMAC年会讲师，2026CMAC年中会议讲师。',
     tags: ['Dify', 'AI Agent', 'LLM', 'FastGPT', 'Python'],
-    photo: '/members/张浩.png',
+    photo: 'members/张浩.png',
   },
   {
     name: '周锦阳',
     title: '科学编程员',
     bio: '2022届中国药科大学信息管理与信息系统专业，现任科学编程员。主要负责部门自研平台ClinMatrix的开发、部署与维护，以及DRS管理平台开发，并承担临床项目指标库整理与维护等工作。具备较好的技术学习和代码编程能力，性格沉稳，工作严谨细致，注重代码质量和问题闭环，持续为临床数据相关工作提供技术支持。',
     tags: ['Vue3', 'Django', 'ClinMatrix', 'TypeScript'],
-    photo: '/members/周锦阳.png',
+    photo: 'members/周锦阳.png',
   },
   {
     name: '刘伟豪',
     title: '助理科学编程经理',
     bio: '2022届中国药科大学药学理科基地专业，现就职助理科学编程经理，主要负责数据可视化推进与自动化算法技术的落地应用。在Python数据生态、ClickHouse性能调优及前端网页制作方面拥有扎实的技术功底。近期负责推进原SAS程序向Python迭代和GitLab自动部署工作，并在SAS Viya 可视化工作中等关键项目中展现出出色的工程落地能力。日常工作中善于利用AI技术驱动业务流程优化，能够精准利用数据技术为业务增长和系统降本增效护航。',
     tags: ['Python', 'ClickHouse', 'SAS Viya', 'GitLab CI', '可视化'],
-    photo: '/members/刘伟豪.png',
+    photo: 'members/刘伟豪.png',
   },
   {
     name: '宋秋池',
     title: '科学编程员',
     bio: '2022届南京中医药大学计算机科学与技术专业毕业，现任职于临床数据部科学编程室。主要工作是为临床试验数据管理赋能，目前日常工作中负责配置维护负责项目的各个数据管理报表，聚焦底层数据梳理与入库，如ECOA数据同步，sftp数据传输，his系统数据传输，数据库间数据传输等。熟悉多种编程语言、多种数据库、主流AI工具及Docker部署，擅长用AI与自动化工作流替代重复劳动，提升工作效率。',
     tags: ['Docker', 'sFTP', 'ECOA', 'Python', 'AI'],
-    photo: '/members/宋秋池.png',
+    photo: 'members/宋秋池.png',
   },
   {
     name: '王明鑫',
     title: '助理科学编程经理',
     bio: '2022届中国药科大学信息管理与信息系统专业，现任职助理科学编程经理。依托医药与信息交叉的专业背景，扎实开展科学编程相关工作。日常严格按照业务要求完成代码开发、数据处理与程序维护等任务；统筹科学编程相关项目，跟进进度、协调团队事务，把控工作质量；做事严谨细致、注重细节。工作中积极配合同事协作沟通，主动复盘总结经验，坚持学习行业新技术。后续也会继续夯实专业能力，认真履职，全力配合团队推进各项工作。',
     tags: ['飞书API', 'SAS Viya', 'Digital Data Flow', '自动化'],
-    photo: '/members/王明鑫.png',
+    photo: 'members/王明鑫.png',
   },
   {
     name: '王若书',
     title: '科学编程经理',
     bio: '就读于大连医科大学2018届临床药学专业，2021届药理学专业，于2021年毕业后校招入职本公司，现任职科学编程经理。2022年由数据管理员转岗考核通过后，成为一名科学编程员，因此具有一年多的数据管理经验。目前已熟练掌握SAS、SQL编程及Viya、Superset可视化技术，熟悉Python、CSS编程、影刀RPA技术以及一些AI工具。',
     tags: ['SAS', 'SQL', 'Superset', 'SAS Viya', 'RPA'],
-    photo: '/members/王若书.png',
+    photo: 'members/王若书.png',
   },
 ]
 
 export const topics: Topic[] = [
   { date: '2025-03-31', author: '张浩', title: 'LLM本地化部署 + Dify', tags: ['AI', 'LLM', 'Dify'] },
-  { date: '2025-04-30', author: '王若书', title: 'Dataset-json 数据标准研究', tags: ['数据标准', 'JSON'] },
-  { date: '2025-03-07', author: '王明鑫', title: 'Digital Data Flow 临床数据流', tags: ['数据流', 'DDC'] },
-  { date: '2025-04-30', author: '王明鑫', title: '飞书API + SAS Viya 数据读写', tags: ['飞书', 'SAS Viya', 'API'] },
+  { date: '2025-04-30', author: '王若书', title: 'Dataset-json 数据标准', tags: ['数据标准', 'JSON'] },
+  { date: '2025-03-07', author: '王明鑫', title: 'Digital Data Flow', tags: ['数据流', 'DDC'] },
+  { date: '2025-04-30', author: '王明鑫', title: '飞书API + SAS Viya 自动化', tags: ['飞书', 'SAS Viya', 'API'] },
   { date: '2021-12-06', author: '张力弦', title: 'IRC与EDC疗效评估对比', tags: ['IRC', 'EDC', '疗效评估'] },
 ]
 
 export const trainings: Training[] = [
+  { date: '2026-06-04', instructor: '宋秋池', title: 'PostgreSQL 使用指南' },
+  { date: '2026-05-22', instructor: '张力弦', title: 'Vibe Coding 环境部署',
+    series: '系列课程',
+    children: [
+      { date: '第1期', instructor: '张力弦', title: '环境部署与模型配置' },
+      { date: '第2期', instructor: '张浩', title: 'Claude Code 基础' },
+    ]
+  },
+  { date: '2026-04-12', instructor: '王明鑫', title: 'Study Report V3.0 指标说明' },
+  { date: '2026-04-03', instructor: '张浩', title: 'SKILL概念与定制' },
   {
     date: '2025-06-01', instructor: '张力弦', title: 'Visual Analytics 可视化教程',
-    series: '6期系列课程',
+    series: '系列课程',
     children: [
       { date: '第1期', instructor: '张力弦', title: '加载数据与基础对象的使用' },
-      { date: '第2期', instructor: '', title: '数据窗格与点图、柱状图、线图' },
-      { date: '第3期', instructor: '', title: '条形图、蝴蝶图、瀑布图、盒形图、饼图' },
-      { date: '第4期', instructor: '', title: '容器使用与序列图、进度图、针状图' },
-      { date: '第5期', instructor: '', title: '参数、控件对象与部分图表' },
-      { date: '第6期', instructor: '', title: '地图对象和内容对象' },
+      { date: '第2期', instructor: '刘伟豪', title: '数据窗格与点图、柱状图、线图' },
+      { date: '第3期', instructor: '张浩', title: '条形图、蝴蝶图、瀑布图、盒形图、饼图' },
+      { date: '第4期', instructor: '王若书', title: '容器使用与序列图、进度图、针状图' },
+      { date: '第5期', instructor: '王明鑫', title: '参数、控件对象与部分图表' },
+      { date: '第6期', instructor: '宋秋池', title: '地图对象和内容对象' },
     ],
   },
-  { date: '2026-04-03', instructor: '张浩', title: 'SKILL概念与定制' },
-  { date: '2026-04-12', instructor: '王明鑫', title: 'Study Report V3.0 升级与指标说明' },
-  { date: '2025-05-11', instructor: '王明鑫', title: '飞书多维表格 Viya Report 自动化配置工具' },
+  { date: '2025-05-11', instructor: '王明鑫', title: '飞书多维表格自动化配置' },
 ]
 
 export const posterEvents: PosterEvent[] = [

@@ -1,17 +1,20 @@
 <template>
-  <section class="min-h-[85vh] flex items-center relative overflow-hidden">
-    <!-- Background decorative dots -->
-    <div class="absolute top-20 right-10 opacity-5 select-none pointer-events-none">
+  <section class="min-h-[85vh] flex items-center relative overflow-hidden dot-grid">
+    <!-- Decorative confetti shapes -->
+    <div class="absolute inset-0 select-none pointer-events-none overflow-hidden">
       <div
-        v-for="i in 20"
-        :key="i"
-        class="absolute rounded-full"
+        v-for="shape in confetti"
+        :key="shape.key"
+        class="absolute"
         :style="{
-          width: `${4 + (i % 4) * 6}px`,
-          height: `${4 + (i % 4) * 6}px`,
-          backgroundColor: ['#8B5CF6', '#F472B6', '#FBBF24', '#34D399'][i % 4],
-          left: `${(i * 17) % 300}px`,
-          top: `${(i * 23) % 200}px`,
+          left: shape.x + '%',
+          top: shape.y + '%',
+          width: shape.size + 'px',
+          height: shape.size + 'px',
+          backgroundColor: shape.color,
+          borderRadius: shape.round ? '50%' : '4px',
+          opacity: 0.08,
+          transform: `rotate(${shape.rotate}deg)`,
         }"
       />
     </div>
@@ -31,14 +34,14 @@
         <div class="flex gap-4 justify-center lg:justify-start flex-wrap">
           <a
             href="#members"
-            class="no-underline inline-flex items-center gap-2 bg-violet text-white font-bold text-sm px-6 py-3 rounded-full border-2 border-slate-800 shadow-pop hover:shadow-pop-hover hover:-translate-x-0.5 hover:-translate-y-0.5 active:shadow-pop-active active:translate-x-0.5 active:translate-y-0.5 transition-all duration-300"
+            class="candy-btn no-underline inline-flex items-center gap-2 bg-violet text-white font-bold text-sm px-6 py-3 rounded-full border-2 border-slate-800 shadow-pop"
           >
             了解团队
             <span class="bg-white/20 rounded-full w-5 h-5 flex items-center justify-center text-xs">→</span>
           </a>
           <a
             href="#tech"
-            class="no-underline inline-flex items-center gap-2 bg-white text-slate-800 font-bold text-sm px-6 py-3 rounded-full border-2 border-slate-200 hover:border-slate-800 hover:bg-amber-light transition-all duration-300"
+            class="secondary-btn no-underline inline-flex items-center gap-2 bg-white text-slate-800 font-bold text-sm px-6 py-3 rounded-full border-2 border-slate-200"
           >
             浏览架构
           </a>
@@ -66,3 +69,16 @@
     </div>
   </section>
 </template>
+
+<script setup lang="ts">
+const colors = ['#8B5CF6', '#F472B6', '#FBBF24', '#34D399']
+const confetti = Array.from({ length: 15 }, (_, i) => ({
+  key: i,
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: 20 + Math.random() * 60,
+  color: colors[i % 4],
+  round: Math.random() > 0.4,
+  rotate: Math.random() * 360,
+}))
+</script>

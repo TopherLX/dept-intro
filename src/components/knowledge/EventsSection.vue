@@ -1,15 +1,15 @@
 <template>
-  <section id="events" class="pb-24">
+  <section id="events" class="py-24 scroll-mt-16">
     <SectionTitle title="会议宣发" color="#F59E0B" />
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
       <div
         v-for="event in posterEvents"
         :key="event.title"
-        class="bg-white border-2 border-slate-200 rounded-xl overflow-hidden shadow-sticker-amber transition-all duration-300 hover:-translate-x-0.5 hover:-translate-y-0.5 cursor-pointer group"
+        class="sticker-card bg-white border-2 border-slate-800 rounded-xl overflow-hidden shadow-sticker-amber cursor-pointer group"
       >
         <div class="aspect-[3/4] bg-amber-light/30 flex items-center justify-center overflow-hidden">
           <n-image
-            :src="`/posters/${event.poster}`"
+            :src="`${baseUrl}posters/${event.poster}`"
             :alt="event.title"
             class="w-full h-full object-cover"
             preview-disabled
@@ -27,4 +27,6 @@
 <script setup lang="ts">
 import { posterEvents } from '@/data/content'
 import SectionTitle from '@/components/shared/SectionTitle.vue'
+
+const baseUrl = import.meta.env.BASE_URL
 </script>

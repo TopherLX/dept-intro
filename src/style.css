@@ -35,6 +35,51 @@ body {
   color: #1E293B;
 }
 
+/* Bouncy easing per design system */
+.sticker-card {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sticker-card:hover {
+  transform: rotate(-1deg) scale(1.02);
+}
+
+.candy-btn {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.candy-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px #1E293B;
+}
+.candy-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px 0px #1E293B;
+}
+
+.secondary-btn {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.secondary-btn:hover {
+  background-color: #FBBF24;
+  border-color: #1E293B;
+}
+
+/* Blob radius */
+.rounded-blob {
+  border-radius: 24px 24px 24px 4px;
+}
+
+/* Dot grid pattern */
+.dot-grid {
+  background-image: radial-gradient(#E2E8F0 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* Confetti tag style */
+.tag-0 { background: #EDE9FE; color: #8B5CF6; }
+.tag-1 { background: #FCE7F3; color: #F472B6; }
+.tag-2 { background: #FEF3C7; color: #D97706; }
+.tag-3 { background: #D1FAE5; color: #059669; }
+
 @keyframes pop-in {
   0% { transform: scale(0); opacity: 0; }
   60% { transform: scale(1.1); }
@@ -70,9 +115,9 @@ body {
   border-radius: 3px;
 }
 .member-scroll::-webkit-scrollbar-thumb {
-  background: #8B5CF6;
+  background: #CBD5E1;
   border-radius: 3px;
 }
 .member-scroll::-webkit-scrollbar-thumb:hover {
-  background: #7C3AED;
+  background: #94A3B8;
 }

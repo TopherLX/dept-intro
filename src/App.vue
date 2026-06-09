@@ -28,13 +28,15 @@ import WorkModeSection from './components/workmode/WorkModeSection.vue'
 import TopicsSection from './components/knowledge/TopicsSection.vue'
 import TrainingSection from './components/knowledge/TrainingSection.vue'
 import EventsSection from './components/knowledge/EventsSection.vue'
+import DepartmentSection from './components/department/DepartmentSection.vue'
 
 const sections = [
+  { id: 'department', component: DepartmentSection },
   { id: 'members', component: MembersSection },
+  { id: 'events', component: EventsSection },
   { id: 'tech', component: TechSection },
   { id: 'workmode', component: WorkModeSection },
   { id: 'topics', component: TopicsSection },
   { id: 'training', component: TrainingSection },
-  { id: 'events', component: EventsSection },
 ]
 </script>

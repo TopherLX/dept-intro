@@ -40,6 +40,18 @@ export interface PosterEvent {
   speaker?: string
 }
 
+export interface DepartmentIntro {
+  summary: string
+  highlights: { label: string; value: string }[]
+}
+
+export interface Responsibility {
+  icon: string
+  title: string
+  description: string
+  color: string
+}
+
 export const members: Member[] = [
   {
     name: '张力弦',
@@ -132,6 +144,56 @@ export const posterEvents: PosterEvent[] = [
   { date: '2026-03', title: '智能技术与 RBQM 的实战赋能与价值闭环', poster: '智能技术与RBQM的实战赋能与价值闭环_CMAC_20260320.jpg', speaker: "张浩" },
   { date: '2025-04', title: '数创未来 — SAS 生命科学行业会议', poster: '数创未来-SAS生命科学行业会议_SAS_20250420.JPG', speaker: "张力弦" },
   { date: '2025-03', title: 'AI 赋能临床数据科学：机遇与挑战', poster: 'AI赋能临床数据科学：机遇与挑战_CSDG_20250314.jpg', speaker: "张力弦" },
+]
+
+export const departmentIntro: DepartmentIntro = {
+  summary:
+    '临床科学编程室作为数据技术支持团队，现有7名核心成员（硕士2人、本科5人），融合药学、计算机科学与信息管理等专业背景。团队掌握 SAS、Python、JavaScript、SQL 等编程语言，负责部门端到端的数据工程交付、可视化分析以及定制化应用全栈开发。团队已构建"一仓一库"数据基础设施，累计赋能219个临床试验项目，高效运行近10条自动化数据管道，上线1个自研Web应用、运维约6个开源应用，并通过多次专项培训持续驱动部门技术能力提升，重点推进AI与工作流的深度融合。',
+  highlights: [
+    { label: '核心成员', value: '7名' },
+    { label: '临床项目', value: '219+' },
+    { label: '数据管道', value: '近10条' },
+    { label: '自研应用', value: '1个' },
+    { label: '开源应用', value: '约6个' },
+  ],
+}
+
+export const responsibilities: Responsibility[] = [
+  {
+    icon: '📡',
+    title: '数据工程与基础设施',
+    description:
+      '通过数据仓库 ClickHouse 整合 EDC、IRC、IRT、PV、eCOA、CTMS 等业务系统，构建端到端自动化数据管道；依托 SAS Viya 构建合规安全的数据访问平台。',
+    color: '#8B5CF6',
+  },
+  {
+    icon: '📈',
+    title: '数据分析与决策支持',
+    description:
+      '深度解构业务逻辑，敏捷迭代报表与指标；搭建项目进度、数据质量等指标体系；依托 SAS Visual Analytics、Apache Superset 及 ClinMatrix Web 平台开发定制化交互看板。',
+    color: '#F472B6',
+  },
+  {
+    icon: '🧩',
+    title: '应用开发与场景落地',
+    description:
+      '聚焦高频痛点与人工瓶颈，交付离群值智能检测、心电图智能编码、数据审核工作台等业务应用；积极引入 AI 工具赋能数据管理，降低人工审查成本。',
+    color: '#34D399',
+  },
+  {
+    icon: '🖥️',
+    title: '开源应用与日常维护',
+    description:
+      '快速响应部门工具需求，完成多个开源应用的本地化部署；负责日常运维与故障排查，保障系统在业务中稳定运行。',
+    color: '#FBBF24',
+  },
+  {
+    icon: '🎓',
+    title: '技术沉淀与内部赋能',
+    description:
+      '保持跟进数据科学领域知识与技术，团队成员先行消化并转换为实际工作技能；通过部门内部技术培训分享编程技巧与工具使用经验，协助提升团队整体效率。',
+    color: '#8B5CF6',
+  },
 ]
 
 export const timelineItems: TimelineEvent[] = [

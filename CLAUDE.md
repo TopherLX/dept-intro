@@ -35,10 +35,11 @@ pnpm preview          # 预览生产构建
 src/
 ├── App.vue                    # 主容器，各板块垂直排列
 ├── main.ts / style.css        # 入口 + 设计 Token（颜色/字体/阴影/动画）
-├── data/content.ts            # 全部静态数据（成员/课题/培训/会议/时间线/技术层）
+├── data/content.ts            # 全部静态数据（部门简介/成员/课题/培训/会议/时间线/技术层）
 ├── components/
 │   ├── layout/   AppHeader.vue（sticky + 滚动高亮）, AppFooter.vue
 │   ├── hero/     HeroSection.vue（blob 装饰 + dot-grid + confetti）
+│   ├── department/ DepartmentSection.vue（简介 + 5 职责卡片 3+2 网格）, IntroCard.vue, ResponsibilityCard.vue
 │   ├── members/  MembersSection.vue（横向滚动走马灯）, MemberCard.vue
 │   ├── tech/     TechSection.vue（SVG 内嵌 + 点击放大 + 滚轮缩放）
 │   ├── workmode/ WorkModeSection.vue（CDM/CDS 双卡 + 示意图 SVG + 放大缩放）
@@ -74,6 +75,8 @@ src/
 ## 数据更新
 
 所有内容在 `src/data/content.ts`，修改后 HMR 即时生效：
+- `departmentIntro` — 团队概况 + 数据亮点
+- `responsibilities[]` — 5 大核心职责（标题/描述/图标/颜色）
 - `members[]` — 姓名/职位/简介/标签/照片
 - `topics[]` — 日期/作者/标题/标签
 - `trainings[]` — 日期/讲师/标题/系列子课程

@@ -1,5 +1,5 @@
 <template>
-  <section id="department" class="py-24 scroll-mt-16">
+  <section class="py-24 scroll-mt-16">
     <!-- Section 1: 部门简介 -->
     <SectionTitle title="关于我们" color="#8B5CF6" />
     <IntroCard :summary="departmentIntro.summary" :highlights="departmentIntro.highlights" />

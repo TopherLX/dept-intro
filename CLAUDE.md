@@ -43,7 +43,7 @@ src/
 │   ├── workmode/ WorkModeSection.vue（CDM/CDS 双卡 + 示意图 SVG + 放大缩放）
 │   ├── knowledge/ TopicsSection.vue（成员头像 + 三色轮换）, TrainingSection.vue（头像 + 三色轮换 + 折叠）, EventsSection.vue（coverflow 画廊）
 │   └── shared/   SectionTitle.vue（圆点 + 标题 + 装饰线）
-└── assets/       posters/（海报图片）, public/members/（成员照片）
+└── public/       posters/（海报图片）, members/（成员照片）
 ```
 
 ## 设计系统
@@ -82,7 +82,7 @@ src/
 
 ## refs/ 目录
 
-原始参考资料（不参与构建）：
+原始参考资料，已加入 `.gitignore`，仅存本地，不入仓库。
 - `部门成员简介.docx` — 成员数据源（照片通过 python-docx 提取）
 - `部门技术架构全景图.svg` — 技术架构 SVG 源
 - `工作模式革新/` — CDS 工作模式文档 + 示意图

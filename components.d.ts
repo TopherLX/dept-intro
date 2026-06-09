@@ -13,7 +13,20 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppFooter: typeof import('./src/components/layout/AppFooter.vue')['default']
     AppHeader: typeof import('./src/components/layout/AppHeader.vue')['default']
+    EventsSection: typeof import('./src/components/knowledge/EventsSection.vue')['default']
     HeroSection: typeof import('./src/components/hero/HeroSection.vue')['default']
+    MemberCard: typeof import('./src/components/members/MemberCard.vue')['default']
+    MembersSection: typeof import('./src/components/members/MembersSection.vue')['default']
+    NCarousel: typeof import('naive-ui')['NCarousel']
+    NCollapse: typeof import('naive-ui')['NCollapse']
+    NCollapseItem: typeof import('naive-ui')['NCollapseItem']
+    NPopover: typeof import('naive-ui')['NPopover']
+    NTimeline: typeof import('naive-ui')['NTimeline']
+    NTimelineItem: typeof import('naive-ui')['NTimelineItem']
     SectionTitle: typeof import('./src/components/shared/SectionTitle.vue')['default']
+    TechSection: typeof import('./src/components/tech/TechSection.vue')['default']
+    TopicsSection: typeof import('./src/components/knowledge/TopicsSection.vue')['default']
+    TrainingSection: typeof import('./src/components/knowledge/TrainingSection.vue')['default']
+    WorkModeSection: typeof import('./src/components/workmode/WorkModeSection.vue')['default']
   }
 }

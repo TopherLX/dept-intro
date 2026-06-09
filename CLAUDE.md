@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 临床数据科学部（CDS）团队介绍单页网站。展示团队成员、技术架构、工作模式、研究课题、培训体系和会议宣发。
 
-**线上地址**: https://topherlx.github.io/dept-intro/
+**线上地址**: https://topherlx.github.io/team-intro/
 
 ## 常用命令
 

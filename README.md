@@ -4,7 +4,7 @@
 
 ## 线上访问
 
-🔗 **[https://topherlx.github.io/dept-intro/](https://topherlx.github.io/dept-intro/)**
+🔗 **[https://topherlx.github.io/team-intro/](https://topherlx.github.io/team-intro/)**
 
 ## 本地开发
 

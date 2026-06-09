@@ -3,7 +3,7 @@
     <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
       <a href="#" class="flex items-center gap-2 no-underline">
         <span class="font-heading text-xl font-extrabold text-violet">CDS</span>
-        <span class="hidden sm:inline text-sm text-slate-500 font-medium">临床数据科学部</span>
+        <span class="hidden sm:inline text-sm text-slate-500 font-medium">临床数据部 → 临床科学编程室</span>
       </a>
 
       <ul class="flex gap-1 list-none m-0 p-0">

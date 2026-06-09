@@ -1,5 +1,19 @@
-# Vue 3 + TypeScript + Vite
+# CDS · 临床数据科学部
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+团队介绍网页 — 展示成员、技术架构、工作模式、研究课题、培训体系与会议宣发。
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## 线上访问
+
+🔗 **[https://topherlx.github.io/dept-intro/](https://topherlx.github.io/dept-intro/)**
+
+## 本地开发
+
+```bash
+pnpm install
+pnpm dev        # 启动开发服务器，支持 HMR 热更新
+pnpm build      # 生产构建
+```
+
+## 技术栈
+
+Vue 3 + TypeScript + Vite · Naive UI · Tailwind CSS v4 · Playful Geometric 设计系统 · GitHub Pages

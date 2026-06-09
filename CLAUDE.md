@@ -12,6 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 pnpm install          # 安装依赖
+pnpm setup            # 安装 Git 钩子（首次使用需执行）
 pnpm dev              # 启动开发服务器（HMR 热更新，无需手动构建）
 pnpm build            # 生产构建到 dist/
 pnpm preview          # 预览生产构建
@@ -87,3 +88,8 @@ src/
 - `部门技术架构全景图.svg` — 技术架构 SVG 源
 - `工作模式革新/` — CDS 工作模式文档 + 示意图
 - `课题/`、`培训/`、`会议宣发公众号/` — PPTX、PDF、海报 JPG
+
+## Git 钩子
+
+`scripts/pre-commit.sh` — 提交前提醒检查 CLAUDE.md 和 README.md 是否需要同步更新。
+首次使用时运行 `pnpm setup` 安装。

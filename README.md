@@ -10,8 +10,9 @@
 
 ```bash
 pnpm install
-pnpm dev        # 启动开发服务器，支持 HMR 热更新
-pnpm build      # 生产构建
+pnpm setup     # 安装 Git 钩子（首次使用）
+pnpm dev       # 启动开发服务器，支持 HMR 热更新
+pnpm build     # 生产构建
 ```
 
 ## 技术栈

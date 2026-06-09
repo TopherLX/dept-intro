@@ -7,8 +7,13 @@
         :key="event.title"
         class="bg-white border-2 border-slate-200 rounded-xl overflow-hidden shadow-sticker-amber transition-all duration-300 hover:-translate-x-0.5 hover:-translate-y-0.5 cursor-pointer group"
       >
-        <div class="aspect-[3/4] bg-amber-light/30 flex items-center justify-center p-4">
-          <span class="text-3xl opacity-30 select-none">📢</span>
+        <div class="aspect-[3/4] bg-amber-light/30 flex items-center justify-center overflow-hidden">
+          <n-image
+            :src="`/posters/${event.poster}`"
+            :alt="event.title"
+            class="w-full h-full object-cover"
+            preview-disabled
+          />
         </div>
         <div class="p-3">
           <p class="text-amber-700 text-xs font-semibold mb-1">{{ event.date }}</p>

@@ -20,6 +20,7 @@ declare module 'vue' {
     NCarousel: typeof import('naive-ui')['NCarousel']
     NCollapse: typeof import('naive-ui')['NCollapse']
     NCollapseItem: typeof import('naive-ui')['NCollapseItem']
+    NImage: typeof import('naive-ui')['NImage']
     NPopover: typeof import('naive-ui')['NPopover']
     NTimeline: typeof import('naive-ui')['NTimeline']
     NTimelineItem: typeof import('naive-ui')['NTimelineItem']

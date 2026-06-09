@@ -39,7 +39,7 @@ src/
 ├── components/
 │   ├── layout/   AppHeader.vue（sticky + 滚动高亮）, AppFooter.vue
 │   ├── hero/     HeroSection.vue（blob 装饰 + dot-grid + confetti）
-│   ├── department/ DepartmentSection.vue（简介 + 5 职责卡片 3+2 网格）, IntroCard.vue, ResponsibilityCard.vue
+│   ├── department/ TeamSection.vue（团队简介 + 5 职责卡片 3+2 网格）, IntroCard.vue, ResponsibilityCard.vue
 │   ├── members/  MembersSection.vue（横向滚动走马灯）, MemberCard.vue
 │   ├── tech/     TechSection.vue（SVG 内嵌 + 点击放大 + 滚轮缩放）
 │   ├── workmode/ WorkModeSection.vue（CDM/CDS 双卡 + 示意图 SVG + 放大缩放）
@@ -75,7 +75,7 @@ src/
 ## 数据更新
 
 所有内容在 `src/data/content.ts`，修改后 HMR 即时生效：
-- `departmentIntro` — 团队概况 + 数据亮点
+- `teamIntro` — 团队概况 + 数据亮点
 - `responsibilities[]` — 5 大核心职责（标题/描述/图标/颜色）
 - `members[]` — 姓名/职位/简介/标签/照片
 - `topics[]` — 日期/作者/标题/标签

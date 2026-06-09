@@ -27,7 +27,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 const navItems = [
-  { id: 'department', label: '简介' },
+  { id: 'team', label: '团队简介' },
   { id: 'members', label: '成员' },
   { id: 'tech', label: '架构' },
   { id: 'workmode', label: '模式' },

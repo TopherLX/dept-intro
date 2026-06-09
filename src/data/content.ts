@@ -40,7 +40,7 @@ export interface PosterEvent {
   speaker?: string
 }
 
-export interface DepartmentIntro {
+export interface TeamIntro {
   summary: string
   highlights: { label: string; value: string }[]
 }
@@ -146,7 +146,7 @@ export const posterEvents: PosterEvent[] = [
   { date: '2025-03', title: 'AI 赋能临床数据科学：机遇与挑战', poster: 'AI赋能临床数据科学：机遇与挑战_CSDG_20250314.jpg', speaker: "张力弦" },
 ]
 
-export const departmentIntro: DepartmentIntro = {
+export const teamIntro: TeamIntro = {
   summary:
     '临床科学编程室作为数据技术支持团队，现有7名核心成员（硕士2人、本科5人），融合药学、计算机科学与信息管理等专业背景。团队掌握 SAS、Python、JavaScript、SQL 等编程语言，负责部门端到端的数据工程交付、可视化分析以及定制化应用全栈开发。团队已构建"一仓一库"数据基础设施，累计赋能219个临床试验项目，高效运行近10条自动化数据管道，上线1个自研Web应用、运维约6个开源应用，并通过多次专项培训持续驱动部门技术能力提升，重点推进AI与工作流的深度融合。',
   highlights: [

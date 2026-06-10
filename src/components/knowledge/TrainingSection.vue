@@ -1,9 +1,10 @@
 <template>
   <section id="training" class="pb-160 scroll-mt-16">
     <SectionTitle title="培训体系" color="#10B981" />
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <EmptyPlaceholder v-if="props.trainings.length === 0" />
+    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <div
-        v-for="(training, idx) in trainings"
+        v-for="(training, idx) in props.trainings"
         :key="training.title"
         class="sticker-card group relative flex items-center gap-4 rounded-2xl border-2 border-slate-800 bg-white p-6 shadow-sticker"
         :class="[hoverShadows[idx % 3]]"
@@ -55,8 +56,11 @@
 </template>
 
 <script setup lang="ts">
-import { trainings } from '@/data/content'
+import type { Training } from '@/data/types'
+import EmptyPlaceholder from '@/components/shared/EmptyPlaceholder.vue'
 import SectionTitle from '@/components/shared/SectionTitle.vue'
+
+const props = withDefaults(defineProps<{ trainings: Training[] }>(), { trainings: () => [] })
 
 const baseUrl = import.meta.env.BASE_URL
 const hoverShadows = ['hover:shadow-sticker-mint', 'hover:shadow-sticker-violet', 'hover:shadow-sticker-amber']

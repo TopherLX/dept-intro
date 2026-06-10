@@ -1,7 +1,8 @@
 <template>
   <section id="topics" class="pb-24 scroll-mt-16">
     <SectionTitle title="研究课题" color="#8B5CF6" />
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <EmptyPlaceholder v-if="props.topics.length === 0" />
+    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <div
         v-for="(topic, idx) in sortedTopics"
         :key="topic.title"
@@ -38,12 +39,15 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { topics } from '@/data/content'
+import type { Topic } from '@/data/types'
+import EmptyPlaceholder from '@/components/shared/EmptyPlaceholder.vue'
 import SectionTitle from '@/components/shared/SectionTitle.vue'
+
+const props = withDefaults(defineProps<{ topics: Topic[] }>(), { topics: () => [] })
 
 const baseUrl = import.meta.env.BASE_URL
 
 const sortedTopics = computed(() =>
-  [...topics].sort((a, b) => b.date.localeCompare(a.date))
+  [...props.topics].sort((a, b) => b.date.localeCompare(a.date))
 )
 </script>

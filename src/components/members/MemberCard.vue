@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Member } from '@/data/content'
+import type { Member } from '@/data/types'
 
 const baseUrl = import.meta.env.BASE_URL
 

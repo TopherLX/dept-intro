@@ -2,7 +2,8 @@
   <section id="members" class="pb-24">
     <SectionTitle title="团队成员" color="#8B5CF6" />
 
-    <div class="relative">
+    <EmptyPlaceholder v-if="props.members.length === 0" />
+    <div v-else class="relative">
       <div
         ref="scrollContainer"
         class="flex gap-5 overflow-x-auto overflow-y-visible pb-10 pt-6 px-4 scroll-smooth member-scroll"
@@ -13,7 +14,7 @@
         @scroll="updateFade"
       >
         <MemberCard
-          v-for="(member, idx) in members"
+          v-for="(member, idx) in props.members"
           :key="member.name"
           :member="member"
           :shadow-color="shadowColors[idx % shadowColors.length]"
@@ -37,9 +38,12 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import { members } from '@/data/content'
+import type { Member } from '@/data/types'
+import EmptyPlaceholder from '@/components/shared/EmptyPlaceholder.vue'
 import SectionTitle from '@/components/shared/SectionTitle.vue'
 import MemberCard from './MemberCard.vue'
+
+const props = withDefaults(defineProps<{ members: Member[] }>(), { members: () => [] })
 
 const shadowColors = ['#F472B6', '#8B5CF6', '#FBBF24', '#34D399']
 

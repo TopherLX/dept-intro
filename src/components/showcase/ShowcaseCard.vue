@@ -68,7 +68,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Showcase } from '@/data/content'
+import type { Showcase } from '@/data/types'
 
 const baseUrl = import.meta.env.BASE_URL
 const placeholderColors = ['#EDE9FE', '#FCE7F3', '#D1FAE5', '#FEF3C7', '#E0E7FF', '#FEE2E2', '#F3E8FF', '#E0F2FE', '#FEF9C3', '#FFE4E6']

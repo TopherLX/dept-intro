@@ -22,6 +22,8 @@ declare module 'vue' {
     NCollapseItem: typeof import('naive-ui')['NCollapseItem']
     NModal: typeof import('naive-ui')['NModal']
     ResponsibilityCard: typeof import('./src/components/team/ResponsibilityCard.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
     SectionTitle: typeof import('./src/components/shared/SectionTitle.vue')['default']
     ShowcaseCard: typeof import('./src/components/showcase/ShowcaseCard.vue')['default']
     ShowcaseSection: typeof import('./src/components/showcase/ShowcaseSection.vue')['default']

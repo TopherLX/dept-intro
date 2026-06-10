@@ -41,12 +41,12 @@ src/
 │   ├── hero/     HeroSection.vue（blob 装饰 + dot-grid + confetti）
 │   ├── team/      TeamSection.vue（团队简介 + 5 职责卡片 3+2 网格）, IntroCard.vue, ResponsibilityCard.vue
 │   ├── members/  MembersSection.vue（横向滚动走马灯）, MemberCard.vue
-│   ├── showcase/ ShowcaseSection.vue（成果展示 4 列卡片）, ShowcaseCard.vue
+│   ├── showcase/ ShowcaseSection.vue（成果展示 5 列 10 卡片）, ShowcaseCard.vue
 │   ├── tech/     TechSection.vue（SVG 内嵌 + 点击放大 + 滚轮缩放）
 │   ├── workmode/ WorkModeSection.vue（CDM/CDS 双卡 + 示意图 SVG + 放大缩放）
 │   ├── knowledge/ TopicsSection.vue（成员头像 + 三色轮换）, TrainingSection.vue（头像 + 三色轮换 + 折叠）, EventsSection.vue（coverflow 画廊）
 │   └── shared/   SectionTitle.vue（圆点 + 标题 + 装饰线）
-└── public/       posters/, members/, showcase/（成果 Logo）, hero/（Hero 卡片 SVG）
+└── public/       posters/, members/, showcase/（成果 Logo: 10 个平台）, hero/（Hero 卡片 SVG）
 ```
 
 ## 设计系统

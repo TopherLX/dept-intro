@@ -23,27 +23,28 @@
       <!-- Left: text -->
       <div class="text-center lg:text-left">
         <span class="inline-block bg-amber-light text-amber-700 font-bold text-xs px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase">
-          Clinical Data Science
+          {{ badge }}
         </span>
-        <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-800 leading-tight mb-5">
-          用数据科学<br /> 赋能部门业务
+        <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-800 leading-tight mb-5" style="white-space: pre-line;">
+          {{ title }}
         </h1>
         <p class="text-slate-500 text-lg max-w-md leading-relaxed mb-8">
-          探索从数据采集、治理到智能分析的完整技术生态
+          {{ subtitle }}
         </p>
         <div class="flex gap-4 justify-center lg:justify-start flex-wrap p-1">
           <a
-            href="#team"
+            :href="primaryCta.href"
             class="candy-btn no-underline inline-flex items-center gap-2 bg-violet text-white font-bold text-sm px-6 py-3 rounded-full border-2 border-slate-800 shadow-pop"
           >
-            了解团队
+            {{ primaryCta.text }}
             <span class="bg-white/20 rounded-full w-5 h-5 flex items-center justify-center text-xs">→</span>
           </a>
           <a
-            href="#tech"
+            v-if="secondaryCta"
+            :href="secondaryCta.href"
             class="secondary-btn no-underline inline-flex items-center gap-2 bg-white text-slate-800 font-bold text-sm px-6 py-3 rounded-full border-2 border-slate-200"
           >
-            技术架构
+            {{ secondaryCta.text }}
           </a>
         </div>
         <!-- Color dots row -->
@@ -61,7 +62,7 @@
       <div class="flex-shrink-0 w-72 h-72 sm:w-96 sm:h-96 relative">
         <div class="relative z-10 rounded-[3rem] rounded-tl-none border-4 border-slate-800 bg-white p-2 shadow-[12px_12px_0px_0px_#F472B6]">
           <img
-            :src="`${baseUrl}hero/card.svg`"
+            :src="image"
             alt="团队"
             class="aspect-square w-full rounded-[2.5rem] rounded-tl-none object-cover"
           />
@@ -73,7 +74,17 @@
 </template>
 
 <script setup lang="ts">
-const baseUrl = import.meta.env.BASE_URL
+import type { HeroData } from '@/data/types'
+
+withDefaults(defineProps<HeroData>(), {
+  badge: 'Clinical Data Science',
+  title: '用数据科学\n赋能部门业务',
+  subtitle: '探索从数据采集、治理到智能分析的完整技术生态',
+  primaryCta: () => ({ text: '了解团队', href: '#team' }),
+  secondaryCta: undefined,
+  image: `${import.meta.env.BASE_URL}hero/card.svg`,
+})
+
 const colors = ['#8B5CF6', '#F472B6', '#FBBF24', '#34D399']
 const confetti = Array.from({ length: 15 }, (_, i) => ({
   key: i,

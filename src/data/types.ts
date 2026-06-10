@@ -51,10 +51,10 @@ export interface Showcase {
 }
 
 export interface HeroData {
-  badge: string
-  title: string
-  subtitle: string
-  primaryCta: { text: string; href: string }
+  badge?: string
+  title?: string
+  subtitle?: string
+  primaryCta?: { text: string; href: string }
   secondaryCta?: { text: string; href: string }
-  image: string
+  image?: string
 }

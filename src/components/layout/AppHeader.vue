@@ -2,7 +2,11 @@
   <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b-2 border-slate-200">
     <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
       <!-- Left: page-aware label -->
-      <span class="font-heading text-xl font-extrabold text-violet">
+      <span v-if="routePath === '/'" class="flex items-center gap-2">
+        <span class="font-heading text-xl font-extrabold text-violet">CDS</span>
+        <span class="hidden sm:inline text-sm text-slate-500 font-medium">临床数据部</span>
+      </span>
+      <span v-else class="font-heading text-xl font-extrabold text-violet">
         {{ teamNames[routePath] ?? '临床数据部' }}
       </span>
 

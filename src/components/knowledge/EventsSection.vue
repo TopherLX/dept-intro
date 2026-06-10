@@ -74,7 +74,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue'
-import { posterEvents } from '@/data/content'
+import { posterEvents } from '@/data/ds-team'
 import SectionTitle from '@/components/shared/SectionTitle.vue'
 
 const baseUrl = import.meta.env.BASE_URL

@@ -2,10 +2,10 @@ import type { Member, Topic, Training, TeamIntro, Responsibility, Showcase, Hero
 
 export const hero: HeroData = {
   badge: 'Safety Team',
-  title: '药物安全团队',
+  title: '药物安全组',
   subtitle: '内容建设中，敬请期待。',
   primaryCta: { text: '了解更多', href: '#team' },
-  image: `${import.meta.env.BASE_URL}hero/card.svg`,
+  image: '',
 }
 
 export const teamIntro: TeamIntro = {

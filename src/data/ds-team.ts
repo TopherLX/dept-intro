@@ -2,7 +2,7 @@ import type { Member, Topic, Training, PosterEvent, TeamIntro, Responsibility, S
 
 export const hero: HeroData = {
   badge: 'Clinical Data Science',
-  title: '用数据科学\n赋能部门业务',
+  title: '临床科学编程室',
   subtitle: '探索从数据采集、治理到智能分析的完整技术生态',
   primaryCta: { text: '了解团队', href: '#team' },
   secondaryCta: { text: '技术架构', href: '#tech' },

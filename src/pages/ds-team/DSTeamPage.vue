@@ -1,11 +1,9 @@
 <template>
   <TeamPageLayout :data="dsTeamData">
-    <template #extra>
-      <div class="max-w-6xl mx-auto px-6">
-        <TechSection />
-        <WorkModeSection />
-        <EventsSection />
-      </div>
+    <template #after-showcase>
+      <EventsSection />
+      <TechSection />
+      <WorkModeSection />
     </template>
   </TeamPageLayout>
 </template>

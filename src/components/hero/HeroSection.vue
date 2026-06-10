@@ -1,5 +1,5 @@
 <template>
-  <section class="min-h-[85vh] flex items-center relative overflow-hidden dot-grid mb-48">
+  <section class="min-h-[85vh] flex items-center relative dot-grid mb-48">
     <!-- Decorative confetti shapes -->
     <div class="absolute inset-0 select-none pointer-events-none overflow-hidden">
       <div
@@ -19,9 +19,9 @@
       />
     </div>
 
-    <div class="flex flex-col lg:flex-row items-center gap-60 w-full relative z-10">
+    <div class="flex flex-col lg:flex-row items-center lg:justify-between w-full relative z-10 pr-10 pb-10">
       <!-- Left: text -->
-      <div class="text-center lg:text-left">
+      <div class="text-center lg:text-left lg:min-w-[320px]">
         <span class="inline-block bg-amber-light text-amber-700 font-bold text-xs px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase">
           {{ badge }}
         </span>
@@ -35,6 +35,7 @@
           <a
             :href="primaryCta.href"
             class="candy-btn no-underline inline-flex items-center gap-2 bg-violet text-white font-bold text-sm px-6 py-3 rounded-full border-2 border-slate-800 shadow-pop"
+            @click.prevent="handleCtaClick(primaryCta.href)"
           >
             {{ primaryCta.text }}
             <span class="bg-white/20 rounded-full w-5 h-5 flex items-center justify-center text-xs">→</span>
@@ -43,6 +44,7 @@
             v-if="secondaryCta"
             :href="secondaryCta.href"
             class="secondary-btn no-underline inline-flex items-center gap-2 bg-white text-slate-800 font-bold text-sm px-6 py-3 rounded-full border-2 border-slate-200"
+            @click.prevent="handleCtaClick(secondaryCta.href)"
           >
             {{ secondaryCta.text }}
           </a>
@@ -62,10 +64,17 @@
       <div class="flex-shrink-0 w-72 h-72 sm:w-96 sm:h-96 relative">
         <div class="relative z-10 rounded-[3rem] rounded-tl-none border-4 border-slate-800 bg-white p-2 shadow-[12px_12px_0px_0px_#F472B6]">
           <img
+            v-if="image"
             :src="image"
             alt="团队"
             class="aspect-square w-full rounded-[2.5rem] rounded-tl-none object-cover"
           />
+          <div
+            v-else
+            class="aspect-square w-full rounded-[2.5rem] rounded-tl-none bg-violet-light flex items-center justify-center"
+          >
+            <span class="text-violet text-2xl">🏗️</span>
+          </div>
         </div>
         <div class="-bottom-10 -right-10 -z-10 absolute h-full w-full rounded-[3rem] rounded-br-none bg-[#8B5CF6] opacity-20" />
       </div>
@@ -84,6 +93,18 @@ withDefaults(defineProps<HeroData>(), {
   secondaryCta: undefined,
   image: `${import.meta.env.BASE_URL}hero/card.svg`,
 })
+
+function handleCtaClick(href: string) {
+  if (href.startsWith('#')) {
+    const el = document.getElementById(href.slice(1))
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - 80
+      window.scrollTo({ top, behavior: 'smooth' })
+    }
+  } else {
+    window.open(href, '_blank')
+  }
+}
 
 const colors = ['#8B5CF6', '#F472B6', '#FBBF24', '#34D399']
 const confetti = Array.from({ length: 15 }, (_, i) => ({

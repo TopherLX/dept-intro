@@ -80,7 +80,7 @@ src/
 - **WorkModeSection**：CDM/CDS 双卡 + 示意图 SVG + click -> modal + zoom
 - **MembersSection**：`setInterval` 自动滚动，到末尾停 5s 回弹，click 停止/恢复
 - **EventsSection**：coverflow 画廊 + 点击跳转 + snap 吸附
-- **AppHeader**：scroll 事件监听滚动高亮
+- **AppHeader**：路由感知导航栏，HubPage 显示科室下拉菜单，团队页根据 DOM 自动发现 section 并滚动高亮
 
 ## 组件命名 Conventions
 

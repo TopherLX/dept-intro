@@ -1,6 +1,6 @@
 <template>
-  <div class="max-w-6xl mx-auto px-6">
-    <template v-for="section in visibleSections" :key="section">
+  <div class="max-w-6xl mx-auto px-6 pb-165">
+    <template v-for="section in beforeShowcaseSections" :key="section">
       <HeroSection v-if="section === 'hero'" v-bind="data.hero" />
       <TeamIntroSection
         v-if="section === 'teamIntro'"
@@ -13,6 +13,9 @@
       />
       <MembersSection v-if="section === 'members'" :members="data.members" />
       <ShowcaseSection v-if="section === 'showcase'" :showcases="data.showcases" />
+    </template>
+    <slot name="after-showcase" />
+    <template v-for="section in afterShowcaseSections" :key="section">
       <TopicsSection v-if="section === 'topics'" :topics="data.topics" />
       <TrainingSection v-if="section === 'training'" :trainings="data.trainings" />
     </template>
@@ -30,6 +33,8 @@ import ShowcaseSection from '@/components/showcase/ShowcaseSection.vue'
 import TopicsSection from '@/components/knowledge/TopicsSection.vue'
 import TrainingSection from '@/components/knowledge/TrainingSection.vue'
 
+import { computed } from 'vue'
+
 export interface TeamPageData {
   hero: HeroData
   teamIntro: TeamIntro
@@ -40,7 +45,7 @@ export interface TeamPageData {
   trainings: Training[]
 }
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   data: TeamPageData
   visibleSections?: string[]
 }>(), {
@@ -54,4 +59,14 @@ withDefaults(defineProps<{
     'training',
   ],
 })
+
+const beforeSlots = ['hero', 'teamIntro', 'responsibilities', 'members', 'showcase']
+const afterSlots = ['topics', 'training']
+
+const beforeShowcaseSections = computed(() =>
+  props.visibleSections.filter(s => beforeSlots.includes(s))
+)
+const afterShowcaseSections = computed(() =>
+  props.visibleSections.filter(s => afterSlots.includes(s))
+)
 </script>

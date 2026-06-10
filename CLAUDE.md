@@ -102,6 +102,7 @@ src/
 - `trainings[]` — 日期/讲师/标题/系列子课程
 
 共享类型定义在 `src/data/types.ts` 中（Member, Topic, Training, Showcase, TeamIntro 等）。
+添加新团队内容时参考 `docs/add-team-content-guide.md`。
 
 ## refs/ 目录
 

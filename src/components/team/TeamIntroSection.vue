@@ -1,5 +1,5 @@
 <template>
-  <section class="pb-24 scroll-mt-16">
+  <section id="team" class="pb-24 scroll-mt-16">
     <SectionTitle title="团队简介" color="#8B5CF6" />
     <EmptyPlaceholder v-if="!summary && highlights.length === 0" />
     <IntroCard v-else :summary="summary" :highlights="highlights" />

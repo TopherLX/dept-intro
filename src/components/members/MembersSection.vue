@@ -1,5 +1,5 @@
 <template>
-  <section id="members" class="pb-24">
+  <section id="members" class="pb-24 scroll-mt-16">
     <SectionTitle title="团队成员" color="#8B5CF6" />
 
     <EmptyPlaceholder v-if="props.members.length === 0" />

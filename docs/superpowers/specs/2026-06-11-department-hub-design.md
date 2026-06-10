@@ -58,7 +58,7 @@ src/pages/
     └── SafetyTeamPage.vue
 ```
 
-团队页统一使用 TeamPageLayout 组件组合共享 Section，保证各团队页的 Section 顺序和间距一致。每个团队可在自己目录下添加私有组件。
+团队页默认使用 TeamPageLayout 组件组合共享 Section，提供统一顺序和间距。每个团队可通过 `visibleSections` prop 控制显示/隐藏和排序，也可完全不使用 TeamPageLayout 自由组合。每个团队可在自己目录下添加私有组件。
 
 ### DS Team 私有组件
 
@@ -117,21 +117,20 @@ export const hero = {
 
 ## TeamPageLayout 组合规范
 
-`TeamPageLayout.vue` 共享布局组件，固定 Section 顺序和间距：
+`TeamPageLayout.vue` 提供默认 Section 顺序和间距，同时支持灵活控制：
 
-```
-<HeroSection v-bind="data.hero" />
-<TeamIntroSection v-bind="data.teamIntro" />
-<ResponsibilitiesSection :responsibilities="data.responsibilities" />
-<MembersSection :members="data.members" />
-<ShowcaseSection :showcases="data.showcases" />
-<TopicsSection :topics="data.topics" />
-<TrainingSection :trainings="data.trainings" />
-<!-- 私有 Section 插槽 -->
-<slot name="extra" />
+```vue
+<TeamPageLayout :data="teamData" :visibleSections="['hero', 'members', 'topics']">
+  <template #extra>
+    <!-- 团队私有 Section -->
+  </template>
+</TeamPageLayout>
 ```
 
-各团队页只需传入数据对象，无需关心布局。私有内容通过 `<slot name="extra">` 注入（如 DS Team 的 TechSection / WorkModeSection / EventsSection）。
+- **默认全部展示**：不传 `visibleSections` 时按固定顺序渲染全部 7 个 Section（hero → teamIntro → responsibilities → members → showcase → topics → training）
+- **按需控制**：传 `visibleSections` 只展示指定 Section，支持排序调整（如上例 hero → members → topics）
+- **私有扩展**：`<slot name="extra">` 注入团队私有组件（如 DS Team 的 Tech / WorkMode / Events）
+- **完全自由**：团队也可完全不使用 TeamPageLayout，直接按需引入共享 Section 组件
 
 ## Section 组件现有耦合分析
 

@@ -204,14 +204,6 @@ export const showcases: Showcase[] = [
     link: 'https://datapanel.cttq.com/',
   },
   {
-    title: 'Viya Monitor',
-    description: 'SAS Viya 计算引擎监控平台，及时追踪计算资源使用',
-    image: 'showcase/viya-monitor-logo.svg',
-    borderRadius: 'rounded-[2rem] rounded-tr-none',
-    badge: '运维监控',
-    link: 'https://topherlx.github.io/viya-monitor-dashboard/',
-  },
-  {
     title: '研究任务与需求管理',
     description: '集中管理临床试验数据需求，追踪任务进度与交付状态',
     image: 'showcase/feishu-logo.svg',
@@ -234,6 +226,14 @@ export const showcases: Showcase[] = [
     borderRadius: 'rounded-[2rem] rounded-tr-none',
     badge: '内部培训',
     link: 'https://ai-coding-tutorials.tech/',
+  },
+  {
+    title: 'Viya Monitor',
+    description: 'SAS Viya 计算引擎监控平台，及时追踪计算资源使用',
+    image: 'showcase/viya-monitor-logo.svg',
+    borderRadius: 'rounded-[2rem] rounded-tr-none',
+    badge: '运维监控',
+    link: 'https://topherlx.github.io/viya-monitor-dashboard/',
   },
   {
     title: 'Apache Superset',

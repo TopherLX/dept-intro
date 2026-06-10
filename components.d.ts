@@ -31,6 +31,7 @@ declare module 'vue' {
     ShowcaseSection: typeof import('./src/components/showcase/ShowcaseSection.vue')['default']
     TeamIntroSection: typeof import('./src/components/team/TeamIntroSection.vue')['default']
     TeamPageLayout: typeof import('./src/components/layout/TeamPageLayout.vue')['default']
+    TeamSection: typeof import('./src/components/team/TeamSection.vue')['default']
     TechSection: typeof import('./src/components/tech/TechSection.vue')['default']
     TopicsSection: typeof import('./src/components/knowledge/TopicsSection.vue')['default']
     TrainingSection: typeof import('./src/components/knowledge/TrainingSection.vue')['default']

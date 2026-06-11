@@ -1,5 +1,5 @@
 <template>
-  <section id="members" ref="sectionRef" class="pb-24 scroll-mt-16">
+  <section id="members" class="pb-24 scroll-mt-16">
     <SectionTitle title="团队成员" color="#8B5CF6" />
 
     <EmptyPlaceholder v-if="props.members.length === 0" />
@@ -47,12 +47,12 @@ const props = withDefaults(defineProps<{ members: Member[] }>(), { members: () =
 
 const shadowColors = ['#F472B6', '#8B5CF6', '#FBBF24', '#34D399']
 
-const sectionRef = ref<HTMLElement | null>(null)
 const scrollContainer = ref<HTMLElement | null>(null)
 const showLeftFade = ref(false)
 const showRightFade = ref(true)
 let timerId: ReturnType<typeof setInterval> | null = null
 let pauseTimer: ReturnType<typeof setTimeout> | null = null
+let entryTimer: ReturnType<typeof setTimeout> | null = null
 let stopped = false
 let observer: IntersectionObserver | null = null
 
@@ -109,23 +109,25 @@ function resumeScroll() {
 }
 
 onMounted(() => {
-  if (!sectionRef.value) return
+  const el = scrollContainer.value
+  if (!el) return
   observer = new IntersectionObserver(
     (entries) => {
       if (entries[0].isIntersecting) {
-        // Wait 3s after becoming visible, then start scrolling
-        setTimeout(() => startAutoScroll(), 3000)
+        entryTimer = setTimeout(() => startAutoScroll(), 3000)
         observer?.disconnect()
+        observer = null
       }
     },
-    { threshold: 0.1 }
+    { threshold: 0.15, rootMargin: '50px 0px' }
   )
-  observer.observe(sectionRef.value)
+  observer.observe(el)
   document.addEventListener('click', resumeScroll)
 })
 
 onUnmounted(() => {
   stopAutoScroll()
+  if (entryTimer) clearTimeout(entryTimer)
   observer?.disconnect()
   document.removeEventListener('click', resumeScroll)
 })

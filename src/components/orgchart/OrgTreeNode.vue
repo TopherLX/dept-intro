@@ -25,9 +25,8 @@
     <!-- Children: horizontal (L1→L2) -->
     <template v-if="node.children && node.children.length && level < 2">
       <div class="w-0.5 h-5 bg-[#CBD5E1]"></div>
-      <!-- 216 = card w-[200px] + gap-4 (16px); -16 removes trailing gap -->
-      <div class="h-0.5 bg-[#CBD5E1] rounded-sm" :style="{ width: `${node.children.length * 216 - 16}px` }"></div>
-      <div class="flex" :style="{ width: `${node.children.length * 216 - 16}px` }">
+      <div class="h-0.5 bg-[#CBD5E1] rounded-sm" :style="{ width: `${(node.children.length - 1) / node.children.length * 100}%` }"></div>
+      <div class="flex w-full">
         <div v-for="(_, i) in node.children" :key="i" class="flex flex-col items-center" style="flex: 1;">
           <div class="w-0.5 h-3.5 bg-[#CBD5E1]"></div>
         </div>

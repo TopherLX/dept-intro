@@ -13,6 +13,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppFooter: typeof import('./src/components/layout/AppFooter.vue')['default']
     AppHeader: typeof import('./src/components/layout/AppHeader.vue')['default']
+    CoreSkillsSection: typeof import('./src/components/team/CoreSkillsSection.vue')['default']
     EmptyPlaceholder: typeof import('./src/components/shared/EmptyPlaceholder.vue')['default']
     EventsSection: typeof import('./src/components/knowledge/EventsSection.vue')['default']
     HeroSection: typeof import('./src/components/hero/HeroSection.vue')['default']
@@ -39,6 +40,7 @@ declare module 'vue' {
     TopicsIframeSection: typeof import('./src/components/knowledge/TopicsIframeSection.vue')['default']
     TopicsSection: typeof import('./src/components/knowledge/TopicsSection.vue')['default']
     TrainingSection: typeof import('./src/components/knowledge/TrainingSection.vue')['default']
+    WorkingGroupsSection: typeof import('./src/components/team/WorkingGroupsSection.vue')['default']
     WorkModeSection: typeof import('./src/components/workmode/WorkModeSection.vue')['default']
   }
 }

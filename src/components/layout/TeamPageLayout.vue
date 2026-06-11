@@ -12,6 +12,7 @@
         :responsibilities="data.responsibilities"
       />
     </template>
+    <slot name="after-responsibilities" />
     <MembersSection v-if="showMembers" :members="data.members" />
     <slot name="after-members" />
     <ShowcaseSection v-if="showShowcase" :showcases="data.showcases" />

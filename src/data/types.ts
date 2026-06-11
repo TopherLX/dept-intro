@@ -71,3 +71,18 @@ export interface ResearchTopic {
   description: string
   owner: string
 }
+
+export interface WorkingGroup {
+  icon: string
+  name: string
+  description: string
+  color: string
+}
+
+export interface CoreSkill {
+  name: string
+  percentage: number
+  sub: string
+  tags: string
+  color: string
+}

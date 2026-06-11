@@ -1,4 +1,4 @@
-import type { Member, Topic, Training, TeamIntro, Responsibility, Showcase, HeroData, OrgNode, ResearchTopic } from './types'
+import type { Member, Topic, Training, TeamIntro, Responsibility, Showcase, HeroData, OrgNode, ResearchTopic, WorkingGroup, CoreSkill } from './types'
 
 export const hero: HeroData = {
   badge: 'Clinical Data Management · #1',
@@ -55,12 +55,58 @@ export const responsibilities: Responsibility[] = [
       '落实临床项目数据合规审核，跟进问题整改，搭建并完善标准化临床数据管理体系；配合完成项目阶段性复盘与结题数据梳理，保障数据完整、一致、合规，全力支撑项目结题、申报及核查工作。',
     color: '#8B5CF6',
   },
+]
+export const workingGroups: WorkingGroup[] = [
   {
-    icon: '🏗️',
-    title: '数据管理标准化建设',
+    icon: '📋',
+    name: 'SOPs 工作组',
     description:
-      'SOPs工作组以流程图+表格可视化统一操作标准，降低培训成本、缩短胜任周期；CCG标准工作组依托EDC标准库搭建统一填写指南模板，消除填写差异；可视化需求小组基于SAS Viya Visual Analytics搭建一体化项目数据看板体系。三组协同推动标准化、合规化、智能化升级。',
+      '全面梳理核心业务流程，采用流程图+表格的可视化形式统一操作标准，提升落地执行效率；搭建系统化严谨的标准化流程体系，夯实部门合规管控标准，优化数据管理工作质量。新版SOP逻辑清晰、步骤详实，可有效降低新员工培训成本，帮助新人快速掌握全链条业务，显著缩短岗位胜任周期。',
+    color: '#8B5CF6',
+  },
+  {
+    icon: '📏',
+    name: 'CCG 标准工作组',
+    description:
+      '依托 EDC 标准库开展CCG标准化建设工作，核心负责搭建统一的标准填写指南模板，并按规范完成各类填写指南的编制与迭代。工作中严格遵循行业及内部数据管理要求，统一填写口径、规范操作细则，消除填写差异，推动全流程数据管理工作高效、标准化运转。',
     color: '#F472B6',
+  },
+  {
+    icon: '📊',
+    name: '可视化需求小组',
+    description:
+      '依托 SAS Viya Visual Analytics 工具开展数据可视化工作，围绕数据录入、SDV、质疑、受试者入组等核心维度，搭建一体化项目数据可视化看板体系。依托平台可视化能力实时展示项目进度与数据状态，直观呈现各环节运行情况。以可视化成果为支撑，为管理层提供清晰、及时的数据参考，助力高效研判与科学决策，保障项目有序推进。',
+    color: '#34D399',
+  },
+]
+export const coreSkills: CoreSkill[] = [
+  {
+    name: 'SAS 编程',
+    percentage: 100,
+    sub: '核心工具 · 全员掌握',
+    tags: '数据清理 · 可视化 · 分析',
+    color: '#3b6c8f',
+  },
+  {
+    name: 'Vibe Coding',
+    percentage: 100,
+    sub: '数据管理技术 · 全员熟悉',
+    tags: '编程清理 · 数理分析',
+    color: '#3e8e7e',
+  },
+  {
+    name: '数据可视化',
+    percentage: 100,
+    sub: 'SAS Viya · 看板体系',
+    tags: '实时可视 · 决策支撑',
+    color: '#7a6b8e',
+  },
+  {
+    name: '数理基础分析',
+    percentage: 100,
+    sub: '统计与数据处理能力',
+    tags: '科研赋能 · 课题深耕',
+    color: '#b68b40',
   },
 ]
 export const members: Member[] = []

@@ -86,3 +86,9 @@ export interface CoreSkill {
   tags: string
   color: string
 }
+
+export interface TimelineItem {
+  date: string
+  title: string
+  description: string
+}

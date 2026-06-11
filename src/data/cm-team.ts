@@ -1,4 +1,4 @@
-import type { Member, Topic, Training, TeamIntro, Responsibility, Showcase, HeroData, PosterEvent } from './types'
+import type { Member, Topic, Training, TeamIntro, Responsibility, Showcase, HeroData, PosterEvent, TimelineItem } from './types'
 
 export const hero: HeroData = {
   badge: 'Center Monitoring',
@@ -10,7 +10,7 @@ export const hero: HeroData = {
 
 export const teamIntro: TeamIntro = {
   summary:
-    '中心化监查室于2026年正式成立，是临床试验基于风险质量管理重要的一环，依托统计编程与数据可视化手段，对多中心临床试验进行跨中心、跨维度的近实时的风险识别与驱动式监查，当前共7人，复合型团队，包括运营、建库、数据管理等职能，全员熟悉SAS/Python编程，JMP PRO操作，了解基础统计知识，熟悉ICHE6(R3)、E8(R1)等法规，从2025年开始对在研的III期项目进行中心化监查活动，人均覆盖2-3个项目，总计12个项目正在运行。无RBQM系统，所有可视化及计算均为手动编程产出，后续计划通过AI编程，将所有基础监查框架标准化，当前标准化工具产出1个。',
+    '中心化监查室于2026年正式成立，是临床试验基于风险质量管理重要的一环，依托统计编程与数据可视化手段，对多中心临床试验进行跨中心、跨维度的近实时的风险识别与驱动式监查，当前共7人，复合型团队，包括运营、建库、数据管理等职能，全员熟悉SAS/Python编程，JMP PRO操作，了解基础统计知识，熟悉ICHE6(R3)、E8(R1)等法规，从2025年开始对在研的III期项目进行中心化监查活动，人均覆盖2-3个项目，总计12个项目正在运行。无RBQM系统，所有可视化及计算均为手动编程产出，后续计划通过AI编程，将所有基础监查框架标准化，当前标准化工具产出1个。在研究开始前识别潜在风险，制定预防措施，从根本上提升质量管理水平；利用科学的统计方法对影响研究结果/受试者保护的关键质量因素实施重点监控，确保试验结果的可靠性；通过系统性的风险管理，大幅减少严重质量问题的发生概率，保障临床试验高质量运行。',
   highlights: [
     { label: '核心成员', value: '7名' },
     { label: '在研项目', value: '12个' },
@@ -81,44 +81,44 @@ export const members: Member[] = [
   },
   {
     name: '顾晋铨',
-    title: '助理临床数据管理经理',
-    bio: '',
-    tags: [],
+    title: '助理中心化监查经理',
+    bio: '毕业于南京医科大学，先后从事临床运营、数据管理和中心化监查等工作，经手主导项目30余项。推动批量质疑落地，从0搭建包括算法、可视化、工作流等RBQM全体系。擅长SAS、JMP等数据清理和分析工具。',
+    tags: ['SAS', 'JMP', 'RBQM', '数据清理'],
     photo: 'members/顾晋铨.png',
   },
   {
     name: '盛炜',
-    title: '临床数据管理经理',
-    bio: '',
-    tags: [],
+    title: '中心化监查经理',
+    bio: '2020年毕业于南京医科大学生物统计专业，从事临床数据相关工作6年，先后就职于辉瑞、正大天晴。负责过global项目与local项目20+，作为LDM核心负责1项国内首仿关键注册项目成功获批。2024年下半年开始作为中心化监查小组核心成员，推动部门中心化监查实施落地与RBM推广。将中心化监查方法落地应用于3个关键注册项目，与多职能团队紧密协同，识别数据欺诈、流程执行不规范等多项核心风险点，实现数据管理与中心化监查的深度融合。',
+    tags: ['SAS', '生物统计', 'Global项目', 'RBM'],
     photo: 'members/盛炜.png',
   },
   {
     name: '饶响书',
-    title: '助理临床数据管理经理',
-    bio: '',
-    tags: [],
+    title: '助理中心化监查经理',
+    bio: '2022年7月毕业于成都中医药大学，入职正大天晴，从事数据管理，2025年7月加入中心化监查工作组。期间负责和辅助项目10余项，其中，中心化监查项目3项。较熟悉CDISC标准，擅长SAS编程，可视化。',
+    tags: ['SAS', 'CDISC', '可视化'],
     photo: 'members/饶响书.png',
   },
   {
     name: '尹默',
-    title: '助理科学编程经理',
-    bio: '',
-    tags: [],
+    title: '中心化监查员',
+    bio: '2023年硕士毕业于日本东京大学，6月加入正大天晴研究院临床运营部门，从事CRA（临床监查员）工作，期间参与多项III期临床项目现场监查、项目内部质控及稽查，曾参与国家局现场核查1次，了解临床试验各阶段流程及相关法律法规；2025年1月转岗至临床数据部，加入中心化监查小组，开始学习并从事CM相关工作，目前负责两个III期项目的中心化监查运行。',
+    tags: ['CRA', 'III期项目', '现场核查'],
     photo: 'members/尹默.png',
   },
   {
     name: '龚奕鸣',
-    title: '科学编程员',
-    bio: '',
-    tags: [],
+    title: '中心化监查员',
+    bio: '2025年毕业于南京医科大学，于2025年6月加入正大天晴临床数据部，从事质疑管理、逻辑核查等数据管理工作，熟悉了临床试验流程，相关法律法规和EDC系统功能配置；能够熟练使用SAS，JMP Pro等统计分析工具；于2025年10月加入中心化监查室，从事肿瘤项目的中心化监查报告撰写更新等工作。',
+    tags: ['SAS', 'JMP Pro', 'EDC', '质疑管理'],
     photo: 'members/龚奕鸣.png',
   },
   {
     name: '陈曦',
-    title: '助理临床数据库设计经理',
-    bio: '',
-    tags: [],
+    title: '助理中心化监查经理',
+    bio: '2020年毕业于沈阳药科大学，毕业后从事药物分析研发工作。2022年6月加入正大天晴，负责EDC建库工作。期间累计独立负责建库项目20余项，覆盖实体瘤、免疫、血液瘤等多个适应症，涉及I期至III期临床试验；同时完成系统升级任务40余次，实施交叉质控项目30余项。深入理解临床试验方案设计，熟练掌握泰格、太美、Medidata等EDC及eCOA系统的功能配置、逻辑校验与自定义函数编写。2026年初转岗至中心化监查，逐渐学习掌握SAS编写，结合统计知识和对临床试验理解，进一步拓展临床试验数据监查能力。',
+    tags: ['EDC建库', 'SAS', 'Medidata', 'eCOA'],
     photo: 'members/陈曦.png',
   },
 ]
@@ -127,3 +127,21 @@ export const showcases: Showcase[] = []
 export const topics: Topic[] = []
 export const trainings: Training[] = []
 export const posterEvents: PosterEvent[] = []
+
+export const timeline: TimelineItem[] = [
+  {
+    date: '2013',
+    title: 'FDA/EMA 倡导 RBM',
+    description: 'FDA与EMA倡导基于风险的监查（RBM），强调质量源于设计（QbD）、聚焦质量关键要素（CtQ），确保数据可信可靠以回答科学问题、保障受试者权益。',
+  },
+  {
+    date: 'ICH E6(R2)',
+    title: 'RBQM 理念正式引入',
+    description: 'ICH E6(R2)正式引入RBQM（基于风险的质量管理）理念，将风险评估与管理嵌入临床试验全生命周期，推动行业从传统100% SDV向基于风险的监查策略转型。',
+  },
+  {
+    date: '2026.03',
+    title: 'ICH E6(R3) 中国实施',
+    description: '中国正式实施ICH E6(R3)，进一步强化基于风险与相称性的监查策略，中心化监查室应运而生，为临床试验质量保障体系提供核心支撑。',
+  },
+]

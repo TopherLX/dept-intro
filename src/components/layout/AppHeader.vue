@@ -112,12 +112,12 @@ watch(dropdownOpen, (open) => {
 
 // ── Section auto-discovery ─────────────────────────────────────
 const sectionLabels: Record<string, string> = {
-  team:             '团队简介',
-  responsibilities: '核心职责',
-  'org-chart':      '组织架构',
+  team:             '团队',
+  responsibilities: '职责',
+  'org-chart':      '架构',
   members:          '成员',
   showcase:         '成果',
-  'project-analysis':'项目分析',
+  'project-analysis':'项目',
   topics:           '课题',
   events:           '会议',
   tech:             '架构',

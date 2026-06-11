@@ -15,7 +15,7 @@ export const teamIntro: TeamIntro = {
     { label: '核心成员', value: '18名' },
     { label: '人均项目', value: '5-6个' },
     { label: '数据管理经验', value: '3年+' },
-    { label: '掌握技能', value: 'SAS + Vibe Coding' },
+    { label: '掌握技能', value: 'SAS + AI' },
   ],
 }
 

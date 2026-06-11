@@ -5,8 +5,6 @@
       badge="Clinical Data Department"
       title="部门概览"
       subtitle="临床科学编程室 · 团队总览"
-      :primary-cta="undefined"
-      :secondary-cta="undefined"
     />
     <MembersSection :members="[]" />
     <WorkModeSection />

@@ -7,10 +7,11 @@
     >
       <!-- Left: Avatar -->
       <div
-        class="w-12 h-12 rounded-full border-2 shrink-0 flex items-center justify-center"
-        :class="[avatarBg, avatarBorder]"
+        class="w-12 h-12 rounded-full border-2 shrink-0 flex items-center justify-center overflow-hidden"
+        :class="node.photo ? 'border-slate-200' : [avatarBg, avatarBorder]"
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" :stroke="iconColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <img v-if="node.photo" :src="`${baseUrl}members/${node.photo}`" :alt="node.name" class="w-full h-full object-cover" />
+        <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="none" :stroke="iconColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="8" r="4" />
           <path d="M4 22c0-4 4-7 8-7s8 3 8 7" />
         </svg>
@@ -65,6 +66,7 @@ const levelConfig: Record<number, { shadow: string; avatarBg: string; avatarBord
   3: { shadow: '#FBBF24', avatarBg: 'bg-gradient-to-br from-amber-light to-[#FDE68A]', avatarBorder: 'border-[#FBBF24]', icon: '#D97706' },
 }
 
+const baseUrl = import.meta.env.BASE_URL
 const cfg = computed(() => levelConfig[props.level] ?? levelConfig[3])
 const shadowColor = computed(() => cfg.value.shadow)
 const avatarBg = computed(() => cfg.value.avatarBg)

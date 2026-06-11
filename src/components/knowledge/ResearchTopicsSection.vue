@@ -1,6 +1,7 @@
 <template>
   <section id="topics" class="scroll-mt-16 pb-24">
     <SectionTitle title="研究课题" color="#8B5CF6" />
+    <p v-if="summary" class="mt-6 text-lg text-slate-800 leading-relaxed">{{ summary }}</p>
     <div class="mt-12 space-y-16">
       <div v-for="group in groupedTopics" :key="group.category">
         <button
@@ -49,7 +50,7 @@ import { computed, ref } from 'vue'
 import type { ResearchTopic } from '@/data/types'
 import SectionTitle from '@/components/shared/SectionTitle.vue'
 
-const props = defineProps<{ topics: ResearchTopic[] }>()
+const props = defineProps<{ topics: ResearchTopic[]; summary?: string }>()
 
 const expanded = ref(new Set<string>(['AI & 系统智能化']))
 

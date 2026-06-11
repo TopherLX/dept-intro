@@ -62,6 +62,7 @@ export interface HeroData {
 export interface OrgNode {
   name: string
   title: string
+  photo?: string
   children?: OrgNode[]
 }
 

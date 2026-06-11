@@ -75,46 +75,52 @@ export const trainings: Training[] = []
 export const orgChart: OrgNode = {
   name: '徐金莲',
   title: '高级主任',
+  photo: '徐金莲.png',
   children: [
     {
       name: '季梦雪',
       title: '主任助理',
+      photo: '季梦雪.png',
       children: [
-        { name: '赵力利', title: '高级数据经理' },
-        { name: '孙姝琦', title: '数据经理' },
-        { name: '陈逸涛', title: '助理数据经理' },
+        { name: '赵力利', title: '高级数据经理', photo: '赵力利.png' },
+        { name: '孙姝琦', title: '数据经理', photo: '孙姝琦.png' },
+        { name: '陈逸涛', title: '助理数据经理', photo: '陈逸涛.png' },
       ],
     },
     {
       name: '袁文英',
       title: '主任助理',
+      photo: '袁文英.png',
       children: [
-        { name: '徐露露', title: '助理数据经理' },
-        { name: '孟雪晴', title: '数据经理' },
-        { name: '胡昊宇', title: '数据管理员' },
+        { name: '徐露露', title: '助理数据经理', photo: '徐露露.png' },
+        { name: '孟雪晴', title: '数据经理', photo: '孟雪情.png' },
+        { name: '胡昊宇', title: '数据管理员', photo: '胡昊宇.png' },
       ],
     },
     {
       name: '程永梅',
       title: '数据经理',
+      photo: '程永梅.png',
       children: [
-        { name: '刘梦珊', title: '助理数据经理' },
-        { name: '许童瑶', title: '助理数据经理' },
+        { name: '刘梦珊', title: '助理数据经理', photo: '刘梦珊.png' },
+        { name: '许童瑶', title: '助理数据经理', photo: '许童瑶.png' },
       ],
     },
     {
       name: '徐静',
       title: '高级数据经理',
+      photo: '徐静.png',
       children: [
-        { name: '李银萍', title: '助理数据经理' },
-        { name: '鞠千禧', title: '助理数据经理' },
+        { name: '李银萍', title: '助理数据经理', photo: '李银萍.png' },
+        { name: '鞠千禧', title: '助理数据经理', photo: '鞠千禧.png' },
       ],
     },
     {
       name: '邓巧红',
       title: '高级数据经理',
+      photo: '邓巧红.png',
       children: [
-        { name: '周治文', title: '助理数据经理' },
+        { name: '周治文', title: '助理数据经理', photo: '周治文.png' },
       ],
     },
   ],

@@ -10,10 +10,10 @@ export const hero: HeroData = {
 
 export const teamIntro: TeamIntro = {
   summary:
-    '当前团队共18人，临床数据管理经验均超3年，是一支融合药学、信息管理与信息系统、护理学等专业人才的复合型核心业务团队。团队汇聚数据管理、临床监查、临床协调三类经验的人才，兼具标准化数据治理功底与一线临床实操经验。全员掌握SAS编程核心工具，全员熟悉Vibe Coding等数据管理技术，运用编程进行数据清理、数据可视化展示、数理基础分析等业务，现阶段团队作为主要的业务执行团队，人均负责5-6个临床项目以及其他研发课题，项目经验充足、质控成效稳定，科研赋能扎实、课题深耕精进。',
+    '当前团队共18人，临床数据管理经验均超3年，是一支融合药学、信息管理与信息系统、护理学等专业人才的复合型核心业务团队。团队汇聚数据管理、临床监查、临床协调三类经验的人才，兼具标准化数据治理功底与一线临床实操经验。全员掌握SAS编程核心工具，全员熟悉Vibe Coding等数据管理技术，运用编程进行数据清理、数据可视化展示、数理基础分析等业务，现阶段团队作为主要的业务执行团队，人均负责4-5个临床项目以及其他研发课题，项目经验充足、质控成效稳定，科研赋能扎实、课题深耕精进。',
   highlights: [
     { label: '核心成员', value: '18名' },
-    { label: '人均项目', value: '5-6个' },
+    { label: '人均项目', value: '4-5个' },
     { label: '数据管理经验', value: '3年+' },
     { label: '掌握技能', value: 'SAS + AI' },
   ],
@@ -117,47 +117,53 @@ export const trainings: Training[] = []
 export const orgChart: OrgNode = {
   name: '周敏',
   title: '高级主任',
+  photo: '周敏.png',
   children: [
     {
       name: '孙萍',
       title: '主任助理',
+      photo: '孙萍.png',
       children: [
-        { name: '贾潘丽', title: '数据经理' },
-        { name: '李元晶', title: '助理数据经理' },
-        { name: '丁福洋', title: '助理数据经理' },
+        { name: '贾潘丽', title: '数据经理', photo: '贾潘丽.jpg' },
+        { name: '李元晶', title: '助理数据经理', photo: '李元晶.png' },
+        { name: '丁福洋', title: '助理数据经理', photo: '丁福洋.png' },
       ],
     },
     {
       name: '杨俐娴',
       title: '主任助理',
+      photo: '杨俐娴.png',
       children: [
-        { name: '史庆秀', title: '助理数据经理' },
-        { name: '曹郡颖', title: '助理数据经理' },
+        { name: '史庆秀', title: '助理数据经理', photo: '史庆秀.png' },
+        { name: '曹郡颖', title: '助理数据经理', photo: '曹珺颖.png' },
       ],
     },
     {
       name: '谢庭益',
       title: '数据经理',
+      photo: '谢庭益.jpg',
       children: [
-        { name: '俞婷', title: '助理数据经理' },
-        { name: '李倩楠', title: '数据管理员' },
+        { name: '俞婷', title: '助理数据经理', photo: '俞婷.jpg' },
+        { name: '李倩楠', title: '数据管理员', photo: '李倩楠.jpg' },
       ],
     },
     {
       name: '陈帆',
       title: '数据经理',
+      photo: '陈帆.jpg',
       children: [
-        { name: '徐燕', title: '数据经理' },
-        { name: '屠乐琪', title: '助理数据经理' },
+        { name: '徐燕', title: '数据经理', photo: '徐燕.png' },
+        { name: '屠乐琪', title: '助理数据经理', photo: '屠乐琪.png' },
       ],
     },
     {
       name: '王今歌',
       title: '资深数据经理',
+      photo: '王今歌.png',
       children: [
-        { name: '陈宇洁', title: '数据经理' },
-        { name: '王宇嘉', title: '助理数据经理' },
-        { name: '朱心蓓', title: '助理数据经理' },
+        { name: '陈宇洁', title: '数据经理', photo: '陈宇洁.jpg' },
+        { name: '王宇嘉', title: '助理数据经理', photo: '王宇嘉.jpg' },
+        { name: '朱心蓓', title: '助理数据经理', photo: '朱心蓓.jpg' },
       ],
     },
   ],

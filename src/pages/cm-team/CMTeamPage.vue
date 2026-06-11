@@ -1,9 +1,7 @@
 <template>
   <TeamPageLayout :data="teamData" :visible-sections="visibleSections">
-    <template #after-intro>
-      <TimelineSection :timeline="timeline" />
-    </template>
     <template #after-members>
+      <TimelineSection :timeline="timeline" />
       <WorkflowImagesSection />
     </template>
     <template #after-showcase>

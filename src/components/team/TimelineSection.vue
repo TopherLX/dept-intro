@@ -1,6 +1,6 @@
 <template>
-  <section id="timeline" class="scroll-mt-16">
-    <SectionTitle title="发展阶段" color="#8B5CF6" class="mt-24" />
+  <section id="timeline" class="scroll-mt-16 pb-24">
+    <SectionTitle title="发展阶段" color="#8B5CF6" />
     <div class="relative mt-10">
       <!-- Horizontal line -->
       <div class="absolute left-0 right-0 top-[22px] h-0.5 rounded-full bg-slate-200" />

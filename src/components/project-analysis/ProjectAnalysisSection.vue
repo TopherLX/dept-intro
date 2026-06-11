@@ -31,5 +31,6 @@
 <script setup lang="ts">
 import SectionTitle from '@/components/shared/SectionTitle.vue'
 
-const src = `${import.meta.env.BASE_URL}project-analysis.html`
+const props = withDefaults(defineProps<{ file?: string }>(), { file: 'cdm-team1-project-analysis.html' })
+const src = `${import.meta.env.BASE_URL}${props.file}`
 </script>

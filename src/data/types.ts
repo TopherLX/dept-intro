@@ -58,3 +58,16 @@ export interface HeroData {
   secondaryCta?: { text: string; href: string }
   image?: string
 }
+
+export interface OrgNode {
+  name: string
+  title: string
+  children?: OrgNode[]
+}
+
+export interface ResearchTopic {
+  category: string
+  title: string
+  description: string
+  owner: string
+}

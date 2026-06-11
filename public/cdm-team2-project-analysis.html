@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>临床数据部二室 · 项目汇总报告 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+  :root { --primary: #0f2540; --accent: #2b6cb0; --success: #2f855a; --warning: #c05621; --danger: #c53030;
+    --bg: #f5f7fa; --card: #ffffff; --text: #2d3748; --muted: #718096; --border: #e2e8f0;
+    --shadow: 0 2px 8px rgba(0,0,0,0.06); --shadow-lg: 0 4px 24px rgba(0,0,0,0.08); }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); line-height:1.6; }
+  .header { background: linear-gradient(135deg, #0f2540 0%, #1a3a5c 40%, #2b6cb0 100%); color:#fff; padding:36px 48px; position:relative; overflow:hidden; }
+  .header::before { content:''; position:absolute; top:-60px; right:-60px; width:260px; height:260px; border-radius:50%; background:rgba(255,255,255,0.03); }
+  .header::after { content:''; position:absolute; bottom:-40px; right:120px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.04); }
+  .header h1 { font-size:30px; font-weight:700; letter-spacing:0.5px; position:relative; z-index:1; }
+  .header .subtitle { font-size:14px; opacity:0.8; margin-top:6px; position:relative; z-index:1; }
+  .header .meta-row { display:flex; gap:32px; margin-top:16px; font-size:13px; opacity:0.7; position:relative; z-index:1; flex-wrap:wrap; }
+  .kpi-grid { display:grid; grid-template-columns:repeat(6, 1fr); gap:16px; padding:24px 48px; margin-top:-28px; position:relative; z-index:2; }
+  .kpi-card { background:var(--card); border-radius:10px; padding:20px 22px; box-shadow:var(--shadow-lg); border-top:3px solid transparent; transition:transform .2s; }
+  .kpi-card:hover { transform:translateY(-2px); }
+  .kpi-card.accent-1 { border-top-color:#3182ce; } .kpi-card.accent-2 { border-top-color:#2f855a; }
+  .kpi-card.accent-3 { border-top-color:#d69e2e; } .kpi-card.accent-4 { border-top-color:#e53e3e; }
+  .kpi-card.accent-5 { border-top-color:#805ad5; } .kpi-card.accent-6 { border-top-color:#0891b2; }
+  .kpi-label { font-size:12px; color:var(--muted); font-weight:500; }
+  .kpi-value { font-size:32px; font-weight:700; color:var(--primary); margin:4px 0; }
+  .kpi-sub { font-size:12px; color:var(--muted); }
+  .content { padding:24px 48px 48px; }
+  .section-title { font-size:18px; font-weight:700; color:var(--primary); margin:32px 0 16px; padding-bottom:10px; border-bottom:2px solid var(--border); display:flex; align-items:center; gap:10px; }
+  .section-title::before { content:''; display:inline-block; width:4px; height:20px; background:var(--accent); border-radius:2px; flex-shrink:0; }
+  .chart-grid { display:grid; gap:16px; }
+  .chart-grid.cols-2 { grid-template-columns:1fr 1fr; }
+  .chart-grid.cols-3 { grid-template-columns:1fr 1fr 1fr; }
+  .chart-grid.cols-2-1 { grid-template-columns:2fr 1fr; }
+  .chart-card { background:var(--card); border-radius:10px; padding:20px; box-shadow:var(--shadow); }
+  .chart-card h3 { font-size:15px; font-weight:600; color:var(--primary); margin-bottom:12px; }
+  .chart-box { width:100%; height:380px; }
+  .highlight-box { background:linear-gradient(135deg, #fffbeb 0%, #fffaf0 100%); border:1px solid #fbd38d; border-radius:10px; padding:20px 24px; margin:16px 0; }
+  .highlight-box h4 { font-size:14px; font-weight:700; color:#975a16; margin-bottom:8px; }
+  .highlight-box p { font-size:13px; color:#744210; line-height:1.8; }
+  .table-wrap { overflow-x:auto; margin-top:12px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  thead th { background:#edf2f7; color:var(--primary); padding:10px 12px; text-align:left; font-weight:600; white-space:nowrap; border-bottom:2px solid #cbd5e0; }
+  tbody td { padding:10px 12px; border-bottom:1px solid var(--border); }
+  tbody tr:hover { background:#f7fafc; }
+  .badge { display:inline-block; padding:2px 10px; border-radius:12px; font-size:11px; font-weight:600; white-space:nowrap; }
+  .badge-s { background:#fed7d7; color:#9b2c2c; } .badge-a { background:#fefcbf; color:#975a16; }
+  .badge-b { background:#c6f6d5; color:#276749; } .badge-c { background:#e2e8f0; color:#4a5568; }
+  .badge-nda { background:#e9d8fd; color:#553c9a; } .badge-normal { background:#bee3f8; color:#2a4365; }
+  .badge-close { background:#c6f6d5; color:#276749; } .badge-follow { background:#fefcbf; color:#975a16; }
+  .badge-report { background:#e9d8fd; color:#553c9a; }
+  .footer { padding:20px 48px; text-align:center; color:var(--muted); font-size:12px; border-top:1px solid var(--border); }
+  @media (max-width:1400px) { .kpi-grid { grid-template-columns:repeat(3, 1fr); } }
+  @media (max-width:1000px) { .chart-grid.cols-2, .chart-grid.cols-3, .chart-grid.cols-2-1 { grid-template-columns:1fr; } .kpi-grid { grid-template-columns:repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>临床数据部二室 · 项目汇总报告</h1>
+  <div class="subtitle">项目全景分析与2026年度关键节点进展汇报</div>
+  <div class="meta-row">
+    <span>报告周期：截至2026年6月</span>
+    <span>汇报对象：临床数据部</span>
+    <span>项目总数：60个</span>
+    <span>制表日期：2026年6月8日</span>
+  </div>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi-card accent-1">
+    <div class="kpi-label">项目总量</div>
+    <div class="kpi-value">60</div>
+    <div class="kpi-sub">覆盖16个适应症方向</div>
+  </div>
+  <div class="kpi-card accent-2">
+    <div class="kpi-label">在研项目</div>
+    <div class="kpi-value">52</div>
+    <div class="kpi-sub">占比86.7%，结题申报4个</div>
+  </div>
+  <div class="kpi-card accent-3">
+    <div class="kpi-label">S级重点项目</div>
+    <div class="kpi-value">10</div>
+    <div class="kpi-sub">A级28个 · B级14个 · C级8个</div>
+  </div>
+  <div class="kpi-card accent-4">
+    <div class="kpi-label">2026年关键申报</div>
+    <div class="kpi-value">6</div>
+    <div class="kpi-sub">2个NDA + 2个Pre-NDA + 期中分析2个</div>
+  </div>
+  <div class="kpi-card accent-5">
+    <div class="kpi-label">LDM团队</div>
+    <div class="kpi-value">16</div>
+    <div class="kpi-sub">人均管理3.8个项目</div>
+  </div>
+  <div class="kpi-card accent-6">
+    <div class="kpi-label">里程碑全覆盖</div>
+    <div class="kpi-value">100%</div>
+    <div class="kpi-sub">46个项目按计划正常运行</div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="highlight-box">
+    <h4>核心管理亮点与成绩</h4>
+    <p>
+      二室目前管理<strong>60个活跃项目</strong>，覆盖<strong>16个适应症方向</strong>，涵盖肿瘤（44个，占比73.3%）等多治疗领域。
+      项目团队<strong>16名LDM</strong>在项目质量、进度管理和跨部门协作方面保持高水平交付，<strong>全部60个项目均已完成2026年节点规划，节点覆盖率100%</strong>。
+      <strong>2个项目已完成NDA锁库</strong>，2个处于Pre-NDA阶段，2个完成期中分析，4个进入结题申报阶段。
+      项目在研率86.7%，S级项目全面受控，46个项目按计划正常运行。
+    </p>
+  </div>
+
+  <div class="section-title">一、适应症领域布局分析</div>
+  <div class="chart-grid cols-2-1">
+    <div class="chart-card">
+      <h3>适应症（大类）项目分布</h3>
+      <div class="chart-box" id="chart-indication"></div>
+    </div>
+    <div class="chart-card">
+      <h3>治疗领域构成</h3>
+      <div class="chart-box" id="chart-tumor-pie"></div>
+    </div>
+  </div>
+  <div class="chart-grid cols-3" style="margin-top:16px;">
+    <div class="chart-card">
+      <h3>肿瘤领域亚型分布</h3>
+      <div class="chart-box" id="chart-tumor-sub"></div>
+    </div>
+    <div class="chart-card">
+      <h3>非肿瘤领域分布</h3>
+      <div class="chart-box" id="chart-nontumor"></div>
+    </div>
+    <div class="chart-card">
+      <h3>临床分期分布</h3>
+      <div class="chart-box" id="chart-phase"></div>
+    </div>
+  </div>
+
+  <div class="section-title">二、项目等级与状态管控</div>
+  <div class="chart-grid cols-2">
+    <div class="chart-card">
+      <h3>项目等级（S/A/B/C）分布</h3>
+      <div class="chart-box" id="chart-level"></div>
+    </div>
+    <div class="chart-card">
+      <h3>项目状态总览</h3>
+      <div class="chart-box" id="chart-status"></div>
+    </div>
+  </div>
+  <div class="chart-grid cols-2" style="margin-top:16px;">
+    <div class="chart-card">
+      <h3>项目等级 × 项目状态 交叉分析</h3>
+      <div class="chart-box" id="chart-level-status"></div>
+    </div>
+    <div class="chart-card">
+      <h3>各等级项目的临床分期构成</h3>
+      <div class="chart-box" id="chart-level-phase"></div>
+    </div>
+  </div>
+
+  <div class="section-title">三、2026年度关键节点与里程碑</div>
+  <div class="chart-grid cols-2">
+    <div class="chart-card">
+      <h3>2026年项目节点分布</h3>
+      <div class="chart-box" id="chart-milestone"></div>
+    </div>
+    <div class="chart-card">
+      <h3>NDA/Pre-NDA/期中分析项目一览</h3>
+      <div class="chart-box" id="chart-nda-timeline"></div>
+    </div>
+  </div>
+
+  <div class="chart-card" style="margin-top:16px;">
+    <h3>重点项目清单（S级 & NDA/Pre-NDA/期中分析项目）</h3>
+    <div class="table-wrap" id="key-table-container"></div>
+  </div>
+
+  <div class="section-title">四、团队资源与项目管理效能</div>
+  <div class="chart-grid cols-2">
+    <div class="chart-card">
+      <h3>LDM项目负载分布</h3>
+      <div class="chart-box" id="chart-ldm"></div>
+    </div>
+    <div class="chart-card">
+      <h3>各等级项目按LDM分布</h3>
+      <div class="chart-box" id="chart-ldm-level"></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  临床数据部二室 · 项目汇总报告 · 数据截止至2026年6月8日 · 仅供内部管理使用
+</div>
+
+<script>
+var projectData = [{"protocol": "TQH2722-III-01", "phase": "III", "tumor": "自免", "indication_large": "自免", "indication_small": "特应性皮炎", "protocol_name": "评价TQH2722注射液治疗中重度特应性皮炎受试者的有效性和安全性的多中心、随机、双盲、安慰剂对照III期临床试验", "level": "S", "enrolled": "500", "status": "在研", "ldm": "袁文英", "pm": "王栋", "mm": "谭鸿", "plan_centers": "76", "plan_cases": "500", "enroll_complete": "2025-05-20 00:00:00", "milestone_2026": "NDA", "lock_time": "计划2026-06-19锁完", "notes": "2026-05-12确定BLA的timeline计划：\n截断日期=2026.05.22\n①末例W52随访（V28/W52）：2026.05.20\n②数据冻结时间 2026.06.10；\n③数据审核报告定稿 2026.06.17；\n④EDC电子签完成 2026.06.12；\n⑤锁定完成数据编码后传输统计 2026.06.23；\n⑥BLA资料递交 2026.08.23."}, {"protocol": "TQB3122-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "晚期恶性肿瘤", "indication_small": "晚期恶性肿瘤", "protocol_name": "评价TQB3122胶囊在晚期恶性肿瘤受试者中的安全性、耐受性、药代动力学和初步疗效的I期临床研究", "level": "A", "enrolled": "3", "status": "在研", "ldm": "袁文英", "pm": "粟倩", "mm": "刘嘉伟", "plan_centers": "多中心", "plan_cases": "14~26", "enroll_complete": "2026-12-31 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQH2722-I-02", "phase": "I", "tumor": "自免", "indication_large": "自免", "indication_small": "其他", "protocol_name": "评价TQH2722注射液在健康成人研究参与者中的随机、开放、单次给药、两制剂、平行设计的药代动力学比对试验", "level": "B", "enrolled": "216", "status": "在研", "ldm": "袁文英", "pm": "姚伟强", "mm": "王欣", "plan_centers": "1", "plan_cases": "216", "enroll_complete": "2026-03-10 00:00:00", "milestone_2026": "结题不申报", "lock_time": "计划2026-06-18锁完", "notes": "2026-01-02至2026-03-07完成入组；\n2026-06-18锁定"}, {"protocol": "TQB2934-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "多发性骨髓瘤", "protocol_name": "评估注射用TQB2934在多发性骨髓瘤受试者中耐受性和药代动力学的I期临床试验", "level": "C", "enrolled": "60", "status": "在研", "ldm": "李银萍", "pm": "张倩倩", "mm": "李文君", "plan_centers": "14", "plan_cases": "60", "enroll_complete": "2025-05-28 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": "2026-06完成写文章清理"}, {"protocol": "TQC3721-D8-I-01", "phase": "I", "tumor": "呼吸", "indication_large": "COPD", "indication_small": "COPD", "protocol_name": "TQC3721吸入粉雾剂在慢性阻塞性肺疾病患者中单次/多次剂量递增安全性、耐受性和药代/药效动力学特征的I期临床研究", "level": "A", "enrolled": "101", "status": "在研", "ldm": "徐露露", "pm": "杨蒙", "mm": "李卫国", "plan_centers": "7", "plan_cases": "48-72", "enroll_complete": "2026-07-15 00:00:00", "milestone_2026": "结题不申报", "lock_time": "计划2026-11-02完成锁库", "notes": ""}, {"protocol": "TQC2731-III-02", "phase": "III", "tumor": "呼吸", "indication_large": "鼻窦炎", "indication_small": "鼻窦炎", "protocol_name": "评价TQC2731注射液治疗慢性鼻窦炎伴鼻息肉患者的有效性、安全性的多中心、随机、双盲、安慰剂平行对照的III期临床试验", "level": "S", "enrolled": "198", "status": "在研", "ldm": "徐露露", "pm": "张浅", "mm": "朱冬伊", "plan_centers": "60", "plan_cases": "246", "enroll_complete": "2026-09-30 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQH3906-II-03", "phase": "II", "tumor": "自免", "indication_large": "自免", "indication_small": "系统性红斑狼疮", "protocol_name": "评估TQH3906治疗系统性红斑狼疮的有效性与安全性的随机、双盲、安慰剂对照、多中心II期临床试验", "level": "A", "enrolled": "0", "status": "在研", "ldm": "徐露露", "pm": "邱洁", "mm": "张佳薇", "plan_centers": "30", "plan_cases": "198", "enroll_complete": "2027-02-28 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB3002-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "肺癌", "indication_small": "非小细胞肺癌", "protocol_name": "评估TQB3002片在晚期恶性肿瘤中的安全性、耐受性和药代动力学I期临床试验", "level": "C", "enrolled": "14", "status": "终止", "ldm": "许童瑶", "pm": "汤少男", "mm": "苏楠", "plan_centers": "10", "plan_cases": "130", "enroll_complete": "2026-12-31 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": "2026年3月终止"}, {"protocol": "TQB2102-II-02", "phase": "II", "tumor": "肿瘤", "indication_large": "乳腺肿瘤", "indication_small": "乳腺肿瘤", "protocol_name": "评估注射用TQB2102在HER2阴性复发/转移性乳腺癌中的有效性和安全性的II期临床试验", "level": "B", "enrolled": "38", "status": "在研", "ldm": "许童瑶", "pm": "张鸿鹍", "mm": "董新军", "plan_centers": "17", "plan_cases": "42", "enroll_complete": "2025/9/31", "milestone_2026": "结题不申报", "lock_time": "", "notes": "2026.05.15完成截止2026.04.15数据清洗及冻结，数据交由统计分析后续用于文章发表"}, {"protocol": "LM-108-II-01", "phase": "II", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "肠癌", "protocol_name": "评估注射用 LM-108联合特瑞普利单抗注射液用于经至少一线系统治疗（含靶向PD-1或PD-L1类药物）失败的不可切除或转移性微卫星高度不稳定(MSI-H) 的晚期恶性实体瘤患者的II期、单臂、多中心、开放标签临床研究", "level": "S", "enrolled": "14", "status": "在研", "ldm": "邓巧红", "pm": "郭可可", "mm": "李杰", "plan_centers": "45", "plan_cases": "84", "enroll_complete": "2026-07-01 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB3909-Ib/II-02", "phase": "Ib/II", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "血液肿瘤", "protocol_name": "TQB3909片在复发或难治性CLL/SLL受试者中的安全性及有效性的Ib/II期临床试验", "level": "S", "enrolled": "97", "status": "结题申报", "ldm": "邓巧红", "pm": "李鑫", "mm": "陈晶", "plan_centers": "56", "plan_cases": "95", "enroll_complete": "2025-10-12 00:00:00", "milestone_2026": "pre-NDA", "lock_time": "2026-04-03 00:00:00", "notes": ""}, {"protocol": "TQB2825-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "淋巴瘤", "protocol_name": "评估TQB2825注射液对比免疫化疗治疗复发/难治性滤泡性淋巴瘤的有效性与安全性的随机、开放、多中心III期临床试验", "level": "S", "enrolled": "51", "status": "在研", "ldm": "邓巧红", "pm": "董姣姣", "mm": "张文君", "plan_centers": "60", "plan_cases": "228", "enroll_complete": "2027-04-01 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "ALTN-II-02", "phase": "IIT", "tumor": "呼吸", "indication_large": "肺纤维化", "indication_small": "肺纤维化", "protocol_name": "盐酸安罗替尼胶囊治疗IPF/PF-ILDs 的多中心、随机、双盲、安慰剂对照临床试验", "level": "C", "enrolled": "32", "status": "在研", "ldm": "季梦雪", "pm": "朱源锋", "mm": "赵玉", "plan_centers": "4", "plan_cases": "30", "enroll_complete": "2024-06-30 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2102-II-03", "phase": "II", "tumor": "肿瘤", "indication_large": "肺癌", "indication_small": "非小细胞肺癌", "protocol_name": "评价注射用TQB2102在HER2基因异常局部晚期或转移性非小细胞肺癌中的有效性和安全性II期临床试验", "level": "B", "enrolled": "104", "status": "结题不申报", "ldm": "赵力利", "pm": "程俊", "mm": "申丽丽", "plan_centers": "22", "plan_cases": "150", "enroll_complete": "2025-07-30 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": "后续工作：\n1.研究者发文章数据清理（时间未定）\n2.HER2过表达的患者申请突破性疗法（时间未定）"}, {"protocol": "TQB2450-ALTN-II-04", "phase": "II", "tumor": "肿瘤", "indication_large": "其他肿瘤", "indication_small": "软组织肉瘤", "protocol_name": "评价贝莫苏拜单抗注射液联合盐酸安罗替尼胶囊治疗晚期或不可切除腺泡状软组织肉瘤的单臂、多中心II期临床试验", "level": "B", "enrolled": "4", "status": "在研", "ldm": "邓巧红", "pm": "陈尧", "mm": "汤湧", "plan_centers": "10", "plan_cases": "33", "enroll_complete": "NA", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "D1553-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "肺癌", "indication_small": "非小细胞肺癌", "protocol_name": "一项评估D1553对比多西他赛治疗既往标准治疗失败的KRAS G12C突变阳性局部晚期或转移性非小细胞肺癌的随机、对照、双盲双模拟、多中心III期临床研究", "level": "A", "enrolled": "156", "status": "在研", "ldm": "刘梦珊", "pm": "郑景霁", "mm": "潘虹", "plan_centers": "90", "plan_cases": "522", "enroll_complete": "2027-10-01 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB3019-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "淋巴瘤", "protocol_name": "评价TQB3019胶囊在晚期恶性肿瘤受试者中的安全耐受性、药代动力学及初步有效性的I期临床试验", "level": "A", "enrolled": "23", "status": "在研", "ldm": "刘梦珊", "pm": "吴嘉", "mm": "郭婉晶", "plan_centers": "15", "plan_cases": "80", "enroll_complete": "2026-03-30 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": "已完成爬坡"}, {"protocol": "TQA2225-II-01", "phase": "II", "tumor": "肝病", "indication_large": "非酒精性脂肪性肝炎NASH", "indication_small": "非酒精性脂肪性肝炎NASH", "protocol_name": "评价TQA2225/AP025在成人非酒精性脂肪性肝炎（NASH）受试者中的有效性和安全性的Ⅱ期随机、双盲、安慰剂对照研究", "level": "A", "enrolled": "160", "status": "在研", "ldm": "刘梦珊", "pm": "宗婷婷", "mm": "刘宇", "plan_centers": "60", "plan_cases": "174", "enroll_complete": "2025-12-15 00:00:00", "milestone_2026": "结题不申报", "lock_time": "2026-05-13 00:00:00", "notes": "主队列154例单独锁库揭盲"}, {"protocol": "LNDA-II-01", "phase": "IIT", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "淋巴瘤", "protocol_name": "奥布替尼联合来那度胺、利妥昔单抗用于初治套细胞淋巴瘤患者的前瞻性、多中心、单臂、开放II期临床研究", "level": "C", "enrolled": "29", "status": "结题不申报", "ldm": "刘梦珊", "pm": "刘彩红", "mm": " - ", "plan_centers": "4", "plan_cases": "29", "enroll_complete": "2023-09-28 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2868-ALTN-II-01", "phase": "II", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "胰腺癌", "protocol_name": "TQB2868注射液联合安罗替尼胶囊与化疗一线治疗转移性胰腺癌的单臂、开放、II期临床研究", "level": "A", "enrolled": "80", "status": "在研", "ldm": "周治文", "pm": "夏莹", "mm": "李杰", "plan_centers": "2", "plan_cases": "80", "enroll_complete": "2025-03", "milestone_2026": "正常运行", "lock_time": "", "notes": "不定期BD数据清理"}, {"protocol": "TQ-A3334-II-03", "phase": "II", "tumor": "肝病", "indication_large": "乙肝", "indication_small": "乙肝", "protocol_name": "评估TQ-A3334片联合核苷（酸）类似物在初治/经治慢性HBV感染受试者中的有效性和安全性的随机、双盲、安慰剂对照的II期临床试验", "level": "B", "enrolled": "116", "status": "在研", "ldm": "周治文", "pm": "张路", "mm": "张小平", "plan_centers": "14", "plan_cases": "116", "enroll_complete": "2025-08", "milestone_2026": "正常运行", "lock_time": "2025-12-29 00:00:00", "notes": "2025-12-29已锁定受试者前24周数据"}, {"protocol": "TQB3205-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "晚期恶性肿瘤", "indication_small": "晚期恶性肿瘤", "protocol_name": "评估 TQB3205 胶囊在晚期恶性肿瘤受试者中耐受性、药代动力学\n和初步有效性的 I 期临床试验", "level": "A", "enrolled": "3", "status": "在研", "ldm": "周治文", "pm": "兰晓彤", "mm": "郭婉晶", "plan_centers": "1", "plan_cases": "剂量递增阶段例数：根据剂量递增\n情况确定， 暂定不超过 36 例；\n剂量扩展阶段： 40 ~ 120 例", "enroll_complete": "-", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "LM-108-Ib/II-01-A", "phase": "Ib/II", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "胃癌", "protocol_name": "评估LM-108±派安普利单抗+化疗在晚期实体瘤患者中的安全性、耐受性以及初步疗效的开放标签Ib/II期临床研究-队列A组", "level": "A", "enrolled": "142", "status": "在研", "ldm": "孟雪情", "pm": "赵茜茜", "mm": "汤湧", "plan_centers": "30", "plan_cases": "185", "enroll_complete": "2026-06-30 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "LM-108-Ib/II-01-C", "phase": "Ib/II", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "胰腺癌", "protocol_name": "评估LM-108±派安普利单抗+化疗在晚期实体瘤患者中的安全性、耐受性以及初步疗效的开放标签Ib/II期临床研究-队列C组", "level": "A", "enrolled": "64", "status": "在研", "ldm": "孟雪情", "pm": "武国东", "mm": "李杰", "plan_centers": "20", "plan_cases": "64", "enroll_complete": "2025-09-23 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2102-Ib/II-01", "phase": "Ib/II", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "胆道癌", "protocol_name": "评估注射用TQB2102治疗HER2阳性局部晚期或转移性胆道癌有效性和安全性的Ib/II期临床试验", "level": "A", "enrolled": "15", "status": "在研", "ldm": "鞠千禧", "pm": "朱源锋", "mm": "李杰", "plan_centers": "25", "plan_cases": "57", "enroll_complete": "2026-07-31 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": "预计2026.07.31末例受试者入组，入组进度不达预期"}, {"protocol": "TQB2102-II-05", "phase": "II", "tumor": "肿瘤", "indication_large": "妇科肿瘤", "indication_small": "卵巢癌", "protocol_name": "评价注射用 TQB2102 治疗复发/转移性晚期妇科肿瘤患者的安全性和有效性的 II 期临床试验", "level": "A", "enrolled": "56", "status": "在研", "ldm": "鞠千禧", "pm": "许坚镇", "mm": "刘嘉伟", "plan_centers": "25", "plan_cases": "60", "enroll_complete": "2025/07", "milestone_2026": "结题不申报", "lock_time": "", "notes": "2026.3.15冻结截至的2026.1.20卵巢癌项目受试者基线、疗效、安全性数据，数据交付统计，预计2026.09.15文章发表"}, {"protocol": "TQB3909-TQB3702-IB-01", "phase": "Ib", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "血液肿瘤", "protocol_name": "评估TQB3909片联合TQB3702片在恶性血液肿瘤受试者中安全性、有效性和药代动力学的Ib期临床试验", "level": "A", "enrolled": "73", "status": "在研", "ldm": "李银萍", "pm": "肖婷", "mm": "陈晶", "plan_centers": "28", "plan_cases": "73", "enroll_complete": "2025-7", "milestone_2026": "正常运行", "lock_time": "", "notes": "2026-06完成CDE沟通清理，数据截断2026-02-28\nTQB3909-ISS项目之一，数据截断2025-12-01"}, {"protocol": "NLB-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "白血病", "protocol_name": "奈拉滨注射液治疗儿童和成人难治或复发的T淋巴母细胞白血病（T-ALL）和T 淋巴母细胞淋巴瘤（T-LBL）患者的有效性及安全性研究", "level": "B", "enrolled": "29", "status": "在研", "ldm": "李银萍", "pm": "张硕钰", "mm": "陈晶", "plan_centers": "30", "plan_cases": "83", "enroll_complete": "2027年", "milestone_2026": "正常运行", "lock_time": "", "notes": "2026-05开了全国研究者会推进入组，期望在2026年底完成入组"}, {"protocol": "TQB6411-IB/II-02", "phase": "Ib/II", "tumor": "肿瘤", "indication_large": "肺癌", "indication_small": "晚期肺癌", "protocol_name": "评估注射用TQB6411 在晚期肺癌受试者中有效性和安全性的Ib/Ⅱ\n期临床试验", "level": "A", "enrolled": "22", "status": "在研", "ldm": "李银萍", "pm": "金穗", "mm": "汤湧", "plan_centers": "35", "plan_cases": "190-405", "enroll_complete": "2026-11-30 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB3909-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "淋巴瘤", "protocol_name": "评估TQB3909片对比研究者选择的方案治疗复发/难治性慢性淋巴细胞白血病/小淋巴细胞淋巴瘤（CLL/SLL）有效性与安全性的随机、开放、多中心III期临床试验", "level": "B", "enrolled": "0", "status": "在研", "ldm": "李银萍", "pm": "李鑫", "mm": "陈晶", "plan_centers": "13", "plan_cases": "128", "enroll_complete": "", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQC2731-III-01", "phase": "III", "tumor": "呼吸", "indication_large": "哮喘", "indication_small": "哮喘", "protocol_name": "评价TQC2731注射液在控制不佳的重度哮喘患者中的有效性和安全性的多中心、随机、双盲、安慰剂对照的ⅡI期临床试验", "level": "S", "enrolled": "293", "status": "在研", "ldm": "季梦雪", "pm": "吴若男", "mm": "梅丽", "plan_centers": "110", "plan_cases": "660", "enroll_complete": "2026-12", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQC2731-II-04", "phase": "II", "tumor": "呼吸", "indication_large": "COPD", "indication_small": "COPD", "protocol_name": "评价 TQC2731 注射液在中度至极重度慢性阻塞性 肺疾病患者的有效性、安全性和药代动力学的多 中心、随机、双盲、安慰剂对照 II 期临床研究", "level": "A", "enrolled": "258", "status": "在研", "ldm": "季梦雪", "pm": "罗韵丽", "mm": "朱冬伊", "plan_centers": "45", "plan_cases": "队列一：198\n 队列二：60 ", "enroll_complete": "2025-10/2025-12", "milestone_2026": "期中分析", "lock_time": "预计2026-04-13", "notes": ""}, {"protocol": "TQB2102-II-04", "phase": "II", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "胃癌/胃食管结合部癌", "protocol_name": "评价注射用TQB2102联合贝莫苏拜单抗/派安普利单抗±卡培他滨在不可切除的局部晚期、复发性或转移性HER2阳性胃食管腺癌患者中有效性和安全性的Ⅱ期临床试验", "level": "B", "enrolled": "86", "status": "在研", "ldm": "赵力利", "pm": "刘日东", "mm": "李杰", "plan_centers": "38", "plan_cases": "方案中样本量为三个队列共需要 204 例；实际队列1入组50例，队列2计划入组不超过40例。（队列3不再入组）", "enroll_complete": "2026/6/1项目组已明确后续不再入组", "milestone_2026": "正常运行", "lock_time": "", "notes": "预计在2026.12还会再进行一次文章发表"}, {"protocol": "TQ05105-TQB3617-Ib/II-01", "phase": "Ib/II", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "骨髓纤维化", "protocol_name": "TQ05105片联合TQB3617胶囊\n治疗中高危骨髓纤维化的Ib/II期临床研究", "level": "B", "enrolled": "52", "status": "在研", "ldm": "赵力利", "pm": "劳珊莉", "mm": "张婷", "plan_centers": "20", "plan_cases": "52", "enroll_complete": "2025-07-25 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB3454-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "胆道癌", "protocol_name": "评估TQB3454片治疗伴 IDH1突变晚期胆道癌有效性和安全性的随机、双盲、安慰剂对照、多中心 III期临床研究", "level": "B", "enrolled": "115", "status": "结题申报", "ldm": "赵力利", "pm": "张弛", "mm": "李杰", "plan_centers": "59", "plan_cases": "165", "enroll_complete": "2026-12", "milestone_2026": "NDA", "lock_time": "2026-05-08 00:00:00", "notes": "2026.2.11已递交preNDA；\n2026.5.8已完成NDA数据清理锁库。"}, {"protocol": "TQC3302-I-01", "phase": "I", "tumor": "呼吸", "indication_large": "COPD", "indication_small": "COPD", "protocol_name": "评价TQC3302吸入喷雾剂在中国健康参与者中的安全性、耐受性及药代动力学的I期临床研究", "level": "A", "enrolled": "17", "status": "在研", "ldm": "赵力利", "pm": "郭静雯", "mm": "朱冬伊", "plan_centers": "1", "plan_cases": "44", "enroll_complete": "2026.9.30", "milestone_2026": "正常运行", "lock_time": "", "notes": "组1和组2入组完成，组3在入组中。计划2026.9.30入组完成，2026.11.30完成数据清理。"}, {"protocol": "TQB2934-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "多发性骨髓瘤", "protocol_name": "评估注射用TQB2934对比研究者选择的方案治疗复发/难治性多发性骨髓瘤的有效性与安全性的随机、开放、多中心III期临床试验", "level": "A", "enrolled": "0", "status": "在研", "ldm": "赵力利", "pm": "黄剑强", "mm": "李文君", "plan_centers": "", "plan_cases": "260", "enroll_complete": "", "milestone_2026": "正常运行", "lock_time": "", "notes": "目前EDC暂未上线，计划近期上线。"}, {"protocol": "TQB2102-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "乳腺肿瘤", "indication_small": "乳腺肿瘤", "protocol_name": "评价注射用TQB2102对比研究者选择的化疗在HER2低表达复发/转移性乳腺癌中有效性和安全性的随机、开放、平行对照的III期临床试验", "level": "S", "enrolled": "543", "status": "在研", "ldm": "孙姝琦", "pm": "闫振", "mm": "封帆", "plan_centers": "119", "plan_cases": "542", "enroll_complete": "2026-02-09 00:00:00", "milestone_2026": "期中分析", "lock_time": "", "notes": ""}, {"protocol": "TQB2102-Ib-01", "phase": "Ib", "tumor": "肿瘤", "indication_large": "乳腺肿瘤", "indication_small": "乳腺肿瘤", "protocol_name": "评估注射用TQB2102在HER2表达复发/转移性乳腺癌中的有效性和安全性的Ib期临床试验", "level": "C", "enrolled": "153", "status": "结题不申报", "ldm": "徐金莲", "pm": "陈杰", "mm": "封帆", "plan_centers": "21", "plan_cases": "150", "enroll_complete": "2024-07-31 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB3911-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "白血病", "protocol_name": "评价TQB3911片在BCR::ABL融合基因阳性白血病患者中的安全性和耐受性的I期临床试验", "level": "A", "enrolled": "13", "status": "在研", "ldm": "程永梅", "pm": "郭方方", "mm": "陈晶", "plan_centers": "10", "plan_cases": "剂量递增阶段：约15~30例；\n剂量扩展阶段：每个队列约20~30例", "enroll_complete": "2026-06-30 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB3454-I-02", "phase": "I", "tumor": "肿瘤", "indication_large": "晚期恶性肿瘤", "indication_small": "晚期恶性肿瘤", "protocol_name": "TQB3454片耐受性和药代动力学I期临床试验", "level": "C", "enrolled": "57", "status": "结题申报", "ldm": "程永梅", "pm": "邹云飞", "mm": "李杰", "plan_centers": "14", "plan_cases": "18~116", "enroll_complete": "2023-04-14 00:00:00", "milestone_2026": "结题不申报", "lock_time": "2026.03.31", "notes": ""}, {"protocol": "TQC2938-II-01", "phase": "II", "tumor": "呼吸", "indication_large": "COPD", "indication_small": "COPD", "protocol_name": "在中重度慢性阻塞性肺疾病患者中评估TQC2938的有效性、安全性、耐受性和药代动力学特征的随机、双盲、安慰剂对照的II期临床研究", "level": "A", "enrolled": "256", "status": "在研", "ldm": "程永梅", "pm": "王赫", "mm": "梅丽", "plan_centers": "48", "plan_cases": "256", "enroll_complete": "2025-09-16 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "LM302-03-201", "phase": "III", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "胃癌/胃食管结合部癌", "protocol_name": "一项比较注射用LM-302联合替雷利珠单抗与替雷利珠单抗联合化疗在既往未接受过系统性治疗的CLDN18.2阳性的局部晚期不可切除或者转移性胃或胃食管交界处腺癌中有效性和安全性的随机、开放、多中心、阳性对照的III期临床研究", "level": "S", "enrolled": "0", "status": "在研", "ldm": "程永梅", "pm": "闫云霞", "mm": "窦林斌", "plan_centers": "106", "plan_cases": "742", "enroll_complete": "", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2930-Ib/II-01", "phase": "II", "tumor": "肿瘤", "indication_large": "乳腺肿瘤", "indication_small": "乳腺肿瘤", "protocol_name": "评估注射用TQB2930单药或联合治疗HER2阳性复发/转移性乳腺癌的安全性和有效性Ib/II期临床试验", "level": "C", "enrolled": "144", "status": "结题申报", "ldm": "孙姝琦", "pm": "金穗", "mm": "屠礼凡", "plan_centers": "21", "plan_cases": "Ib期阶段：单药34例，联合用药15-20例。\nII期阶段：队列3入组30-50例，队列4入组30-50例。", "enroll_complete": "2025/6", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "CSABTL(II)-II-01", "phase": "II", "tumor": "肿瘤", "indication_large": "泌尿生殖系统肿瘤", "indication_small": "前列腺癌", "protocol_name": "基于生物标志物比较醋酸阿比特龙片(II)与Zytiga®等效性的随机对照、开放、多中心II期临床研究", "level": "B", "enrolled": "29", "status": "在研", "ldm": "陈逸涛", "pm": "胡荣", "mm": "李许", "plan_centers": "14", "plan_cases": "60", "enroll_complete": "2026/12", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2029-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "骨髓瘤", "protocol_name": "评估注射用TQB2029在多发性骨髓瘤受试者中耐受性和药代动力学的I期临床研究", "level": "A", "enrolled": "16", "status": "在研", "ldm": "陈逸涛", "pm": "张波", "mm": "李文君", "plan_centers": "5", "plan_cases": "136", "enroll_complete": "2026-03-01 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2934-Ib/II-01", "phase": "Ib/II", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "其他", "protocol_name": "评估注射用TQB2934在系统性轻链型淀粉样变受试者中有效性、安全性和药代动力学的Ib/II期临床研究", "level": "A", "enrolled": "10", "status": "在研", "ldm": "陈逸涛", "pm": "欧惠根", "mm": "李文君", "plan_centers": "30", "plan_cases": "70", "enroll_complete": "2026-07-01 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2930-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "乳腺肿瘤", "indication_small": "乳腺肿瘤", "protocol_name": "评估TQB2930联合研究者选择的化疗对比曲妥珠单抗联合研究者选择的化疗治疗HER2阳性晚期乳腺癌的随机、开放、平行对照、多中心III期临床研究", "level": "A", "enrolled": "106", "status": "在研", "ldm": "徐静", "pm": "薛金玲", "mm": "屠礼凡", "plan_centers": "66", "plan_cases": "416", "enroll_complete": "2027/4/30/NA", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2102-III-02", "phase": "III", "tumor": "肿瘤", "indication_large": "乳腺肿瘤", "indication_small": "乳腺肿瘤", "protocol_name": "评价注射用 TQB2102 对比注射用恩美曲妥珠单抗在 HER2 阳性晚期乳腺癌中有效性和安全性的随机、开 放、平行对照的 III 期临床试验 ", "level": "A", "enrolled": "246", "status": "在研", "ldm": "孟雪情", "pm": "李金花", "mm": "李许", "plan_centers": "84", "plan_cases": "246", "enroll_complete": "2026-03-24 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": "预计26年10月初到达期中分析事件数"}, {"protocol": "SCHBCC-N044", "phase": "IIT", "tumor": "肿瘤", "indication_large": "乳腺肿瘤", "indication_small": "三阴性乳腺癌", "protocol_name": "基于分子分型的难治性三阴性乳腺癌精准治疗的平台研究", "level": "C", "enrolled": "0", "status": "在研", "ldm": "徐静", "pm": "黄涛", "mm": "李许", "plan_centers": "", "plan_cases": "", "enroll_complete": "", "milestone_2026": "正常运行", "lock_time": "", "notes": "此项目已停止EDC配置，改为线下收集数据"}, {"protocol": "TQB3142-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "晚期恶性肿瘤", "indication_small": "晚期恶性肿瘤", "protocol_name": "评价注射用TQB3142在晚期恶性肿瘤受试者中的安全耐受性、药代动力学及有效性的I期临床试验", "level": "A", "enrolled": "1", "status": "在研", "ldm": "徐静", "pm": "张波", "mm": "毛静诚", "plan_centers": "5", "plan_cases": "66", "enroll_complete": "NA", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQF3250-Ia-01", "phase": "I", "tumor": "内分泌", "indication_large": "2型糖尿病", "indication_small": "2型糖尿病", "protocol_name": "评价TQF3250 胶囊在健康成人受试者中单次给药、剂量递增", "level": "B", "enrolled": "0", "status": "在研", "ldm": "孙姝琦", "pm": "张倩倩", "mm": "张佳薇/赵宵丹", "plan_centers": "1", "plan_cases": "66", "enroll_complete": "NA", "milestone_2026": "结题不申报", "lock_time": "", "notes": ""}, {"protocol": "TQ-B3101-I-03", "phase": "I", "tumor": "肿瘤", "indication_large": "肺癌", "indication_small": "肺癌", "protocol_name": "[14C] TQ-B3101 在中国健康受试者体内的 物质平衡临床试验", "level": "B", "enrolled": "0", "status": "在研", "ldm": "孙姝琦", "pm": "胡雯雯", "mm": "李许", "plan_centers": "1", "plan_cases": "6~8", "enroll_complete": "NA", "milestone_2026": "结题不申报", "lock_time": "", "notes": ""}, {"protocol": "TQ-B3101-I-05", "phase": "I", "tumor": "肿瘤", "indication_large": "肺癌", "indication_small": "非小细胞肺癌", "protocol_name": "评价富马酸安奈克替尼胶囊在肝功能不全和肝功能正常受试者中药代动力学和安全性的I期临床研究", "level": "B", "enrolled": "0", "status": "在研", "ldm": "鞠千禧", "pm": "刘聪", "mm": "苏楠", "plan_centers": "3", "plan_cases": "24", "enroll_complete": "2027.01.31", "milestone_2026": "正常运行", "lock_time": "", "notes": "已上线"}, {"protocol": "TQ05105-II-08", "phase": "II", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "骨髓纤维化", "protocol_name": "评价TQ05105片在中高危骨髓纤维化患者中的疗效、安全性以及药代动力学的单臂、开放、多中心II期临床试验", "level": "S", "enrolled": "0", "status": "在研", "ldm": "鞠千禧", "pm": "劳珊莉", "mm": "李许", "plan_centers": "30", "plan_cases": "54", "enroll_complete": "", "milestone_2026": "正常运行", "lock_time": "", "notes": "待完成量表采购后上线"}, {"protocol": "TQC5524-I-01", "phase": "I", "tumor": "呼吸", "indication_large": "COPD", "indication_small": "COPD", "protocol_name": "评价TQC5524 吸入粉雾剂在健康试验参与者和COPD\n试验参与者中安全性、耐受性、药代、药效动力学特征\n的I 期临床试验", "level": "A", "enrolled": "0", "status": "在研", "ldm": "季梦雪", "pm": "张波", "mm": "梅丹", "plan_centers": "", "plan_cases": "99", "enroll_complete": "", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB6426-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "晚期恶性肿瘤", "indication_small": "晚期恶性肿瘤", "protocol_name": "评估注射用TQB6426治疗晚期恶性肿瘤的耐受性和药代动力学的I 期临床试验", "level": "S", "enrolled": "0", "status": "在研", "ldm": "许童瑶", "pm": "张浅", "mm": "", "plan_centers": "5", "plan_cases": "106-151", "enroll_complete": "", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2450-III-11", "phase": "III", "tumor": "肿瘤", "indication_large": "肺癌", "indication_small": "非小细胞肺癌", "protocol_name": "评价 TQB2450 注射液联合含铂化疗后序贯 TQB2450 注射液联合盐酸安罗替尼胶囊对比替雷利珠单抗注射液联合含铂化疗一线治疗晚期非鳞非小细胞肺癌的有效性和安全性的随机、 开放、 平行对照、 多中心 III 期临床试验", "level": "A", "enrolled": "596", "status": "在研", "ldm": "徐静", "pm": "闫云霞", "mm": "申丽丽", "plan_centers": "105", "plan_cases": "596", "enroll_complete": "2023-05-08 00:00:00", "milestone_2026": "pre-NDA", "lock_time": "", "notes": "本项目计划近期再次进行pre-NDA沟通，数据已于2026-01-01冻结并提交数据集给统计"}, {"protocol": "TQH2722-III-03", "phase": "III", "tumor": "自免", "indication_large": "自免", "indication_small": "季节性过敏性鼻炎", "protocol_name": "评价TQH2722注射液联合背景治疗在季节性过敏性鼻炎患者中的有效性与安全性的随机、双盲、安慰剂对照、多中心III期临床试验", "level": "A", "enrolled": "0", "status": "在研", "ldm": "周治文", "pm": "贾璐", "mm": "张琴", "plan_centers": "31", "plan_cases": "178", "enroll_complete": "-", "milestone_2026": "正常运行", "lock_time": "", "notes": "注：本项目暂未进行公司立项会（预计4月底5月初上会）。为了推进项目的注册上市进度，确保在2026年秋季如期启动本研究，现提前走筹备工作。"}, {"protocol": "TQH3906-II-02", "phase": "II", "tumor": "自免", "indication_large": "自免", "indication_small": "银屑病", "protocol_name": "评估TQH3906胶囊治疗活动性银屑病关节炎的有效性和安全性的随机、安慰剂及阳性药物对照、双盲、多中心、平行设计的II期临床试验", "level": "A", "enrolled": "0", "status": "在研", "ldm": "陈逸涛", "pm": "邓思雨", "mm": "张佳薇", "plan_centers": "42", "plan_cases": "156", "enroll_complete": "2027-08-07 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}];
+var themeColors = ['#3182ce','#2f855a','#d69e2e','#e53e3e','#805ad5','#0891b2','#dd6b20','#38a169','#6b46c1','#c53030','#2c7a7b','#9b2c2c','#b7791f','#276749','#553c9a'];
+
+function initChart(domId, option) {
+  var dom = document.getElementById(domId);
+  if (!dom) return;
+  var chart = echarts.init(dom);
+  chart.setOption(option);
+  window.addEventListener('resize', function(){ chart.resize(); });
+}
+
+function getUniqueVals(field) {
+  var vals = [];
+  var seen = {};
+  projectData.forEach(function(p){
+    var v = p[field]||'';
+    if (!v) v = '未定义';
+    if (!seen[v]){ seen[v]=true; vals.push(v); }
+  });
+  return vals;
+}
+
+function countBy(field) {
+  var m = {};
+  projectData.forEach(function(p){
+    var v = p[field]||'';
+    if (!v) v = '未定义';
+    m[v] = (m[v]||0) + 1;
+  });
+  return m;
+}
+
+function countBy2(f1, v1s, f2, v2s) {
+  var result = [];
+  v1s.forEach(function(v1, i1){
+    v2s.forEach(function(v2, i2){
+      var cnt=0;
+      projectData.forEach(function(p){ if((p[f1]||'')===v1&&(p[f2]||'')===v2) cnt++; });
+      result.push([i2, i1, cnt]);
+    });
+  });
+  return result;
+}
+
+// ===== Chart: Indication Bar =====
+var indData = Object.entries(countBy('indication_large')).sort(function(a,b){return b[1]-a[1];});
+initChart('chart-indication', {
+  tooltip: { trigger:'axis', axisPointer:{type:'shadow'} },
+  grid: { left:'3%', right:'8%', bottom:'3%', top:'3%', containLabel:true },
+  xAxis: { type:'value', name:'项目数' },
+  yAxis: { type:'category', data:indData.map(function(d){return d[0];}).reverse(), inverse:true, axisLabel:{fontSize:10} },
+  series: [{
+    type:'bar', data:indData.map(function(d){return d[1];}).reverse(),
+    itemStyle:{ color:function(p){ return themeColors[p.dataIndex%15]; } },
+    label:{show:true, position:'right', fontSize:11, fontWeight:'bold'},
+    barMaxWidth:22
+  }]
+});
+
+// ===== Chart: Tumor vs Non-tumor =====
+var tcData = countBy('tumor');
+var tcColorMap = {'肿瘤':'#e53e3e','呼吸':'#3182ce','健康人':'#2f855a','自免':'#805ad5','肝病':'#d69e2e','呼吸/健康人':'#0891b2','非肿':'#dd6b20','非肿瘤':'#38a169','内分泌':'#dd6b20'};
+var tumorPieData = Object.entries(tcData).map(function(d){return {value:d[1],name:d[0],itemStyle:{color:tcColorMap[d[0]]||themeColors[0]}};});
+initChart('chart-tumor-pie', {
+  tooltip: { trigger:'item', formatter:'{b}: {c}个 ({d}%)' },
+  legend: { orient:'vertical', right:'5%', top:'center', textStyle:{fontSize:11} },
+  series: [{
+    type:'pie', radius:['45%','70%'], center:['35%','50%'], avoidLabelOverlap:false,
+    label:{show:false},
+    emphasis:{label:{show:true, fontSize:14, fontWeight:'bold'}},
+    data:tumorPieData
+  }]
+});
+
+// ===== Chart: Tumor Sub-type TreeMap =====
+var tumorIndList = ['血液肿瘤','消化道肿瘤','乳腺肿瘤','肺癌','晚期恶性肿瘤','晚期实体瘤','软组织肉瘤','妇科肿瘤','泌尿生殖系统肿瘤','多发性骨髓瘤','血液肿瘤-其他','血液瘤','晚期肺癌','其他肿瘤'];
+var tumorTreeData = [];
+tumorIndList.forEach(function(ti){
+  var cnt=0;
+  projectData.forEach(function(p){ if((p.indication_large||'')===ti) cnt++; });
+  if(cnt>0) tumorTreeData.push({name:ti, value:cnt});
+});
+initChart('chart-tumor-sub', {
+  tooltip: { trigger:'item', formatter:'{b}: {c}个项目' },
+  series: [{
+    type:'treemap', data:tumorTreeData,
+    label:{show:true, fontSize:11, formatter:function(p){return p.name+'\n'+p.value+'个';}},
+    upperLabel:{show:true, height:24},
+    roam:false, width:'100%', height:'100%'
+  }]
+});
+
+// ===== Chart: Non-tumor Rose =====
+var nonTumorMap = {};
+projectData.forEach(function(p){ var ind=p.indication_large||''; if(tumorIndList.indexOf(ind)===-1) nonTumorMap[ind]=(nonTumorMap[ind]||0)+1; });
+var nonTumorData = Object.entries(nonTumorMap).map(function(d,i){return {value:d[1],name:d[0],itemStyle:{color:themeColors[i%15]}};});
+initChart('chart-nontumor', {
+  tooltip: { trigger:'item', formatter:'{b}: {c}个项目' },
+  series: [{
+    type:'pie', radius:['38%','72%'], roseType:'area',
+    label:{formatter:'{b}\n{c}个', fontSize:10},
+    data:nonTumorData
+  }]
+});
+
+// ===== Chart: Phase Distribution =====
+var phaseOrder = ['I','Ib','Ib/II','II','III','IIT'];
+var phaseData = countBy('phase');
+var phaseVals = phaseOrder.map(function(p){return phaseData[p]||0;});
+initChart('chart-phase', {
+  tooltip: { trigger:'axis' },
+  grid: { left:'3%', right:'8%', bottom:'3%', top:'3%', containLabel:true },
+  xAxis: { type:'category', data:phaseOrder.map(function(p){return p+'期';}) },
+  yAxis: { type:'value', name:'项目数' },
+  series: [{
+    type:'bar', data:phaseVals,
+    itemStyle:{color:'#3182ce', borderRadius:[4,4,0,0]},
+    label:{show:true, position:'top', fontSize:12, fontWeight:'bold'},
+    barMaxWidth:40,
+    markLine:{ silent:true, data:[{type:'average', name:'均值'}], lineStyle:{color:'#e53e3e', type:'dashed'} }
+  }]
+});
+
+// ===== Chart: Level Distribution =====
+var levelOrder = ['S','A','B','C'];
+var levelColors = {'S':'#e53e3e','A':'#d69e2e','B':'#3182ce','C':'#718096'};
+var lvData = countBy('level');
+var levelPie = levelOrder.map(function(l){return {value:lvData[l]||0, name:l+'级', itemStyle:{color:levelColors[l]}};});
+initChart('chart-level', {
+  tooltip: { trigger:'item', formatter:'{b}: {c}个 ({d}%)' },
+  series: [{
+    type:'pie', radius:['50%','75%'], center:['50%','50%'],
+    label:{formatter:'{b}\n{c}个 ({d}%)', fontSize:12},
+    emphasis:{label:{fontSize:16, fontWeight:'bold'}},
+    data:levelPie
+  }]
+});
+
+// ===== Chart: Status (dynamic from data) =====
+var stData = countBy('status');
+var stColors = {'在研':'#3182ce','随访':'#d69e2e','终止':'#c53030','结题不申报':'#2f855a','结题申报':'#805ad5'};
+var statusPie = Object.entries(stData).map(function(d){return {value:d[1],name:d[0],itemStyle:{color:stColors[d[0]]||'#a0aec0'}};});
+initChart('chart-status', {
+  tooltip: { trigger:'item', formatter:'{b}: {c}个 ({d}%)' },
+  series: [{
+    type:'pie', radius:['45%','72%'], center:['50%','50%'],
+    label:{formatter:'{b}\n{c}个 ({d}%)', fontSize:11},
+    emphasis:{label:{fontSize:15, fontWeight:'bold'}},
+    data:statusPie
+  }]
+});
+
+// ===== Chart: Level x Status Heatmap (dynamic statuses) =====
+var levelList = ['S','A','B','C'];
+var statusList = getUniqueVals('status');
+var heatData = countBy2('level', levelList, 'status', statusList);
+var maxHeat = Math.max.apply(null, heatData.map(function(d){return d[2];})||[0]);
+initChart('chart-level-status', {
+  tooltip: { formatter:function(p){return statusList[p.value[0]]+' · '+levelList[p.value[1]]+'级: <b>'+p.value[2]+'个</b>';} },
+  grid: { left:'15%', right:'10%', bottom:'10%', top:'5%' },
+  xAxis: { type:'category', data:statusList, axisLabel:{fontSize:11}, position:'top' },
+  yAxis: { type:'category', data:levelList.map(function(l){return l+'级';}), axisLabel:{fontSize:11} },
+  visualMap: { min:0, max:maxHeat||1, calculable:true, orient:'vertical', right:'2%', bottom:'20%', inRange:{color:['#ebf8ff','#90cdf4','#3182ce','#1a3a5c']} },
+  series: [{
+    type:'heatmap', data:heatData,
+    label:{show:true, fontSize:13, fontWeight:'bold', color:function(p){return p.value[2]>(maxHeat/2||1)?'#fff':'#1a3a5c';}},
+    emphasis:{itemStyle:{shadowBlur:10, shadowColor:'rgba(0,0,0,0.3)'}}
+  }]
+});
+
+// ===== Chart: Level x Phase Stacked Bar =====
+var phasesForBar = ['I','Ib','Ib/II','II','III','IIT'];
+var phaseColorMap = {'I':'#3182ce','Ib':'#0891b2','Ib/II':'#2f855a','II':'#d69e2e','III':'#e53e3e','IIT':'#805ad5'};
+var lpSeries = phasesForBar.map(function(ph){
+  return {
+    name: ph+'期', type:'bar', stack:'total', barMaxWidth:40,
+    data: levelList.map(function(lv){
+      var cnt=0;
+      projectData.forEach(function(p){ if((p.level||'')===lv && (p.phase||'')===ph) cnt++; });
+      return cnt;
+    }),
+    itemStyle:{color:phaseColorMap[ph]}
+  };
+});
+initChart('chart-level-phase', {
+  tooltip: { trigger:'axis', axisPointer:{type:'shadow'} },
+  legend: { bottom:0, textStyle:{fontSize:11} },
+  grid: { left:'3%', right:'4%', bottom:'12%', top:'3%', containLabel:true },
+  xAxis: { type:'category', data:levelList.map(function(l){return l+'级';}) },
+  yAxis: { type:'value', name:'项目数' },
+  series: lpSeries
+});
+
+// ===== Chart: Milestone =====
+var msOrder = ['NDA','pre-NDA','期中分析','正常运行','结题不申报'];
+var msColors = {'NDA':'#e53e3e','pre-NDA':'#dd6b20','期中分析':'#805ad5','正常运行':'#3182ce','结题不申报':'#2f855a','未定义':'#a0aec0'};
+var msData = countBy('milestone_2026');
+initChart('chart-milestone', {
+  tooltip: { trigger:'axis' },
+  grid: { left:'3%', right:'4%', bottom:'3%', top:'8%', containLabel:true },
+  xAxis: { type:'category', data:msOrder, axisLabel:{fontSize:11} },
+  yAxis: { type:'value', name:'项目数' },
+  series: [{
+    type:'bar', data:msOrder.map(function(m){return {value:msData[m]||0, itemStyle:{color:msColors[m], borderRadius:[4,4,0,0]}};}),
+    label:{show:true, position:'top', fontSize:12, fontWeight:'bold'},
+    barMaxWidth:40,
+    markLine:{ silent:true, data:[{type:'average', name:'均值'}], lineStyle:{color:'#e53e3e', type:'dashed'} }
+  }]
+});
+
+// ===== Chart: NDA/Pre-NDA/期中分析 Timeline =====
+var keyNodeProjects = projectData.filter(function(p){
+  var m = p.milestone_2026||'';
+  return m==='NDA'||m==='pre-NDA'||m==='期中分析';
+});
+initChart('chart-nda-timeline', {
+  tooltip: { trigger:'item', formatter:function(p){return '<b>'+p.name+'</b><br/>等级: '+p.data._level+'级 · '+p.data._phase+'<br/>入组: '+p.value+'例<br/>节点: '+p.data._ms;} },
+  grid: { left:'3%', right:'10%', bottom:'3%', top:'3%', containLabel:true },
+  xAxis: { type:'value', name:'已完成入组例数' },
+  yAxis: { type:'category', data:keyNodeProjects.map(function(p){return p.protocol;}).reverse(), axisLabel:{fontSize:10} },
+  series: [{
+    type:'bar',
+    data: keyNodeProjects.map(function(p){
+      var enrolled = parseInt(p.enrolled)||0;
+      var m = p.milestone_2026||'';
+      var color = m==='NDA'?'#e53e3e':(m==='pre-NDA'?'#dd6b20':'#805ad5');
+      return {value:enrolled, itemStyle:{color:color}, _level:p.level, _phase:p.phase, _ms:m};
+    }).reverse(),
+    label:{show:true, position:'right', formatter:function(p){return p.value+'例';}, fontSize:11},
+    barMaxWidth:20
+  }]
+});
+
+// ===== Chart: LDM Workload =====
+var ldmData = Object.entries(countBy('ldm')).sort(function(a,b){return b[1]-a[1];});
+initChart('chart-ldm', {
+  tooltip: { trigger:'axis' },
+  grid: { left:'3%', right:'6%', bottom:'3%', top:'3%', containLabel:true },
+  xAxis: { type:'value', name:'项目数' },
+  yAxis: { type:'category', data:ldmData.map(function(d){return d[0];}).reverse(), axisLabel:{fontSize:11} },
+  series: [{
+    type:'bar', data:ldmData.map(function(d){return d[1];}).reverse(),
+    itemStyle:{color:'#3182ce', borderRadius:[0,4,4,0]},
+    label:{show:true, position:'right', fontSize:11, fontWeight:'bold'},
+    barMaxWidth:18,
+    markLine:{ silent:true, data:[{type:'average', name:'人均', label:{formatter:'人均: {c}'}}], lineStyle:{color:'#e53e3e', type:'dashed'} }
+  }]
+});
+
+// ===== Chart: LDM x Level =====
+var ldmNames = ldmData.map(function(d){return d[0];});
+var ldmLevelSeries = ['S','A','B','C'].map(function(lv,li){
+  return {
+    name: lv+'级', type:'bar', stack:'total', barMaxWidth:16,
+    data: ldmNames.map(function(name){
+      var cnt=0;
+      projectData.forEach(function(p){ if((p.ldm||'')===name && (p.level||'')===lv) cnt++; });
+      return cnt;
+    }),
+    itemStyle:{color:['#e53e3e','#d69e2e','#3182ce','#a0aec0'][li]}
+  };
+});
+initChart('chart-ldm-level', {
+  tooltip: { trigger:'axis', axisPointer:{type:'shadow'} },
+  legend: { bottom:0, textStyle:{fontSize:11} },
+  grid: { left:'3%', right:'4%', bottom:'12%', top:'3%', containLabel:true },
+  xAxis: { type:'category', data:ldmNames, axisLabel:{fontSize:10, rotate:30} },
+  yAxis: { type:'value', name:'项目数' },
+  series: ldmLevelSeries
+});
+
+// ===== Key Projects Table =====
+var keyProjects = projectData.filter(function(p){
+  return (p.level||'')==='S'||(p.milestone_2026||'')==='NDA'||(p.milestone_2026||'')==='pre-NDA'||(p.milestone_2026||'')==='期中分析';
+});
+var seen = {};
+keyProjects = keyProjects.filter(function(p){var k=p.protocol; if(seen[k]) return false; seen[k]=true; return true;});
+var tbl = '<table><thead><tr><th>方案编号</th><th>适应症（大类）</th><th>适应症（小类）</th><th>分期</th><th>等级</th><th>已入组</th><th>计划例数</th><th>状态</th><th>2026节点</th><th>LDM</th><th>PM</th></tr></thead><tbody>';
+keyProjects.forEach(function(p){
+  var lbMap = {'S':'badge-s','A':'badge-a','B':'badge-b','C':'badge-c'};
+  var mbMap = {'NDA':'badge-nda','pre-NDA':'badge-nda','期中分析':'badge-follow','正常运行':'badge-normal','结题不申报':'badge-close','结题申报':'badge-report'};
+  tbl += '<tr>';
+  tbl += '<td><strong>'+p.protocol+'</strong></td>';
+  tbl += '<td>'+p.indication_large+'</td>';
+  tbl += '<td>'+p.indication_small+'</td>';
+  tbl += '<td>'+(p.phase||'')+'</td>';
+  tbl += '<td><span class="badge '+(lbMap[p.level]||'badge-c')+'">'+(p.level||'')+'级</span></td>';
+  tbl += '<td>'+p.enrolled+'</td>';
+  tbl += '<td>'+p.plan_cases+'</td>';
+  tbl += '<td>'+(p.status||'')+'</td>';
+  tbl += '<td><span class="badge '+(mbMap[p.milestone_2026]||'badge-normal')+'">'+(p.milestone_2026||'未定义')+'</span></td>';
+  tbl += '<td>'+(p.ldm||'')+'</td>';
+  tbl += '<td>'+(p.pm||'')+'</td>';
+  tbl += '</tr>';
+});
+tbl += '</tbody></table>';
+document.getElementById('key-table-container').innerHTML = tbl;
+</script>
+</body>
+</html>

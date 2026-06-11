@@ -112,14 +112,17 @@ watch(dropdownOpen, (open) => {
 
 // ── Section auto-discovery ─────────────────────────────────────
 const sectionLabels: Record<string, string> = {
-  team:     '团队简介',
-  members:  '成员',
-  showcase: '成果',
-  events:   '会议',
-  tech:     '架构',
-  workmode: '模式',
-  topics:   '课题',
-  training: '培训',
+  team:             '团队',
+  responsibilities: '职责',
+  'org-chart':      '架构',
+  members:          '成员',
+  showcase:         '成果',
+  'project-analysis':'项目',
+  topics:           '课题',
+  events:           '会议',
+  tech:             '架构',
+  workmode:         '模式',
+  training:         '培训',
 }
 
 const discoveredSections = ref<{ id: string; label: string }[]>([])

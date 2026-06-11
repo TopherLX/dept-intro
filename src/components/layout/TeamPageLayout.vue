@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-6xl mx-auto px-6 pb-165">
-    <template v-for="section in beforeShowcaseSections" :key="section">
+    <template v-for="section in beforeMembersSections" :key="section">
       <HeroSection v-if="section === 'hero'" v-bind="data.hero" />
       <TeamIntroSection
         v-if="section === 'teamIntro'"
@@ -11,9 +11,10 @@
         v-if="section === 'responsibilities'"
         :responsibilities="data.responsibilities"
       />
-      <MembersSection v-if="section === 'members'" :members="data.members" />
-      <ShowcaseSection v-if="section === 'showcase'" :showcases="data.showcases" />
     </template>
+    <MembersSection v-if="showMembers" :members="data.members" />
+    <slot name="after-members" />
+    <ShowcaseSection v-if="showShowcase" :showcases="data.showcases" />
     <slot name="after-showcase" />
     <template v-for="section in afterShowcaseSections" :key="section">
       <TopicsSection v-if="section === 'topics'" :topics="data.topics" />
@@ -60,12 +61,14 @@ const props = withDefaults(defineProps<{
   ],
 })
 
-const beforeSlots = ['hero', 'teamIntro', 'responsibilities', 'members', 'showcase']
+const beforeMembersSlots = ['hero', 'teamIntro', 'responsibilities']
 const afterSlots = ['topics', 'training']
 
-const beforeShowcaseSections = computed(() =>
-  props.visibleSections.filter(s => beforeSlots.includes(s))
+const beforeMembersSections = computed(() =>
+  props.visibleSections.filter(s => beforeMembersSlots.includes(s))
 )
+const showMembers = computed(() => props.visibleSections.includes('members'))
+const showShowcase = computed(() => props.visibleSections.includes('showcase'))
 const afterShowcaseSections = computed(() =>
   props.visibleSections.filter(s => afterSlots.includes(s))
 )

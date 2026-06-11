@@ -1,4 +1,12 @@
-import type { Member } from './types'
+import type { Member, HeroData } from './types'
+
+export const hero: HeroData = {
+  badge: 'Department Overview',
+  title: '部门概览',
+  subtitle: '',
+  primaryCta: { text: '了解团队', href: '#members' },
+  image: `${import.meta.env.BASE_URL}hero/department.png`,
+}
 
 export const members: Member[] = [
   {

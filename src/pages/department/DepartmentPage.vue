@@ -1,12 +1,7 @@
 <!-- src/pages/department/DepartmentPage.vue -->
 <template>
   <div class="max-w-6xl mx-auto px-6">
-    <HeroSection
-      badge="Clinical Data Department"
-      title="部门概览"
-      subtitle="临床科学编程室 · 团队总览"
-      :primary-cta="{ text: '了解团队', href: '#members' }"
-    />
+    <HeroSection v-bind="hero" />
     <MembersSection :members="members" />
     <WorkModeSection />
   </div>
@@ -16,5 +11,5 @@
 import HeroSection from '@/components/hero/HeroSection.vue'
 import MembersSection from '@/components/members/MembersSection.vue'
 import WorkModeSection from '@/components/workmode/WorkModeSection.vue'
-import { members } from '@/data/department'
+import { hero, members } from '@/data/department'
 </script>

@@ -123,6 +123,11 @@ const sectionLabels: Record<string, string> = {
   tech:             '架构',
   workmode:         '模式',
   training:         '培训',
+  timeline:          '阶段',
+  workflow:          '推进',
+  'monitoring-report':'报告',
+  'working-groups':  '工作组',
+  'core-skills':     '能力',
 }
 
 const discoveredSections = ref<{ id: string; label: string }[]>([])

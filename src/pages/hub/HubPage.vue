@@ -3,7 +3,7 @@
     <span class="inline-block bg-amber-light text-amber-700 font-bold text-xs px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase">
       Clinical Data Department
     </span>
-    <router-link to="/department" class="candy-btn inline-block no-underline font-heading text-5xl sm:text-6xl lg:text-7xl font-extrabold text-violet leading-tight mb-5 text-center border-2 border-transparent rounded-2xl px-4 py-2 hover:border-violet hover:shadow-pop-hover">
+    <router-link to="/department" class="candy-btn inline-block no-underline font-heading text-5xl sm:text-6xl lg:text-7xl font-extrabold text-violet leading-tight mb-5 text-center border-2 border-transparent rounded-2xl px-4 py-2 hover:border-violet">
       临床数据部
     </router-link>
     <p class="text-slate-500 text-lg mb-16 text-center max-w-lg">

@@ -6,7 +6,6 @@
     <template #after-showcase>
       <EventsSection />
       <TechSection />
-      <WorkModeSection />
     </template>
   </TeamPageLayout>
 </template>
@@ -15,7 +14,6 @@
 import TeamPageLayout from '@/components/layout/TeamPageLayout.vue'
 import MembersSection from '@/components/members/MembersSection.vue'
 import TechSection from '@/components/tech/TechSection.vue'
-import WorkModeSection from '@/components/workmode/WorkModeSection.vue'
 import EventsSection from '@/components/knowledge/EventsSection.vue'
 import {
   hero,

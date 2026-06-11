@@ -26,6 +26,7 @@
       <!-- Vertical drop line -->
       <div class="w-0.5 h-5 bg-[#CBD5E1]"></div>
       <!-- Horizontal bar spanning children -->
+      <!-- 148 = card w-[140px] + gap-2 (8px); -8 removes trailing gap -->
       <div class="h-0.5 bg-[#CBD5E1] rounded-sm" :style="{ width: `${node.children.length * 148 - 8}px` }"></div>
       <!-- Drop lines to each child column -->
       <div class="flex" :style="{ width: `${node.children.length * 148 - 8}px` }">
@@ -35,7 +36,7 @@
       </div>
       <!-- Children row -->
       <div class="flex gap-2">
-        <div v-for="(child, i) in node.children" :key="i" class="flex flex-col items-center">
+        <div v-for="child in node.children" :key="child.name" class="flex flex-col items-center">
           <OrgTreeNode :node="child" :level="level + 1" />
         </div>
       </div>
@@ -53,9 +54,9 @@ const props = defineProps<{
 }>()
 
 const levelConfig: Record<number, { shadow: string; avatarBg: string; avatarBorder: string; icon: string }> = {
-  1: { shadow: '#8B5CF6', avatarBg: 'bg-gradient-to-br from-[#EDE9FE] to-[#C4B5FD]', avatarBorder: 'border-[#A78BFA]', icon: '#7C3AED' },
-  2: { shadow: '#F472B6', avatarBg: 'bg-gradient-to-br from-[#FCE7F3] to-[#F9A8D4]', avatarBorder: 'border-[#F472B6]', icon: '#DB2777' },
-  3: { shadow: '#FBBF24', avatarBg: 'bg-gradient-to-br from-[#FEF3C7] to-[#FDE68A]', avatarBorder: 'border-[#FBBF24]', icon: '#D97706' },
+  1: { shadow: '#8B5CF6', avatarBg: 'bg-gradient-to-br from-violet-light to-[#C4B5FD]', avatarBorder: 'border-[#A78BFA]', icon: '#7C3AED' },
+  2: { shadow: '#F472B6', avatarBg: 'bg-gradient-to-br from-pink-light to-[#F9A8D4]', avatarBorder: 'border-[#F472B6]', icon: '#DB2777' },
+  3: { shadow: '#FBBF24', avatarBg: 'bg-gradient-to-br from-amber-light to-[#FDE68A]', avatarBorder: 'border-[#FBBF24]', icon: '#D97706' },
 }
 
 const cfg = computed(() => levelConfig[props.level] ?? levelConfig[3])

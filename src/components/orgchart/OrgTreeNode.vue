@@ -21,24 +21,27 @@
       </div>
     </div>
 
-    <!-- Children -->
-    <template v-if="node.children && node.children.length">
-      <!-- Vertical drop line -->
+    <!-- Children: horizontal (L1→L2) -->
+    <template v-if="node.children && node.children.length && level < 2">
       <div class="w-0.5 h-5 bg-[#CBD5E1]"></div>
-      <!-- Horizontal bar spanning children -->
       <!-- 148 = card w-[140px] + gap-2 (8px); -8 removes trailing gap -->
       <div class="h-0.5 bg-[#CBD5E1] rounded-sm" :style="{ width: `${node.children.length * 148 - 8}px` }"></div>
-      <!-- Drop lines to each child column -->
       <div class="flex" :style="{ width: `${node.children.length * 148 - 8}px` }">
         <div v-for="(_, i) in node.children" :key="i" class="flex flex-col items-center" style="flex: 1;">
           <div class="w-0.5 h-3.5 bg-[#CBD5E1]"></div>
         </div>
       </div>
-      <!-- Children row -->
       <div class="flex gap-2">
         <div v-for="child in node.children" :key="child.name" class="flex flex-col items-center">
           <OrgTreeNode :node="child" :level="level + 1" />
         </div>
+      </div>
+    </template>
+    <!-- Children: vertical (L2→L3) -->
+    <template v-if="node.children && node.children.length && level >= 2">
+      <div class="w-0.5 h-3.5 bg-[#CBD5E1]"></div>
+      <div class="flex flex-col items-center gap-1.5">
+        <OrgTreeNode v-for="child in node.children" :key="child.name" :node="child" :level="level + 1" />
       </div>
     </template>
   </div>

@@ -24,11 +24,14 @@
 
     <!-- Children: horizontal (L1→L2) -->
     <template v-if="node.children && node.children.length && level < 2">
-      <div class="w-0.5 h-5 bg-[#CBD5E1]"></div>
-      <div class="h-0.5 bg-[#CBD5E1] rounded-sm" :style="{ width: `${(node.children.length - 1) / node.children.length * 100}%` }"></div>
+      <div class="w-0.5 h-5 flow-v"></div>
+      <div class="flex" :style="{ width: `${(node.children.length - 1) / node.children.length * 100}%` }">
+        <div class="flex-1 h-0.5 flow-h-left"></div>
+        <div class="flex-1 h-0.5 flow-h-right"></div>
+      </div>
       <div class="flex w-full">
         <div v-for="(_, i) in node.children" :key="i" class="flex flex-col items-center" style="flex: 1;">
-          <div class="w-0.5 h-3.5 bg-[#CBD5E1]"></div>
+          <div class="w-0.5 h-3.5 flow-v"></div>
         </div>
       </div>
       <div class="flex gap-4">
@@ -39,7 +42,7 @@
     </template>
     <!-- Children: vertical (L2→L3) -->
     <template v-if="node.children && node.children.length && level >= 2">
-      <div class="w-0.5 h-3.5 bg-[#CBD5E1]"></div>
+      <div class="w-0.5 h-3.5 flow-v"></div>
       <div class="flex flex-col items-center gap-2.5">
         <OrgTreeNode v-for="child in node.children" :key="child.name" :node="child" :level="level + 1" />
       </div>
@@ -68,3 +71,33 @@ const avatarBg = computed(() => cfg.value.avatarBg)
 const avatarBorder = computed(() => cfg.value.avatarBorder)
 const iconColor = computed(() => cfg.value.icon)
 </script>
+
+<style scoped>
+.flow-v {
+  background: repeating-linear-gradient(to bottom, #CBD5E1 0 4px, transparent 4px 12px);
+  animation: flow-down 1.5s linear infinite;
+}
+.flow-h-left {
+  background: repeating-linear-gradient(to right, #CBD5E1 0 4px, transparent 4px 12px);
+  animation: flow-left 1.5s linear infinite;
+}
+.flow-h-right {
+  background: repeating-linear-gradient(to right, #CBD5E1 0 4px, transparent 4px 12px);
+  animation: flow-right 1.5s linear infinite;
+}
+@keyframes flow-down {
+  to { background-position: 0 -12px; }
+}
+@keyframes flow-left {
+  to { background-position: 12px 0; }
+}
+@keyframes flow-right {
+  to { background-position: -12px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flow-v, .flow-h-left, .flow-h-right {
+    background: #CBD5E1;
+    animation: none;
+  }
+}
+</style>

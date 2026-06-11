@@ -64,3 +64,10 @@ export interface OrgNode {
   title: string
   children?: OrgNode[]
 }
+
+export interface ResearchTopic {
+  category: string
+  title: string
+  description: string
+  owner: string
+}

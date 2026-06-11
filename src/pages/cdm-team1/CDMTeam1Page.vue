@@ -5,7 +5,7 @@
     </template>
     <template #after-showcase>
       <ProjectAnalysisSection />
-      <TopicsIframeSection />
+      <ResearchTopicsSection :topics="researchTopics" />
     </template>
   </TeamPageLayout>
 </template>
@@ -14,8 +14,8 @@
 import TeamPageLayout from '@/components/layout/TeamPageLayout.vue'
 import OrgChartSection from '@/components/orgchart/OrgChartSection.vue'
 import ProjectAnalysisSection from '@/components/project-analysis/ProjectAnalysisSection.vue'
-import TopicsIframeSection from '@/components/knowledge/TopicsIframeSection.vue'
-import { hero, teamIntro, responsibilities, members, showcases, topics, trainings, orgChart } from '@/data/cdm-team1'
+import ResearchTopicsSection from '@/components/knowledge/ResearchTopicsSection.vue'
+import { hero, teamIntro, responsibilities, members, showcases, topics, trainings, orgChart, researchTopics } from '@/data/cdm-team1'
 
 const visibleSections = ['hero', 'teamIntro', 'responsibilities']
 const teamData = { hero, teamIntro, responsibilities, members, showcases, topics, trainings }

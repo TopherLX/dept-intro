@@ -1,6 +1,6 @@
 <template>
-  <TeamPageLayout :data="teamData">
-    <template #after-showcase>
+  <TeamPageLayout :data="teamData" :visible-sections="visibleSections">
+    <template #after-members>
       <OrgChartSection :data="orgChart" />
     </template>
   </TeamPageLayout>
@@ -11,5 +11,6 @@ import TeamPageLayout from '@/components/layout/TeamPageLayout.vue'
 import OrgChartSection from '@/components/orgchart/OrgChartSection.vue'
 import { hero, teamIntro, responsibilities, members, showcases, topics, trainings, orgChart } from '@/data/cdm-team1'
 
+const visibleSections = ['hero', 'teamIntro', 'responsibilities', 'showcase', 'topics', 'training']
 const teamData = { hero, teamIntro, responsibilities, members, showcases, topics, trainings }
 </script>

@@ -3,16 +3,16 @@
     <SectionTitle title="核心职责" color="#FBBF24" class="mt-24" />
     <EmptyPlaceholder v-if="responsibilities.length === 0" />
     <template v-else>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid gap-6" :style="row1Style">
         <ResponsibilityCard
-          v-for="item in responsibilities.slice(0, 3)"
+          v-for="item in row1"
           :key="item.title"
           v-bind="item"
         />
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 lg:max-w-2xl lg:mx-auto">
+      <div v-if="row2.length" class="grid gap-6 mt-6" :style="row2Style">
         <ResponsibilityCard
-          v-for="item in responsibilities.slice(3, 5)"
+          v-for="item in row2"
           :key="item.title"
           v-bind="item"
         />
@@ -22,14 +22,33 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { Responsibility } from '@/data/types'
 import SectionTitle from '@/components/shared/SectionTitle.vue'
 import ResponsibilityCard from './ResponsibilityCard.vue'
 import EmptyPlaceholder from '@/components/shared/EmptyPlaceholder.vue'
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   responsibilities: Responsibility[]
 }>(), {
   responsibilities: () => [],
+})
+
+const half = computed(() => Math.ceil(props.responsibilities.length / 2))
+const row1 = computed(() => props.responsibilities.slice(0, half.value))
+const row2 = computed(() => props.responsibilities.slice(half.value))
+
+const row1Style = computed(() => ({
+  gridTemplateColumns: `repeat(${half.value}, minmax(0, 1fr))`,
+}))
+
+const row2Style = computed(() => {
+  if (!row2.value.length) return {}
+  return {
+    gridTemplateColumns: `repeat(${row2.value.length}, minmax(0, 1fr))`,
+    maxWidth: `${(row2.value.length / half.value) * 100}%`,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  }
 })
 </script>

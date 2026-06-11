@@ -3,8 +3,24 @@
     <SectionTitle title="研究课题" color="#8B5CF6" />
     <div class="mt-12 space-y-16">
       <div v-for="group in groupedTopics" :key="group.category">
-        <h3 class="font-heading font-bold text-xl text-slate-800 mb-6">{{ group.category }}</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <button
+          class="flex items-center gap-3 w-full text-left mb-6 group cursor-pointer"
+          @click="toggle(group.category)"
+        >
+          <div
+            class="w-6 h-6 rounded-full border-2 border-slate-800 flex items-center justify-center shrink-0 transition-transform duration-300"
+            :class="{ 'rotate-90': expanded.has(group.category) }"
+          >
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#1E293B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </div>
+          <h3 class="font-heading font-bold text-xl text-slate-800">
+            {{ group.category }}
+            <span class="text-sm text-slate-400 font-normal ml-2">({{ group.topics.length }})</span>
+          </h3>
+        </button>
+        <div v-show="expanded.has(group.category)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div
             v-for="topic in group.topics"
             :key="topic.title"
@@ -29,11 +45,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import type { ResearchTopic } from '@/data/types'
 import SectionTitle from '@/components/shared/SectionTitle.vue'
 
 const props = defineProps<{ topics: ResearchTopic[] }>()
+
+const expanded = ref(new Set<string>())
+
+function toggle(category: string) {
+  if (expanded.value.has(category)) {
+    expanded.value.delete(category)
+  } else {
+    expanded.value.add(category)
+  }
+}
 
 const groupedTopics = computed(() => {
   const groups: { category: string; topics: ResearchTopic[] }[] = []

@@ -1,6 +1,6 @@
 <!-- src/pages/department/DepartmentPage.vue -->
 <template>
-  <div>
+  <div class="max-w-6xl mx-auto px-6">
     <HeroSection
       badge="Clinical Data Department"
       title="部门概览"

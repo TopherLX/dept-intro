@@ -5,7 +5,7 @@ export const hero: HeroData = {
   title: '药物安全组',
   subtitle: '',
   primaryCta: { text: '了解更多', href: '#team' },
-  image: '',
+  image: `${import.meta.env.BASE_URL}hero/safety-team.svg`,
 }
 
 export const teamIntro: TeamIntro = {

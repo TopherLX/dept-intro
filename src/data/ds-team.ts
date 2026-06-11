@@ -6,7 +6,7 @@ export const hero: HeroData = {
   subtitle: '探索从数据采集、治理到智能分析的完整技术生态',
   primaryCta: { text: '了解团队', href: '#team' },
   secondaryCta: { text: '技术架构', href: '#tech' },
-  image: `${import.meta.env.BASE_URL}hero/card.svg`,
+  image: `${import.meta.env.BASE_URL}hero/ds-team.svg`,
 }
 
 export const teamIntro: TeamIntro = {

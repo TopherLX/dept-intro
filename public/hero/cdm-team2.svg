@@ -1,0 +1,308 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 384" width="384" height="384">
+    <defs>
+        <!-- 浅色背景渐变（米色、象牙白到浅冷灰的渐变，温润细腻） -->
+        <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fafaf9" />
+            <stop offset="50%" stop-color="#f5f5f4" />
+            <stop offset="100%" stop-color="#e7e5e4" />
+        </linearGradient>
+
+        <!-- 科技波浪渐变：暖琥珀 -->
+        <linearGradient id="wave-amber" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(249, 115, 22, 0)" />
+            <stop offset="25%" stop-color="rgba(249, 115, 22, 0.7)" />
+            <stop offset="75%" stop-color="rgba(217, 119, 6, 0.7)" />
+            <stop offset="100%" stop-color="rgba(249, 115, 22, 0)" />
+        </linearGradient>
+
+        <!-- 科技波浪渐变：星空蓝 -->
+        <linearGradient id="wave-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(99, 102, 241, 0)" />
+            <stop offset="20%" stop-color="rgba(99, 102, 241, 0.6)" />
+            <stop offset="80%" stop-color="rgba(79, 70, 229, 0.6)" />
+            <stop offset="100%" stop-color="rgba(99, 102, 241, 0)" />
+        </linearGradient>
+
+        <!-- 科技波浪渐变：玫瑰粉紫 -->
+        <linearGradient id="wave-rose" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(236, 72, 153, 0)" />
+            <stop offset="30%" stop-color="rgba(236, 72, 153, 0.5)" />
+            <stop offset="70%" stop-color="rgba(219, 39, 119, 0.5)" />
+            <stop offset="100%" stop-color="rgba(236, 72, 153, 0)" />
+        </linearGradient>
+
+        <!-- 浅色适配发光滤镜 -->
+        <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+
+        <!-- 浅色适配强效发光滤镜 -->
+        <filter id="glow-strong" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="3" result="blur1" />
+            <feGaussianBlur stdDeviation="1" result="blur2" />
+            <feMerge>
+                <feMergeNode in="blur1" />
+                <feMergeNode in="blur2" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+
+        <!-- 科技感斜向几何网格（45度交叉，雷达感更强） -->
+        <pattern id="diagonal-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+            <path d="M 0 24 L 24 0 M 0 0 L 24 24" fill="none" stroke="#d6d3d1" stroke-width="0.6" opacity="0.6"/>
+            <!-- 几何节点 -->
+            <circle cx="12" cy="12" r="1" fill="#78716c" opacity="0.4" />
+        </pattern>
+
+        <!-- 微型点状对齐辅助网格 -->
+        <pattern id="dot-grid" width="6" height="6" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="0.5" fill="#a8a29e" opacity="0.3" />
+        </pattern>
+
+        <!-- 动态波浪 1：琥珀橙主波浪（波动起伏大，温和而有力量） -->
+        <path id="wave1">
+            <animate attributeName="d"
+                values="M -50 160 C 60 260, 140 60, 220 160 C 300 260, 380 60, 480 160;
+                        M -50 160 C 60 60, 140 260, 220 160 C 300 60, 380 260, 480 160;
+                        M -50 160 C 60 260, 140 60, 220 160 C 300 260, 380 60, 480 160"
+                dur="14s" repeatCount="indefinite" />
+        </path>
+        <!-- 动态波浪 2：星空蓝副波浪 -->
+        <path id="wave2">
+            <animate attributeName="d"
+                values="M -50 200 C 80 100, 160 300, 240 200 C 320 100, 400 300, 480 200;
+                        M -50 200 C 80 300, 160 100, 240 200 C 320 300, 400 100, 480 200;
+                        M -50 200 C 80 100, 160 300, 240 200 C 320 100, 400 300, 480 200"
+                dur="18s" repeatCount="indefinite" />
+        </path>
+        <!-- 动态波浪 3：玫瑰粉高频谐波 -->
+        <path id="wave3">
+            <animate attributeName="d"
+                values="M -50 130 C 100 200, 150 50, 250 130 C 350 210, 400 50, 480 130;
+                        M -50 130 C 100 50, 150 210, 250 130 C 350 50, 400 210, 480 130;
+                        M -50 130 C 100 200, 150 50, 250 130 C 350 210, 400 50, 480 130"
+                dur="16s" repeatCount="indefinite" />
+        </path>
+    </defs>
+
+    <style>
+        /* 线条基础样式 */
+        .wave-base {
+            fill: none;
+            stroke-width: 1.5;
+        }
+        
+        /* 数据脉冲运动流 */
+        .data-stream {
+            fill: none;
+            stroke-width: 2.5;
+            stroke-dasharray: 8 60;
+            stroke-linecap: round;
+            animation: flowRight 7s linear infinite;
+        }
+        .data-stream-fast {
+            fill: none;
+            stroke-width: 1.8;
+            stroke-dasharray: 5 40;
+            stroke-linecap: round;
+            animation: flowRight 4.5s linear infinite;
+        }
+        .data-stream-reverse {
+            fill: none;
+            stroke-width: 2;
+            stroke-dasharray: 12 80;
+            stroke-linecap: round;
+            animation: flowLeft 11s linear infinite;
+        }
+
+        @keyframes flowRight {
+            0% { stroke-dashoffset: 280; }
+            100% { stroke-dashoffset: 0; }
+        }
+        @keyframes flowLeft {
+            0% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: 280; }
+        }
+
+        /* 浮动组 */
+        .floating {
+            animation: float 9s ease-in-out infinite;
+        }
+        .floating-delayed {
+            animation: float 11s ease-in-out infinite 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(3px, -5px) rotate(2deg); }
+        }
+
+        /* 信号呼吸灯 */
+        .pulse-node {
+            transform-origin: center;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        /* 科技感刻度与文本 */
+        .tech-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 8px;
+            fill: #57534e;
+            letter-spacing: 1.2px;
+            opacity: 0.85;
+            font-weight: bold;
+        }
+        .tech-accent {
+            fill: #ea580c;
+        }
+    </style>
+
+    <!-- 背景渲染 -->
+    <rect width="100%" height="100%" fill="url(#bg-grad)" />
+    <rect width="100%" height="100%" fill="url(#dot-grid)" />
+    <rect width="100%" height="100%" fill="url(#diagonal-grid)" />
+
+    <!-- 核心光波叠加 -->
+    <!-- 1. 玫瑰粉高频谐波 -->
+    <g filter="url(#glow)">
+        <use href="#wave3" class="wave-base" stroke="url(#wave-rose)" />
+        <use href="#wave3" class="data-stream-reverse" stroke="#db2777" />
+    </g>
+
+    <!-- 2. 星空蓝副波 -->
+    <g filter="url(#glow)">
+        <use href="#wave2" class="wave-base" stroke="url(#wave-blue)" />
+        <use href="#wave2" class="data-stream-fast" stroke="#4f46e5" />
+    </g>
+
+    <!-- 3. 暖琥珀主波浪 -->
+    <g filter="url(#glow-strong)">
+        <use href="#wave1" class="wave-base" stroke="url(#wave-amber)" />
+        <use href="#wave1" class="data-stream" stroke="#f97316" />
+    </g>
+
+    <!-- 科技装饰细节 & HUD 交互面板 -->
+    <g class="floating">
+        <!-- 右上角：频段柱状频谱仪 (Spectrum Level Indicators) -->
+        <g transform="translate(280, 85)" opacity="0.9">
+            <!-- 示波格子 -->
+            <rect x="0" y="0" width="3" height="12" fill="#e2e8f0" stroke="#a8a29e" stroke-width="0.5" />
+            <rect x="0" y="4" width="3" height="8" fill="#f97316" />
+            
+            <rect x="5" y="-3" width="3" height="15" fill="#e2e8f0" stroke="#a8a29e" stroke-width="0.5" />
+            <rect x="5" y="2" width="3" height="10" fill="#f97316" />
+            
+            <rect x="10" y="2" width="3" height="10" fill="#e2e8f0" stroke="#a8a29e" stroke-width="0.5" />
+            <rect x="10" y="5" width="3" height="7" fill="#4f46e5" />
+
+            <circle cx="22" cy="6" r="1.5" fill="#f97316" class="pulse-node" />
+            <line x1="26" y1="6" x2="40" y2="6" stroke="#a8a29e" stroke-width="0.8" stroke-dasharray="1 1" />
+            <text x="44" y="9" class="tech-text">FREQ_EVAL</text>
+        </g>
+    </g>
+
+    <g class="floating-delayed">
+        <!-- 左下角：声纳角度雷达盘 (Sonar Compass Dial) -->
+        <g transform="translate(95, 295)" opacity="0.9">
+            <!-- 雷达表盘圈 -->
+            <circle cx="0" cy="0" r="15" fill="none" stroke="#4f46e5" stroke-width="1" />
+            <circle cx="0" cy="0" r="21" fill="none" stroke="#a8a29e" stroke-width="0.8" stroke-dasharray="2 3" />
+            <!-- 指针线 -->
+            <line x1="0" y1="0" x2="11" y2="-11" stroke="#db2777" stroke-width="1.2">
+                <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="12s" repeatCount="indefinite" />
+            </line>
+            <circle cx="0" cy="0" r="2.5" fill="#db2777" />
+            <text x="25" y="4" class="tech-text">AZIMUTH: <tspan class="tech-accent">134.8°</tspan></text>
+        </g>
+    </g>
+
+    <!-- 边缘界面装饰线与标尺 -->
+    <g opacity="0.85">
+        <!-- 左侧纵向微型精密标尺 (Linear Scale) -->
+        <g transform="translate(16, 120)">
+            <line x1="0" y1="0" x2="0" y2="120" stroke="#78716c" stroke-width="0.8" />
+            <line x1="0" y1="0" x2="4" y2="0" stroke="#78716c" stroke-width="1" />
+            <line x1="0" y1="30" x2="3" y2="30" stroke="#78716c" stroke-width="0.8" />
+            <line x1="0" y1="60" x2="4" y2="60" stroke="#78716c" stroke-width="1" />
+            <line x1="0" y1="90" x2="3" y2="90" stroke="#78716c" stroke-width="0.8" />
+            <line x1="0" y1="120" x2="4" y2="120" stroke="#78716c" stroke-width="1" />
+            <text x="8" y="63" class="tech-text" writing-mode="tb" glyph-orientation-vertical="0">INDEX_Y_02</text>
+        </g>
+
+        <!-- 左上角标志 -->
+        <path d="M 30 35 L 50 35 L 58 43" fill="none" stroke="#f97316" stroke-width="1.2" />
+        <circle cx="30" cy="35" r="1.5" fill="#f97316" />
+        <text x="64" y="46" class="tech-text">TEL_STAT: <tspan fill="#ea580c">SYNC</tspan></text>
+
+        <!-- 右下角标志 -->
+        <path d="M 354 349 L 334 349 L 326 341" fill="none" stroke="#4f46e5" stroke-width="1.2" />
+        <circle cx="354" cy="349" r="1.5" fill="#4f46e5" />
+        <text x="235" y="338" class="tech-text">BEACON_ONLINE</text>
+    </g>
+
+    <!-- 四角瞄准线（HUD 四角锁定） -->
+    <g opacity="0.8">
+        <!-- 左上 -->
+        <path d="M 16 28 L 16 16 L 28 16" fill="none" stroke="#78716c" stroke-width="1.2" />
+        <circle cx="16" cy="16" r="1.5" fill="#78716c" />
+        <!-- 右上 -->
+        <path d="M 368 28 L 368 16 L 356 16" fill="none" stroke="#78716c" stroke-width="1.2" />
+        <circle cx="368" cy="16" r="1.5" fill="#78716c" />
+        <!-- 左下 -->
+        <path d="M 16 356 L 16 368 L 28 368" fill="none" stroke="#78716c" stroke-width="1.2" />
+        <circle cx="16" cy="368" r="1.5" fill="#78716c" />
+        <!-- 右下 -->
+        <path d="M 368 356 L 368 368 L 356 368" fill="none" stroke="#78716c" stroke-width="1.2" />
+        <circle cx="368" cy="368" r="1.5" fill="#78716c" />
+    </g>
+
+    <!-- 粒子运动：粒子完美附着于动效波浪轨道路线上流动 -->
+    <!-- 沿琥珀色主轴 (Wave 1) 的离子 -->
+    <circle r="2.2" fill="#ffffff" stroke="#f97316" stroke-width="0.5" filter="url(#glow-strong)">
+        <animateMotion dur="7.5s" repeatCount="indefinite">
+            <mpath href="#wave1" />
+        </animateMotion>
+    </circle>
+    
+    <circle r="1.6" fill="#f97316" filter="url(#glow)">
+        <animateMotion dur="6s" repeatCount="indefinite" begin="2.5s">
+            <mpath href="#wave1" />
+        </animateMotion>
+    </circle>
+
+    <!-- 沿蓝色副轴 (Wave 2) 的离子 -->
+    <circle r="2" fill="#ffffff" stroke="#4f46e5" stroke-width="0.5" filter="url(#glow)">
+        <animateMotion dur="10s" repeatCount="indefinite" begin="1.2s">
+            <mpath href="#wave2" />
+        </animateMotion>
+    </circle>
+
+    <circle r="1.4" fill="#4f46e5" filter="url(#glow)">
+        <animateMotion dur="8.5s" repeatCount="indefinite" begin="4s">
+            <mpath href="#wave2" />
+        </animateMotion>
+    </circle>
+
+    <!-- 沿玫瑰粉高频轴 (Wave 3) 的离子 -->
+    <circle r="2" fill="#ffffff" stroke="#db2777" stroke-width="0.5" filter="url(#glow-strong)">
+        <animateMotion dur="9s" repeatCount="indefinite" begin="3s">
+            <mpath href="#wave3" />
+        </animateMotion>
+    </circle>
+
+    <circle r="1.4" fill="#db2777" filter="url(#glow)">
+        <animateMotion dur="12s" repeatCount="indefinite" begin="0.8s">
+            <mpath href="#wave3" />
+        </animateMotion>
+    </circle>
+
+</svg>

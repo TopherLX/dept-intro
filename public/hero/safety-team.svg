@@ -1,0 +1,424 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 384" width="384" height="384">
+    <defs>
+        <!-- 浅色医药科技背景渐变（无菌室、生化实验室冷淡感） -->
+        <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f0fdfa" /> <!-- teal-50 -->
+            <stop offset="50%" stop-color="#f8fafc" /> <!-- slate-50 -->
+            <stop offset="100%" stop-color="#eef2ff" /> <!-- indigo-50 -->
+        </linearGradient>
+
+        <!-- 药波渐变：薄荷绿（活性因子） -->
+        <linearGradient id="wave-mint" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(13, 148, 136, 0)" />
+            <stop offset="25%" stop-color="rgba(13, 148, 136, 0.7)" />
+            <stop offset="75%" stop-color="rgba(20, 184, 166, 0.7)" />
+            <stop offset="100%" stop-color="rgba(13, 148, 136, 0)" />
+        </linearGradient>
+
+        <!-- 药波渐变：熏衣草紫（缓释因子） -->
+        <linearGradient id="wave-lavender" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(124, 58, 237, 0)" />
+            <stop offset="20%" stop-color="rgba(124, 58, 237, 0.55)" />
+            <stop offset="80%" stop-color="rgba(139, 92, 246, 0.55)" />
+            <stop offset="100%" stop-color="rgba(124, 58, 237, 0)" />
+        </linearGradient>
+
+        <!-- 药波渐变：基因粉（靶向结合） -->
+        <linearGradient id="wave-pink" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="rgba(244, 63, 94, 0)" />
+            <stop offset="30%" stop-color="rgba(244, 63, 94, 0.45)" />
+            <stop offset="70%" stop-color="rgba(251, 113, 133, 0.45)" />
+            <stop offset="100%" stop-color="rgba(244, 63, 94, 0)" />
+        </linearGradient>
+
+        <!-- 药片渐变 -->
+        <linearGradient id="pill-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" />
+            <stop offset="60%" stop-color="#e2e8f0" />
+            <stop offset="100%" stop-color="#cbd5e1" />
+        </linearGradient>
+
+        <!-- 胶囊前半段（薄荷绿） -->
+        <linearGradient id="capsule-teal" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#2dd4bf" />
+            <stop offset="100%" stop-color="#0d9488" />
+        </linearGradient>
+
+        <!-- 胶囊后半段（紫罗兰） -->
+        <linearGradient id="capsule-purple" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#c084fc" />
+            <stop offset="100%" stop-color="#7c3aed" />
+        </linearGradient>
+
+        <!-- 柔和发光滤镜 -->
+        <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="2.2" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+
+        <!-- 强发光滤镜 -->
+        <filter id="glow-strong" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="3.5" result="blur1" />
+            <feGaussianBlur stdDeviation="1.5" result="blur2" />
+            <feMerge>
+                <feMergeNode in="blur1" />
+                <feMergeNode in="blur2" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+
+        <!-- 精密方格网 -->
+        <pattern id="precision-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#cbd5e1" stroke-width="0.7" opacity="0.5"/>
+            <path d="M -1 0 L 1 0 M 0 -1 L 0 1" stroke="#94a3b8" stroke-width="0.5" opacity="0.6"/>
+        </pattern>
+
+        <!-- 点状矩阵网 -->
+        <pattern id="dot-matrix" width="10" height="10" patternUnits="userSpaceOnUse">
+            <circle cx="1" cy="1" r="0.5" fill="#94a3b8" opacity="0.25" />
+        </pattern>
+
+        <!-- 动态分子代谢路径 1 -->
+        <path id="wave1">
+            <animate attributeName="d"
+                values="M -50 190 C 80 90, 160 290, 240 190 C 320 90, 400 290, 500 190;
+                        M -50 190 C 80 290, 160 90, 240 190 C 320 290, 400 90, 500 190;
+                        M -50 190 C 80 90, 160 290, 240 190 C 320 90, 400 290, 500 190"
+                dur="15s" repeatCount="indefinite" />
+        </path>
+        <!-- 动态分子代谢路径 2 -->
+        <path id="wave2">
+            <animate attributeName="d"
+                values="M -50 150 C 70 250, 150 50, 230 150 C 310 250, 390 50, 500 150;
+                        M -50 150 C 70 50, 150 250, 230 150 C 310 50, 390 250, 500 150;
+                        M -50 150 C 70 250, 150 50, 230 150 C 310 250, 390 50, 500 150"
+                dur="19s" repeatCount="indefinite" />
+        </path>
+        <!-- 动态分子代谢路径 3 -->
+        <path id="wave3">
+            <animate attributeName="d"
+                values="M -50 220 C 100 140, 170 300, 250 220 C 330 140, 410 300, 500 220;
+                        M -50 220 C 100 300, 170 140, 250 220 C 330 300, 410 140, 500 220;
+                        M -50 220 C 100 140, 170 300, 250 220 C 330 140, 410 300, 500 220"
+                dur="17s" repeatCount="indefinite" />
+        </path>
+
+        <!-- 药片模型组件 (Pill) -->
+        <g id="pill">
+            <circle cx="0" cy="0" r="5" fill="url(#pill-grad)" stroke="#94a3b8" stroke-width="0.5" />
+            <!-- 刻线 -->
+            <line x1="-3.5" y1="-3.5" x2="3.5" y2="3.5" stroke="#94a3b8" stroke-width="0.6" opacity="0.8" />
+            <!-- 高光 -->
+            <path d="M -2.5 -2.5 A 3.5 3.5 0 0 1 2.5 -2.5" fill="none" stroke="#ffffff" stroke-width="0.8" opacity="0.6" />
+        </g>
+
+        <!-- 胶囊模型组件 (Capsule) -->
+        <g id="capsule">
+            <!-- 胶囊外轮廓 -->
+            <rect x="-7" y="-3.5" width="14" height="7" rx="3.5" fill="none" stroke="#64748b" stroke-width="0.5" />
+            <!-- 左半部分（薄荷绿） -->
+            <path d="M -3.5 -3.5 L 0 -3.5 L 0 3.5 L -3.5 3.5 A 3.5 3.5 0 0 1 -3.5 -3.5 Z" fill="url(#capsule-teal)" />
+            <!-- 右半部分（紫罗兰） -->
+            <path d="M 0 -3.5 L 3.5 -3.5 A 3.5 3.5 0 0 1 3.5 3.5 L 0 3.5 Z" fill="url(#capsule-purple)" />
+            <!-- 中间拼合环 -->
+            <line x1="0" y1="-3.5" x2="0" y2="3.5" stroke="#ffffff" stroke-width="0.5" opacity="0.8" />
+            <!-- 反光高光 -->
+            <path d="M -5 -1.5 L 5 -1.5" stroke="#ffffff" stroke-width="0.6" stroke-linecap="round" opacity="0.5" />
+        </g>
+    </defs>
+
+    <style>
+        /* 轨道线条核心样式 */
+        .wave-base {
+            fill: none;
+            stroke-width: 1.6;
+        }
+        
+        /* 脉冲数据流光效果 */
+        .data-stream {
+            fill: none;
+            stroke-width: 2.2;
+            stroke-dasharray: 6 45;
+            stroke-linecap: round;
+            animation: flowRight 7.5s linear infinite;
+        }
+        .data-stream-fast {
+            fill: none;
+            stroke-width: 1.6;
+            stroke-dasharray: 4 25;
+            stroke-linecap: round;
+            animation: flowRight 5.2s linear infinite;
+        }
+        .data-stream-reverse {
+            fill: none;
+            stroke-width: 2.2;
+            stroke-dasharray: 10 75;
+            stroke-linecap: round;
+            animation: flowLeft 13s linear infinite;
+        }
+
+        @keyframes flowRight {
+            0% { stroke-dashoffset: 250; }
+            100% { stroke-dashoffset: 0; }
+        }
+        @keyframes flowLeft {
+            0% { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: 250; }
+        }
+
+        /* 阻尼悬浮动效 */
+        .floating {
+            animation: float 11s ease-in-out infinite;
+        }
+        .floating-delayed {
+            animation: float 13s ease-in-out infinite 3s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(3px, -6px) rotate(-2deg); }
+        }
+
+        /* 信号点呼吸动效 */
+        .pulse-node {
+            transform-origin: center;
+            animation: pulse 3.8s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.35; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.3); }
+        }
+
+        /* 字体美化 */
+        .tech-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 8px;
+            fill: #475569;
+            letter-spacing: 1.2px;
+            opacity: 0.85;
+            font-weight: bold;
+        }
+        .tech-highlight {
+            fill: #0d9488;
+        }
+
+        /* 旋转的分子环 */
+        .rotating-benzene {
+            transform-origin: 192px 192px;
+            animation: rotateFull 40s linear infinite;
+        }
+        @keyframes rotateFull {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    <!-- 背景渲染 -->
+    <rect width="100%" height="100%" fill="url(#bg-grad)" />
+    <rect width="100%" height="100%" fill="url(#dot-matrix)" />
+    <rect width="100%" height="100%" fill="url(#precision-grid)" />
+
+    <!-- 几何背景引力力场圈（模拟旋转分子轨道） -->
+    <g opacity="0.25" class="rotating-benzene">
+        <circle cx="192" cy="192" r="95" fill="none" stroke="#94a3b8" stroke-dasharray="2 6" stroke-width="0.8" />
+        <circle cx="192" cy="192" r="125" fill="none" stroke="#cbd5e1" stroke-dasharray="1 10" stroke-width="1.2" />
+        <!-- 环形外的刻度虚线环 -->
+        <circle cx="192" cy="192" r="140" fill="none" stroke="#94a3b8" stroke-dasharray="12 4" stroke-width="0.6" opacity="0.5" />
+    </g>
+
+    <!-- 核心光波/代谢通道叠加 -->
+    <!-- 1. 粉色靶向路径 -->
+    <g filter="url(#glow)">
+        <use href="#wave3" class="wave-base" stroke="url(#wave-pink)" />
+        <use href="#wave3" class="data-stream-reverse" stroke="#f43f5e" />
+    </g>
+
+    <!-- 2. 紫罗兰释药路径 -->
+    <g filter="url(#glow)">
+        <use href="#wave2" class="wave-base" stroke="url(#wave-lavender)" />
+        <use href="#wave2" class="data-stream-fast" stroke="#7c3aed" />
+    </g>
+
+    <!-- 3. 薄荷绿活性路径 -->
+    <g filter="url(#glow-strong)">
+        <use href="#wave1" class="wave-base" stroke="url(#wave-mint)" />
+        <use href="#wave1" class="data-stream" stroke="#0d9488" />
+    </g>
+
+    <!-- 分子结构式 (Molecular Formula) —— 位于卡片中部右侧偏中 -->
+    <g transform="translate(165, 145)" opacity="0.85" filter="url(#glow)">
+        <!-- 苯环主体 (Benzene Ring) -->
+        <polygon points="30,17 56,17 69,40 56,63 30,63 17,40" fill="none" stroke="#334155" stroke-width="1.2" />
+        <!-- 苯环内双键 -->
+        <line x1="33" y1="21" x2="53" y2="21" stroke="#334155" stroke-width="1.2" />
+        <line x1="63" y1="40" x2="53" y2="58" stroke="#334155" stroke-width="1.2" />
+        <line x1="22" y1="40" x2="31" y2="58" stroke="#334155" stroke-width="1.2" />
+        
+        <!-- 化学键支链 -->
+        <!-- 左侧连接羟基 -OH -->
+        <line x1="17" y1="40" x2="0" y2="40" stroke="#334155" stroke-width="1.2" />
+        <text x="-16" y="43" font-family="'Courier New', Courier, monospace" font-size="8px" font-weight="bold" fill="#334155">HO</text>
+
+        <!-- 顶端连接醛基/羧基 -->
+        <line x1="30" y1="17" x2="20" y2="0" stroke="#334155" stroke-width="1.2" />
+        <line x1="18" y1="0" x2="4" y2="0" stroke="#334155" stroke-width="1.2" />
+        <line x1="22" y1="1" x2="28" y2="-10" stroke="#334155" stroke-width="1" /> <!-- 双键 -->
+        <line x1="19" y1="-1" x2="25" y2="-12" stroke="#334155" stroke-width="1" />
+        <text x="27" y="-14" font-family="'Courier New', Courier, monospace" font-size="8px" font-weight="bold" fill="#334155">O</text>
+        <text x="-4" y="3" font-family="'Courier New', Courier, monospace" font-size="8px" font-weight="bold" fill="#334155">O</text>
+
+        <!-- 右侧连接酯基分支 -->
+        <line x1="56" y1="63" x2="69" y2="85" stroke="#334155" stroke-width="1.2" />
+        <!-- 酯键双键 O -->
+        <line x1="67" y1="84" x2="61" y2="94" stroke="#334155" stroke-width="1" />
+        <line x1="70" y1="86" x2="64" y2="96" stroke="#334155" stroke-width="1" />
+        <text x="54" y="104" font-family="'Courier New', Courier, monospace" font-size="8px" font-weight="bold" fill="#334155">O</text>
+        
+        <!-- O-CH2-CH3 -->
+        <line x1="69" y1="85" x2="84" y2="85" stroke="#334155" stroke-width="1.2" />
+        <text x="87" y="88" font-family="'Courier New', Courier, monospace" font-size="8px" font-weight="bold" fill="#334155">O</text>
+        <line x1="97" y1="85" x2="112" y2="95" stroke="#334155" stroke-width="1.2" />
+        <line x1="112" y1="95" x2="128" y2="90" stroke="#334155" stroke-width="1.2" />
+        
+        <!-- HUD 分析标线 -->
+        <path d="M 69,40 L 95,40 L 105,30" fill="none" stroke="#0d9488" stroke-width="0.8" stroke-dasharray="2 2" />
+        <text x="108" y="28" class="tech-text" style="font-size: 7px;">RECEPTOR_BINDING</text>
+    </g>
+
+    <!-- 浮动生化 HUD 面板组 -->
+    <g class="floating">
+        <!-- 右上角：分子实时合成监控仪 (Molecular Synthesis Plotter) -->
+        <g transform="translate(270, 75)" opacity="0.9">
+            <!-- 观测窗六角形 -->
+            <polygon points="15,0 30,8.5 30,25.5 15,34 0,25.5 0,8.5" fill="rgba(241, 245, 249, 0.85)" stroke="#94a3b8" stroke-width="0.8" />
+            <!-- 六角形内精细分子简图 -->
+            <circle cx="15" cy="17" r="3" fill="#0d9488" />
+            <line x1="15" y1="17" x2="7" y2="12" stroke="#475569" stroke-width="0.8" />
+            <line x1="15" y1="17" x2="23" y2="12" stroke="#475569" stroke-width="0.8" />
+            <line x1="15" y1="17" x2="15" y2="26" stroke="#475569" stroke-width="0.8" />
+            <circle cx="7" cy="12" r="1.5" fill="#7c3aed" />
+            <circle cx="23" cy="12" r="1.5" fill="#7c3aed" />
+            <circle cx="15" cy="26" r="1.5" fill="#f43f5e" />
+            
+            <circle cx="38" cy="17" r="1.5" fill="#0d9488" class="pulse-node" />
+            <line x1="42" y1="17" x2="52" y2="17" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="2 2" />
+            <text x="56" y="20" class="tech-text">MOL_SYNTH</text>
+        </g>
+    </g>
+
+    <g class="floating-delayed">
+        <!-- 左下角：生化烧瓶与状态节点 (Chemical Flask HUD) -->
+        <g transform="translate(85, 280)" opacity="0.9">
+            <!-- 活性微缩蜂巢格 -->
+            <polygon points="12,0 24,7 24,21 12,28 0,21 0,7" fill="rgba(241, 245, 249, 0.85)" stroke="#7c3aed" stroke-width="0.8" />
+            <!-- 烧瓶简笔 SVG -->
+            <path d="M 9,7 L 15,7 M 10,7 L 10,12 L 6,20 A 2,2 0 0 0 8,22.5 L 16,22.5 A 2,2 0 0 0 18,20 L 14,12 L 14,7" fill="none" stroke="#7c3aed" stroke-width="1" />
+            <!-- 烧瓶内填充液面 -->
+            <path d="M 7,18.5 Q 12,17 17,18.5 L 16.5,21.5 L 7.5,21.5 Z" fill="#c084fc" opacity="0.6" />
+            
+            <line x1="24" y1="14" x2="36" y2="14" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="1 2" />
+            <text x="40" y="17" class="tech-text">LOAD: <tspan class="tech-highlight">STABLE</tspan></text>
+        </g>
+    </g>
+
+    <!-- 边缘测量系统 & 专业生化标注 -->
+    <g opacity="0.85">
+        <!-- 顶部微量刻度尺 -->
+        <g transform="translate(135, 25)">
+            <line x1="0" y1="0" x2="110" y2="0" stroke="#94a3b8" stroke-width="0.6" />
+            <line x1="0" y1="0" x2="0" y2="3" stroke="#94a3b8" stroke-width="0.8" />
+            <line x1="27.5" y1="0" x2="27.5" y2="2" stroke="#94a3b8" stroke-width="0.6" />
+            <line x1="55" y1="0" x2="55" y2="3" stroke="#94a3b8" stroke-width="0.8" />
+            <line x1="82.5" y1="0" x2="82.5" y2="2" stroke="#94a3b8" stroke-width="0.6" />
+            <line x1="110" y1="0" x2="110" y2="3" stroke="#94a3b8" stroke-width="0.8" />
+            <text x="22" y="-5" class="tech-text" style="font-size: 7px; opacity:0.6;">CHEM_INDEX_B_07</text>
+        </g>
+
+        <!-- 左上角标识 -->
+        <path d="M 30 35 L 50 35 L 58 43" fill="none" stroke="#0d9488" stroke-width="1.2" />
+        <circle cx="30" cy="35" r="1.5" fill="#0d9488" />
+        <text x="64" y="46" class="tech-text">MED_SYS: <tspan fill="#0d9488">ACTIVE</tspan></text>
+
+        <!-- 右下角标识 -->
+        <path d="M 354 349 L 334 349 L 326 341" fill="none" stroke="#7c3aed" stroke-width="1.2" />
+        <circle cx="354" cy="349" r="1.5" fill="#7c3aed" />
+        <text x="250" y="338" class="tech-text">BIOPH_OK_STB</text>
+    </g>
+
+    <!-- 四角瞄准锁定指示器 -->
+    <g opacity="0.8">
+        <path d="M 16 28 L 16 16 L 28 16" fill="none" stroke="#94a3b8" stroke-width="1.2" />
+        <path d="M 368 28 L 368 16 L 356 16" fill="none" stroke="#94a3b8" stroke-width="1.2" />
+        <path d="M 16 356 L 16 368 L 28 368" fill="none" stroke="#94a3b8" stroke-width="1.2" />
+        <path d="M 368 356 L 368 368 L 356 368" fill="none" stroke="#94a3b8" stroke-width="1.2" />
+    </g>
+
+    <!-- ==================== 药片、胶囊及流光沿着对应代谢轨道流动动画 ==================== -->
+    
+    <!-- 1. 薄荷绿波浪轨道 (Wave 1)：流动药片与粒子 -->
+    <!-- 银色微型刻槽药片 1 -->
+    <g filter="url(#glow)">
+        <use href="#pill">
+            <animateMotion dur="11s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#wave1" />
+            </animateMotion>
+        </use>
+    </g>
+    <!-- 银色微型刻槽药片 2（延迟发射） -->
+    <g filter="url(#glow)">
+        <use href="#pill">
+            <animateMotion dur="11s" begin="5.5s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#wave1" />
+            </animateMotion>
+        </use>
+    </g>
+    <!-- 轨道一伴随发光粒子 -->
+    <circle r="2" fill="#ffffff" stroke="#0d9488" stroke-width="0.5" filter="url(#glow-strong)">
+        <animateMotion dur="7.5s" repeatCount="indefinite">
+            <mpath href="#wave1" />
+        </animateMotion>
+    </circle>
+
+
+    <!-- 2. 紫罗兰波浪轨道 (Wave 2)：流动胶囊与粒子 -->
+    <!-- 药理缓释胶囊 1 -->
+    <g filter="url(#glow)">
+        <use href="#capsule">
+            <animateMotion dur="14s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#wave2" />
+            </animateMotion>
+        </use>
+    </g>
+    <!-- 药理缓释胶囊 2（延迟发射） -->
+    <g filter="url(#glow)">
+        <use href="#capsule">
+            <animateMotion dur="14s" begin="7s" repeatCount="indefinite" rotate="auto">
+                <mpath href="#wave2" />
+            </animateMotion>
+        </use>
+    </g>
+    <!-- 轨道二伴随发光粒子 -->
+    <circle r="1.8" fill="#e0f2fe" stroke="#7c3aed" stroke-width="0.5" filter="url(#glow)">
+        <animateMotion dur="10s" repeatCount="indefinite" begin="2s">
+            <mpath href="#wave2" />
+        </animateMotion>
+    </circle>
+
+
+    <!-- 3. 落樱粉高频轨道 (Wave 3)：高速光点流 -->
+    <circle r="2.2" fill="#ffffff" stroke="#f43f5e" stroke-width="0.5" filter="url(#glow-strong)">
+        <animateMotion dur="9s" repeatCount="indefinite" begin="1.5s">
+            <mpath href="#wave3" />
+        </animateMotion>
+    </circle>
+
+    <circle r="1.5" fill="#f43f5e" filter="url(#glow)">
+        <animateMotion dur="13s" repeatCount="indefinite" begin="4.5s">
+            <mpath href="#wave3" />
+        </animateMotion>
+    </circle>
+
+</svg>

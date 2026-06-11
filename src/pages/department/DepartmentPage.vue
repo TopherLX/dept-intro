@@ -6,7 +6,7 @@
       title="部门概览"
       subtitle="临床科学编程室 · 团队总览"
     />
-    <MembersSection :members="[]" />
+    <MembersSection :members="members" />
     <WorkModeSection />
   </div>
 </template>
@@ -15,4 +15,5 @@
 import HeroSection from '@/components/hero/HeroSection.vue'
 import MembersSection from '@/components/members/MembersSection.vue'
 import WorkModeSection from '@/components/workmode/WorkModeSection.vue'
+import { members } from '@/data/department'
 </script>

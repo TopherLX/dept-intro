@@ -7,7 +7,7 @@
     >
       <!-- Avatar -->
       <div
-        class="w-9 h-9 rounded-full border-2 flex-shrink-0 flex items-center justify-center"
+        class="w-9 h-9 rounded-full border-2 shrink-0 flex items-center justify-center"
         :class="[avatarBg, avatarBorder]"
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" :stroke="iconColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -16,7 +16,7 @@
         </svg>
       </div>
       <div class="text-left min-w-0">
-        <div class="font-bold text-[13px] text-[#1E293B] leading-tight truncate">{{ node.name }}</div>
+        <div class="font-heading font-bold text-[13px] text-[#1E293B] leading-tight truncate">{{ node.name }}</div>
         <div class="text-[10px] text-[#64748B] leading-tight truncate">{{ node.title }}</div>
       </div>
     </div>

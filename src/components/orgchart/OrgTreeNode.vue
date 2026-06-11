@@ -2,24 +2,24 @@
   <div class="flex flex-col items-center">
     <!-- Card -->
     <div
-      class="bg-white border-2 border-[#1E293B] rounded-[16px] px-5 py-3 flex flex-col items-center gap-2 w-[240px] transition-all duration-200 hover:scale-105"
+      class="bg-white border-2 border-[#1E293B] rounded-[16px] px-5 py-3 flex items-center gap-3.5 w-[240px] transition-all duration-200 hover:scale-105"
       :style="{ boxShadow: `4px 4px 0 ${shadowColor}` }"
     >
-      <!-- Row 1: Avatar + Name -->
-      <div class="flex items-center gap-2.5">
-        <div
-          class="w-12 h-12 rounded-full border-2 shrink-0 flex items-center justify-center"
-          :class="[avatarBg, avatarBorder]"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" :stroke="iconColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="8" r="4" />
-            <path d="M4 22c0-4 4-7 8-7s8 3 8 7" />
-          </svg>
-        </div>
-        <div class="font-heading font-bold text-base text-[#1E293B] leading-tight">{{ node.name }}</div>
+      <!-- Left: Avatar -->
+      <div
+        class="w-12 h-12 rounded-full border-2 shrink-0 flex items-center justify-center"
+        :class="[avatarBg, avatarBorder]"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" :stroke="iconColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 22c0-4 4-7 8-7s8 3 8 7" />
+        </svg>
       </div>
-      <!-- Row 2: Title -->
-      <div class="text-sm text-[#64748B] leading-tight">{{ node.title }}</div>
+      <!-- Right: Name + Title -->
+      <div class="text-left min-w-0">
+        <div class="font-heading font-bold text-base text-[#1E293B] leading-tight">{{ node.name }}</div>
+        <div class="text-sm text-[#64748B] leading-tight">{{ node.title }}</div>
+      </div>
     </div>
 
     <!-- Children: horizontal (L1→L2) -->

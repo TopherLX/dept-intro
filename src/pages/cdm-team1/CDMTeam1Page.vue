@@ -15,6 +15,6 @@ import OrgChartSection from '@/components/orgchart/OrgChartSection.vue'
 import ProjectAnalysisSection from '@/components/project-analysis/ProjectAnalysisSection.vue'
 import { hero, teamIntro, responsibilities, members, showcases, topics, trainings, orgChart } from '@/data/cdm-team1'
 
-const visibleSections = ['hero', 'teamIntro', 'responsibilities', 'showcase', 'topics', 'training']
+const visibleSections = ['hero', 'teamIntro', 'responsibilities', 'topics', 'training']
 const teamData = { hero, teamIntro, responsibilities, members, showcases, topics, trainings }
 </script>

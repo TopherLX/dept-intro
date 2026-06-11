@@ -12,6 +12,11 @@ const router = createRouter({
       component: () => import('@/pages/hub/HubPage.vue'),
     },
     {
+      path: '/department',
+      name: 'department',
+      component: () => import('@/pages/department/DepartmentPage.vue'),
+    },
+    {
       path: '/ds-team',
       name: 'ds-team',
       component: () => import('@/pages/ds-team/DSTeamPage.vue'),

@@ -1,5 +1,5 @@
 <template>
-  <section class="pb-24">
+  <section id="responsibilities" class="scroll-mt-16 pb-24">
     <SectionTitle title="核心职责" color="#FBBF24" class="mt-24" />
     <EmptyPlaceholder v-if="responsibilities.length === 0" />
     <template v-else>

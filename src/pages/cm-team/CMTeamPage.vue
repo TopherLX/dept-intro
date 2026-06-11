@@ -19,7 +19,7 @@ import TimelineSection from '@/components/team/TimelineSection.vue'
 import WorkflowImagesSection from '@/components/team/WorkflowImagesSection.vue'
 import ProjectAnalysisSection from '@/components/project-analysis/ProjectAnalysisSection.vue'
 import MonitoringReportSection from '@/components/project-analysis/MonitoringReportSection.vue'
-import { hero, teamIntro, responsibilities, members, showcases, timeline } from '@/data/cm-team'
+import { hero, teamIntro, responsibilities, members, timeline } from '@/data/cm-team'
 
 const visibleSections = ['hero', 'teamIntro', 'responsibilities', 'members']
 const teamData = { hero, teamIntro, responsibilities, members, showcases: [], topics: [], trainings: [] }

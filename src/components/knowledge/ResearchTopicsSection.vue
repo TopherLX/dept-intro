@@ -51,7 +51,7 @@ import SectionTitle from '@/components/shared/SectionTitle.vue'
 
 const props = defineProps<{ topics: ResearchTopic[] }>()
 
-const expanded = ref(new Set<string>())
+const expanded = ref(new Set<string>(['AI & 系统智能化']))
 
 function toggle(category: string) {
   if (expanded.value.has(category)) {

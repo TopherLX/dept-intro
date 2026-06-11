@@ -1,7 +1,9 @@
 <template>
   <TeamPageLayout :data="teamData" :visible-sections="visibleSections">
-    <template #after-members>
+    <template #after-intro>
       <OrgChartSection :data="orgChart" />
+    </template>
+    <template #after-members>
       <WorkingGroupsSection :working-groups="workingGroups" />
     </template>
     <template #after-showcase>

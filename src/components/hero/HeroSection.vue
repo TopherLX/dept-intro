@@ -1,5 +1,5 @@
 <template>
-  <section class="min-h-[85vh] flex items-center relative dot-grid mb-48">
+  <section class="min-h-[85vh] flex items-center relative mb-48">
     <!-- Decorative confetti shapes -->
     <div class="absolute inset-0 select-none pointer-events-none overflow-hidden">
       <div
@@ -61,20 +61,13 @@
       </div>
 
       <!-- Right: hero card -->
-      <div class="flex-shrink-0 w-72 h-72 sm:w-96 sm:h-96 relative">
+      <div v-if="image" class="flex-shrink-0 w-72 h-72 sm:w-96 sm:h-96 relative">
         <div class="relative z-10 rounded-[3rem] rounded-tl-none border-4 border-slate-800 bg-white p-2 shadow-[12px_12px_0px_0px_#F472B6]">
           <img
-            v-if="image"
             :src="image"
             alt="团队"
             class="aspect-square w-full rounded-[2.5rem] rounded-tl-none object-cover"
           />
-          <div
-            v-else
-            class="aspect-square w-full rounded-[2.5rem] rounded-tl-none bg-violet-light flex items-center justify-center"
-          >
-            <span class="text-violet text-2xl">🏗️</span>
-          </div>
         </div>
         <div class="-bottom-10 -right-10 -z-10 absolute h-full w-full rounded-[3rem] rounded-br-none bg-[#8B5CF6] opacity-20" />
       </div>
@@ -87,8 +80,8 @@ import type { HeroData } from '@/data/types'
 
 withDefaults(defineProps<HeroData>(), {
   badge: 'Clinical Data Science',
-  title: '用数据科学\n赋能部门业务',
-  subtitle: '探索从数据采集、治理到智能分析的完整技术生态',
+  title: '待建设',
+  subtitle: '待建设',
   primaryCta: () => ({ text: '了解团队', href: '#team' }),
   secondaryCta: undefined,
   image: `${import.meta.env.BASE_URL}hero/card.svg`,

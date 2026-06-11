@@ -3,7 +3,7 @@ import type { Member, Topic, Training, TeamIntro, Responsibility, Showcase, Hero
 export const hero: HeroData = {
   badge: 'Clinical Data Management · #1',
   title: '临床数据管理一室',
-  subtitle: '内容建设中，敬请期待。',
+  subtitle: '',
   primaryCta: { text: '了解更多', href: '#team' },
   image: '',
 }
@@ -135,7 +135,7 @@ export const orgChart: OrgNode = {
       photo: '杨俐娴.png',
       children: [
         { name: '史庆秀', title: '助理数据经理', photo: '史庆秀.png' },
-        { name: '曹郡颖', title: '助理数据经理', photo: '曹珺颖.png' },
+        { name: '曹珺颖', title: '助理数据经理', photo: '曹珺颖.png' },
       ],
     },
     {

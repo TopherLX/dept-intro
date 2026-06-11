@@ -13,6 +13,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AppFooter: typeof import('./src/components/layout/AppFooter.vue')['default']
     AppHeader: typeof import('./src/components/layout/AppHeader.vue')['default']
+    BackgroundSection: typeof import('./src/components/team/BackgroundSection.vue')['default']
     CoreSkillsSection: typeof import('./src/components/team/CoreSkillsSection.vue')['default']
     EmptyPlaceholder: typeof import('./src/components/shared/EmptyPlaceholder.vue')['default']
     EventsSection: typeof import('./src/components/knowledge/EventsSection.vue')['default']

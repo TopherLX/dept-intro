@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-[85vh] flex flex-col items-center justify-center py-20 px-6 relative dot-grid">
-    <span class="inline-block bg-violet-light text-violet font-bold text-xs px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase">
+  <div class="min-h-[85vh] flex flex-col items-center justify-center py-20 px-6 relative">
+    <span class="inline-block bg-amber-light text-amber-700 font-bold text-xs px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase">
       Clinical Data Department
     </span>
     <h1 class="font-heading text-5xl sm:text-6xl lg:text-7xl font-extrabold text-violet leading-tight mb-5 text-center">
@@ -33,22 +33,22 @@ const topRow = [
   },
   {
     id: 'cdm-team1', to: '/cdm-team1', name: '临床数据管理一室', subtitle: '',
-    stats: '', color: '#F472B6', bgColor: '#FCE7F3', ready: false,
+    stats: '', color: '#F472B6', bgColor: '#FCE7F3', ready: true,
   },
   {
     id: 'cdm-team2', to: '/cdm-team2', name: '临床数据管理二室', subtitle: '',
-    stats: '', color: '#34D399', bgColor: '#D1FAE5', ready: false,
+    stats: '', color: '#34D399', bgColor: '#D1FAE5', ready: true,
   },
 ]
 
 const bottomRow = [
   {
     id: 'cm-team', to: '/cm-team', name: '中心化监查室', subtitle: '',
-    stats: '', color: '#FBBF24', bgColor: '#FEF3C7', ready: false,
+    stats: '', color: '#FBBF24', bgColor: '#FEF3C7', ready: true,
   },
   {
     id: 'safety-team', to: '/safety-team', name: '药物安全组', subtitle: '',
-    stats: '', color: '#60A5FA', bgColor: '#EFF6FF', ready: false,
+    stats: '', color: '#60A5FA', bgColor: '#EFF6FF', ready: true,
   },
 ]
 </script>

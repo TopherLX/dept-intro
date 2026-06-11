@@ -128,6 +128,7 @@ const sectionLabels: Record<string, string> = {
   'monitoring-report':'报告',
   'working-groups':  '工作组',
   'core-skills':     '能力',
+  background:       '背景',
 }
 
 const discoveredSections = ref<{ id: string; label: string }[]>([])

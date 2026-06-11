@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-cream">
+  <div class="min-h-screen dot-grid">
     <AppHeader />
     <main>
       <router-view />

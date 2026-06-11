@@ -3,7 +3,7 @@ import type { Member, Topic, Training, TeamIntro, Responsibility, Showcase, Hero
 export const hero: HeroData = {
   badge: 'Center Monitoring',
   title: '中心化监查室',
-  subtitle: '内容建设中，敬请期待。',
+  subtitle: '',
   primaryCta: { text: '了解更多', href: '#team' },
   image: '',
 }

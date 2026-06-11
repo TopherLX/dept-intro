@@ -36,7 +36,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import SectionTitle from '@/components/shared/SectionTitle.vue'
 
 const props = withDefaults(defineProps<{ file?: string }>(), { file: 'cdm-team1-project-analysis.html' })
-const src = `${import.meta.env.BASE_URL}${props.file}`
+const src = /^https?:\/\//.test(props.file) ? props.file : `${import.meta.env.BASE_URL}${props.file}`
 
 const loaded = ref(false)
 const placeholder = ref<HTMLElement>()

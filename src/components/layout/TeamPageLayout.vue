@@ -1,6 +1,7 @@
 <template>
   <div class="max-w-6xl mx-auto px-6 pb-165">
     <HeroSection v-if="showHero" v-bind="data.hero" />
+    <slot name="after-hero" />
     <TeamIntroSection
       v-if="showTeamIntro"
       :summary="data.teamIntro.summary"

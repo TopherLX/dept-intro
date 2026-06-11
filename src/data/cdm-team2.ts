@@ -3,7 +3,7 @@ import type { Member, Topic, Training, TeamIntro, Responsibility, Showcase, Hero
 export const hero: HeroData = {
   badge: 'Clinical Data Management · #2',
   title: '临床数据管理二室',
-  subtitle: '内容建设中，敬请期待。',
+  subtitle: '',
   primaryCta: { text: '了解更多', href: '#team' },
   image: '',
 }
@@ -13,9 +13,9 @@ export const teamIntro: TeamIntro = {
     '当前团队共17人，其中1人处于试用阶段，其他16人数据管理工作经验均超过3年。团队是一支跨临床场景的复合型团队，融合了三类核心背景人才：传统数据管理背景，临床监查员（CRA）背景，临床协调员（CRC）背景。成员自带临床团队的协同经验，能快速建立和监查、CRC 团队的沟通机制，推动数据问题快速闭环。过去几年中开展内部交叉培训，让传统数据管理背景的成员补充临床场景知识，让临床背景的成员提升数据系统能力，让经验复用，打造人人懂临床、人人懂数据的全能型团队，并综合利用3种经验，实现 “前端预防 - 过程管控 - 后端闭环” 的全流程数据质量管控。',
   highlights: [
     { label: '核心成员', value: '17名' },
-    { label: '数据管理经验', value: '3年+' },
-    { label: '背景类型', value: 'DM+CRA+CRC' },
-    { label: '能力模型', value: '临床+数据全能型' },
+    { label: '数据经验', value: '3年+' },
+    { label: '背景', value: 'DM+CRA+CRC' },
+    { label: '能力模型', value: '临床+数据' },
   ],
 }
 

@@ -3,494 +3,481 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>临床数据部二室 · 项目汇总报告 2026</title>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<title>临床数据管理二室 · 项目汇总可视化分析</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
-  :root { --primary: #0f2540; --accent: #2b6cb0; --success: #2f855a; --warning: #c05621; --danger: #c53030;
-    --bg: #f5f7fa; --card: #ffffff; --text: #2d3748; --muted: #718096; --border: #e2e8f0;
-    --shadow: 0 2px 8px rgba(0,0,0,0.06); --shadow-lg: 0 4px 24px rgba(0,0,0,0.08); }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); line-height:1.6; }
-  .header { background: linear-gradient(135deg, #0f2540 0%, #1a3a5c 40%, #2b6cb0 100%); color:#fff; padding:36px 48px; position:relative; overflow:hidden; }
-  .header::before { content:''; position:absolute; top:-60px; right:-60px; width:260px; height:260px; border-radius:50%; background:rgba(255,255,255,0.03); }
-  .header::after { content:''; position:absolute; bottom:-40px; right:120px; width:160px; height:160px; border-radius:50%; background:rgba(255,255,255,0.04); }
-  .header h1 { font-size:30px; font-weight:700; letter-spacing:0.5px; position:relative; z-index:1; }
-  .header .subtitle { font-size:14px; opacity:0.8; margin-top:6px; position:relative; z-index:1; }
-  .header .meta-row { display:flex; gap:32px; margin-top:16px; font-size:13px; opacity:0.7; position:relative; z-index:1; flex-wrap:wrap; }
-  .kpi-grid { display:grid; grid-template-columns:repeat(6, 1fr); gap:16px; padding:24px 48px; margin-top:-28px; position:relative; z-index:2; }
-  .kpi-card { background:var(--card); border-radius:10px; padding:20px 22px; box-shadow:var(--shadow-lg); border-top:3px solid transparent; transition:transform .2s; }
-  .kpi-card:hover { transform:translateY(-2px); }
-  .kpi-card.accent-1 { border-top-color:#3182ce; } .kpi-card.accent-2 { border-top-color:#2f855a; }
-  .kpi-card.accent-3 { border-top-color:#d69e2e; } .kpi-card.accent-4 { border-top-color:#e53e3e; }
-  .kpi-card.accent-5 { border-top-color:#805ad5; } .kpi-card.accent-6 { border-top-color:#0891b2; }
-  .kpi-label { font-size:12px; color:var(--muted); font-weight:500; }
-  .kpi-value { font-size:32px; font-weight:700; color:var(--primary); margin:4px 0; }
-  .kpi-sub { font-size:12px; color:var(--muted); }
-  .content { padding:24px 48px 48px; }
-  .section-title { font-size:18px; font-weight:700; color:var(--primary); margin:32px 0 16px; padding-bottom:10px; border-bottom:2px solid var(--border); display:flex; align-items:center; gap:10px; }
-  .section-title::before { content:''; display:inline-block; width:4px; height:20px; background:var(--accent); border-radius:2px; flex-shrink:0; }
-  .chart-grid { display:grid; gap:16px; }
-  .chart-grid.cols-2 { grid-template-columns:1fr 1fr; }
-  .chart-grid.cols-3 { grid-template-columns:1fr 1fr 1fr; }
-  .chart-grid.cols-2-1 { grid-template-columns:2fr 1fr; }
-  .chart-card { background:var(--card); border-radius:10px; padding:20px; box-shadow:var(--shadow); }
-  .chart-card h3 { font-size:15px; font-weight:600; color:var(--primary); margin-bottom:12px; }
-  .chart-box { width:100%; height:380px; }
-  .highlight-box { background:linear-gradient(135deg, #fffbeb 0%, #fffaf0 100%); border:1px solid #fbd38d; border-radius:10px; padding:20px 24px; margin:16px 0; }
-  .highlight-box h4 { font-size:14px; font-weight:700; color:#975a16; margin-bottom:8px; }
-  .highlight-box p { font-size:13px; color:#744210; line-height:1.8; }
-  .table-wrap { overflow-x:auto; margin-top:12px; }
-  table { width:100%; border-collapse:collapse; font-size:13px; }
-  thead th { background:#edf2f7; color:var(--primary); padding:10px 12px; text-align:left; font-weight:600; white-space:nowrap; border-bottom:2px solid #cbd5e0; }
-  tbody td { padding:10px 12px; border-bottom:1px solid var(--border); }
-  tbody tr:hover { background:#f7fafc; }
-  .badge { display:inline-block; padding:2px 10px; border-radius:12px; font-size:11px; font-weight:600; white-space:nowrap; }
-  .badge-s { background:#fed7d7; color:#9b2c2c; } .badge-a { background:#fefcbf; color:#975a16; }
-  .badge-b { background:#c6f6d5; color:#276749; } .badge-c { background:#e2e8f0; color:#4a5568; }
-  .badge-nda { background:#e9d8fd; color:#553c9a; } .badge-normal { background:#bee3f8; color:#2a4365; }
-  .badge-close { background:#c6f6d5; color:#276749; } .badge-follow { background:#fefcbf; color:#975a16; }
-  .badge-report { background:#e9d8fd; color:#553c9a; }
-  .footer { padding:20px 48px; text-align:center; color:var(--muted); font-size:12px; border-top:1px solid var(--border); }
-  @media (max-width:1400px) { .kpi-grid { grid-template-columns:repeat(3, 1fr); } }
-  @media (max-width:1000px) { .chart-grid.cols-2, .chart-grid.cols-3, .chart-grid.cols-2-1 { grid-template-columns:1fr; } .kpi-grid { grid-template-columns:repeat(2, 1fr); } }
+:root {
+    --c1:#7b95c6;--c2:#49c2d9;--c3:#a1d8e8;--c4:#67a583;--c5:#a2c986;--c6:#d0e2c0;
+    --c7:#fded95;--c8:#ffc1a6;--c9:#f59c7c;--c10:#f47254;--c11:#c85e62;
+    --bg-page:#f7f8fb;--bg-card:#fff;--text-primary:#1c1e24;--text-secondary:#5b5f6b;
+    --text-muted:#9398a5;--border-light:#e4e7ee;--border-subtle:#eef0f5;
+    --fill-stripe:#f5f6fa;--fill-hover:#edf0f7;
+    --shadow-sm:0 1px 3px rgba(0,0,0,0.04);--shadow-md:0 2px 10px rgba(0,0,0,0.06);
+    --radius-sm:5px;--radius-md:10px;
+    --font-display:'Georgia','Noto Serif SC','Times New Roman',serif;
+    --font-body:'Segoe UI','Microsoft YaHei',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font-body);background:var(--bg-page);color:var(--text-primary);min-height:100vh;padding:28px 22px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+.container{max-width:1760px;margin:0 auto;}
+
+.section-label{display:flex;align-items:center;gap:10px;margin:32px 0 18px 4px;font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--text-primary);}
+.section-label .num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;background:var(--c1);color:#fff;border-radius:50%;font-size:15px;font-weight:700;flex-shrink:0;font-family:var(--font-body);}
+
+.section-label::after{content:'';flex:1;height:1px;background:var(--border-light);margin-left:16px;}
+
+.header{text-align:center;padding:38px 30px 32px;margin-bottom:28px;background:var(--bg-card);border:1px solid var(--border-light);border-radius:14px;box-shadow:var(--shadow-sm);}
+.header h1{font-family:var(--font-display);font-size:25px;font-weight:700;color:var(--text-primary);letter-spacing:0.02em;margin-bottom:4px;}
+.header .subtitle{font-size:12px;color:var(--text-muted);letter-spacing:0.06em;text-transform:uppercase;}
+.header .meta-row{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px;flex-wrap:wrap;}
+
+.header .date-tag{font-size:12px;color:var(--text-secondary);}
+.header .date-tag strong{color:var(--text-primary);font-family:var(--font-body);font-variant-numeric:tabular-nums;font-feature-settings:"tnum";}
+
+.stats-row{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:20px 14px 16px;text-align:center;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;transition:box-shadow 0.2s,transform 0.15s;}
+.stat-card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px);}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.stat-card.ac1::before{background:var(--c1);}.stat-card.ac2::before{background:var(--c2);}.stat-card.ac4::before{background:var(--c4);}.stat-card.ac9::before{background:var(--c9);}.stat-card.ac10::before{background:var(--c10);}.stat-card.ac11::before{background:var(--c11);}
+.stat-card .stat-number{font-family:'Segoe UI','Microsoft YaHei',system-ui,-apple-system,sans-serif;font-size:36px;font-weight:700;color:var(--text-primary);line-height:1.2;font-variant-numeric:tabular-nums;font-feature-settings:"tnum";}
+.stat-card .stat-label{font-size:11px;color:var(--text-secondary);margin-top:4px;letter-spacing:0.03em;}
+
+.chart-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:24px;}
+.chart-grid.col2{grid-template-columns:repeat(2,1fr);}
+.chart-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:18px;box-shadow:var(--shadow-sm);transition:box-shadow 0.2s;}
+.chart-card:hover{box-shadow:var(--shadow-md);}
+.chart-card.full-width{grid-column:1/-1;}
+.chart-row-split{grid-column:1/-1;display:flex;gap:18px;}
+.chart-row-split>.chart-card:first-child{width:38%;min-width:0;flex-shrink:0;}
+.chart-row-split>.chart-card:last-child{flex:1;min-width:0;}
+
+.chart-title{display:flex;align-items:center;gap:7px;font-family:var(--font-display);font-size:14px;font-weight:600;color:var(--text-primary);margin-bottom:14px;padding-bottom:9px;border-bottom:1px solid var(--border-subtle);}
+
+.chart-container{height:330px;width:100%;}.chart-container-sm{height:280px;width:100%;}.chart-container-md{height:380px;width:100%;}.chart-container-lg{height:420px;width:100%;}.chart-container-tall{height:440px;width:100%;}.chart-container-sb{height:500px;width:100%;min-width:0;}.chart-container-tm{height:420px;width:100%;}
+
+.tab-buttons{display:flex;justify-content:center;gap:5px;margin-top:12px;flex-wrap:wrap;}
+.tab-btn{padding:5px 14px;border:1px solid var(--border-light);background:var(--bg-card);border-radius:16px;cursor:pointer;font-size:11px;font-weight:600;color:var(--text-secondary);transition:all 0.2s;font-family:var(--font-body);}
+.tab-btn:hover{border-color:var(--c1);color:var(--c1);}
+.tab-btn.active{background:var(--c1);color:#fff;border-color:var(--c1);}
+
+.detail-section{background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:22px;margin-bottom:24px;box-shadow:var(--shadow-sm);}
+.detail-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.detail-title{display:flex;align-items:center;gap:8px;font-family:var(--font-display);font-size:16px;font-weight:600;color:var(--text-primary);}
+
+.export-btn{display:inline-flex;align-items:center;gap:6px;background:var(--c1);color:#fff;border:none;padding:8px 18px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;transition:all 0.2s;font-family:var(--font-body);}
+.export-btn:hover{background:#6b86b8;box-shadow:0 2px 10px rgba(123,149,198,0.3);}
+
+.filter-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px;margin-bottom:14px;padding:14px;background:var(--fill-stripe);border-radius:var(--radius-sm);border:1px solid var(--border-subtle);}
+.filter-item{display:flex;flex-direction:column;}
+.filter-item label{font-size:10px;color:var(--text-muted);margin-bottom:3px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;}
+.filter-item select,.filter-item input{padding:6px 10px;border:1px solid var(--border-light);border-radius:4px;font-size:11px;color:var(--text-primary);background:var(--bg-card);cursor:pointer;transition:border-color 0.2s;font-family:var(--font-body);}
+.filter-item select:focus,.filter-item input:focus{outline:none;border-color:var(--c1);box-shadow:0 0 0 2px rgba(123,149,198,0.08);}
+.reset-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border:1px solid var(--border-light);background:var(--bg-card);border-radius:4px;cursor:pointer;font-size:11px;color:var(--text-secondary);transition:all 0.2s;font-family:var(--font-body);align-self:flex-end;}
+.reset-btn:hover{border-color:var(--c11);color:var(--c11);}
+
+.table-container{overflow-x:auto;max-height:560px;overflow-y:auto;border-radius:var(--radius-sm);border:1px solid var(--border-light);}
+.data-table{width:100%;border-collapse:collapse;font-size:11px;min-width:1200px;font-variant-numeric:tabular-nums;font-feature-settings:"tnum";}
+.data-table thead{position:sticky;top:0;z-index:10;}
+.data-table th{background:#e9ecf3;color:var(--text-primary);padding:9px 7px;text-align:left;font-weight:600;font-size:10px;white-space:nowrap;border-bottom:2px solid #cdd3de;cursor:pointer;user-select:none;letter-spacing:0.03em;}
+.data-table th:hover{background:#dfe3ec;}
+.data-table th .sort-icon{margin-left:3px;font-size:9px;opacity:0.35;}
+.data-table th.sorted .sort-icon{opacity:1;}
+.data-table td{padding:7px;border-bottom:1px solid var(--border-subtle);color:var(--text-primary);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.data-table tbody tr:hover{background:var(--fill-hover);}
+.data-table tbody tr:nth-child(even){background:var(--fill-stripe);}
+.data-table tbody tr:nth-child(even):hover{background:#e9ecf3;}
+
+.status-tag{display:inline-block;padding:2px 10px;border-radius:10px;font-size:10px;font-weight:600;white-space:nowrap;}
+.status-ongoing{background:#d9ecfc;color:#1a5494;}.status-notstarted{background:#e9ebef;color:#3d4247;}.status-filing{background:#daf2df;color:#1e6130;}.status-nofiling{background:#fef2d6;color:#7a5518;}.status-terminated{background:#fde4e2;color:#8b2821;}
+
+.record-count{margin-top:12px;padding:7px 14px;background:var(--fill-stripe);border-radius:var(--radius-sm);font-size:11px;color:var(--text-secondary);border:1px solid var(--border-subtle);}
+.record-count strong{color:var(--c1);font-weight:700;}
+.pagination{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding:10px 14px;background:var(--fill-stripe);border-radius:var(--radius-sm);border:1px solid var(--border-subtle);}
+.pagination-info{font-size:11px;color:var(--text-secondary);}
+.pagination-controls{display:flex;gap:6px;align-items:center;}
+.pagination-btn{padding:5px 12px;border:1px solid var(--border-light);background:var(--bg-card);border-radius:4px;cursor:pointer;font-size:11px;color:var(--text-primary);transition:all 0.2s;font-family:var(--font-body);}
+.pagination-btn:hover:not(:disabled){background:var(--c1);color:#fff;border-color:var(--c1);}
+.pagination-btn:disabled{opacity:0.4;cursor:not-allowed;}
+.page-input{width:44px;padding:5px;border:1px solid var(--border-light);border-radius:4px;text-align:center;font-size:11px;color:var(--text-primary);font-family:var(--font-body);}
+.page-input:focus{outline:none;border-color:var(--c1);}
+
+.footer{text-align:center;padding:20px;color:var(--text-muted);font-size:11px;letter-spacing:0.03em;border-top:1px solid var(--border-subtle);margin-top:4px;}
+
+@media(max-width:1400px){.chart-grid{grid-template-columns:repeat(2,1fr);}.chart-grid.col2{grid-template-columns:1fr;}.chart-row-split{flex-direction:column;}.chart-row-split>.chart-card:first-child{width:100%;}.stats-row{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:768px){body{padding:12px 8px;}.stats-row{grid-template-columns:repeat(2,1fr);}.filter-row{grid-template-columns:1fr;}.header h1{font-size:19px;}}
 </style>
 </head>
 <body>
+<div class="container">
+
+<!-- HEADER -->
 <div class="header">
-  <h1>临床数据部二室 · 项目汇总报告</h1>
-  <div class="subtitle">项目全景分析与2026年度关键节点进展汇报</div>
-  <div class="meta-row">
-    <span>报告周期：截至2026年6月</span>
-    <span>汇报对象：临床数据部</span>
-    <span>项目总数：60个</span>
-    <span>制表日期：2026年6月8日</span>
-  </div>
+<h1>项目汇总可视化分析报告</h1>
+<div class="subtitle">临床数据管理二室</div>
+<div class="meta-row">
+<span class="date-tag">汇总日期：<strong>2026年06月11日</strong></span>
+</div>
 </div>
 
-<div class="kpi-grid">
-  <div class="kpi-card accent-1">
-    <div class="kpi-label">项目总量</div>
-    <div class="kpi-value">60</div>
-    <div class="kpi-sub">覆盖16个适应症方向</div>
-  </div>
-  <div class="kpi-card accent-2">
-    <div class="kpi-label">在研项目</div>
-    <div class="kpi-value">52</div>
-    <div class="kpi-sub">占比86.7%，结题申报4个</div>
-  </div>
-  <div class="kpi-card accent-3">
-    <div class="kpi-label">S级重点项目</div>
-    <div class="kpi-value">10</div>
-    <div class="kpi-sub">A级28个 · B级14个 · C级8个</div>
-  </div>
-  <div class="kpi-card accent-4">
-    <div class="kpi-label">2026年关键申报</div>
-    <div class="kpi-value">6</div>
-    <div class="kpi-sub">2个NDA + 2个Pre-NDA + 期中分析2个</div>
-  </div>
-  <div class="kpi-card accent-5">
-    <div class="kpi-label">LDM团队</div>
-    <div class="kpi-value">16</div>
-    <div class="kpi-sub">人均管理3.8个项目</div>
-  </div>
-  <div class="kpi-card accent-6">
-    <div class="kpi-label">里程碑全覆盖</div>
-    <div class="kpi-value">100%</div>
-    <div class="kpi-sub">46个项目按计划正常运行</div>
-  </div>
+<!-- ═══════════ 一、科室总览 ═══════════ -->
+<div class="section-label"><span class="num">一</span>科室总览</div>
+
+<div class="stats-row">
+<div class="stat-card ac1"><div class="stat-number" id="totalProjects">-</div><div class="stat-label">项目总数</div></div>
+<div class="stat-card ac10"><div class="stat-number" id="totalSA">-</div><div class="stat-label">S/A类项目</div></div>
+<div class="stat-card ac2"><div class="stat-number" id="totalLDM">-</div><div class="stat-label">DM总人数</div></div>
+<div class="stat-card ac4"><div class="stat-number" id="avgPerLDM">-</div><div class="stat-label">均项目数/LDM</div></div>
+<div class="stat-card ac9"><div class="stat-number" id="totalCases">-</div><div class="stat-label">累计入组病例</div></div>
+<div class="stat-card ac11"><div class="stat-number" id="totalOngoing">-</div><div class="stat-label">在研项目数</div></div>
 </div>
 
-<div class="content">
-  <div class="highlight-box">
-    <h4>核心管理亮点与成绩</h4>
-    <p>
-      二室目前管理<strong>60个活跃项目</strong>，覆盖<strong>16个适应症方向</strong>，涵盖肿瘤（44个，占比73.3%）等多治疗领域。
-      项目团队<strong>16名LDM</strong>在项目质量、进度管理和跨部门协作方面保持高水平交付，<strong>全部60个项目均已完成2026年节点规划，节点覆盖率100%</strong>。
-      <strong>2个项目已完成NDA锁库</strong>，2个处于Pre-NDA阶段，2个完成期中分析，4个进入结题申报阶段。
-      项目在研率86.7%，S级项目全面受控，46个项目按计划正常运行。
-    </p>
-  </div>
-
-  <div class="section-title">一、适应症领域布局分析</div>
-  <div class="chart-grid cols-2-1">
-    <div class="chart-card">
-      <h3>适应症（大类）项目分布</h3>
-      <div class="chart-box" id="chart-indication"></div>
-    </div>
-    <div class="chart-card">
-      <h3>治疗领域构成</h3>
-      <div class="chart-box" id="chart-tumor-pie"></div>
-    </div>
-  </div>
-  <div class="chart-grid cols-3" style="margin-top:16px;">
-    <div class="chart-card">
-      <h3>肿瘤领域亚型分布</h3>
-      <div class="chart-box" id="chart-tumor-sub"></div>
-    </div>
-    <div class="chart-card">
-      <h3>非肿瘤领域分布</h3>
-      <div class="chart-box" id="chart-nontumor"></div>
-    </div>
-    <div class="chart-card">
-      <h3>临床分期分布</h3>
-      <div class="chart-box" id="chart-phase"></div>
-    </div>
-  </div>
-
-  <div class="section-title">二、项目等级与状态管控</div>
-  <div class="chart-grid cols-2">
-    <div class="chart-card">
-      <h3>项目等级（S/A/B/C）分布</h3>
-      <div class="chart-box" id="chart-level"></div>
-    </div>
-    <div class="chart-card">
-      <h3>项目状态总览</h3>
-      <div class="chart-box" id="chart-status"></div>
-    </div>
-  </div>
-  <div class="chart-grid cols-2" style="margin-top:16px;">
-    <div class="chart-card">
-      <h3>项目等级 × 项目状态 交叉分析</h3>
-      <div class="chart-box" id="chart-level-status"></div>
-    </div>
-    <div class="chart-card">
-      <h3>各等级项目的临床分期构成</h3>
-      <div class="chart-box" id="chart-level-phase"></div>
-    </div>
-  </div>
-
-  <div class="section-title">三、2026年度关键节点与里程碑</div>
-  <div class="chart-grid cols-2">
-    <div class="chart-card">
-      <h3>2026年项目节点分布</h3>
-      <div class="chart-box" id="chart-milestone"></div>
-    </div>
-    <div class="chart-card">
-      <h3>NDA/Pre-NDA/期中分析项目一览</h3>
-      <div class="chart-box" id="chart-nda-timeline"></div>
-    </div>
-  </div>
-
-  <div class="chart-card" style="margin-top:16px;">
-    <h3>重点项目清单（S级 & NDA/Pre-NDA/期中分析项目）</h3>
-    <div class="table-wrap" id="key-table-container"></div>
-  </div>
-
-  <div class="section-title">四、团队资源与项目管理效能</div>
-  <div class="chart-grid cols-2">
-    <div class="chart-card">
-      <h3>LDM项目负载分布</h3>
-      <div class="chart-box" id="chart-ldm"></div>
-    </div>
-    <div class="chart-card">
-      <h3>各等级项目按LDM分布</h3>
-      <div class="chart-box" id="chart-ldm-level"></div>
-    </div>
-  </div>
+<div class="chart-grid">
+<div class="chart-card"><div class="chart-title">试验分期项目分布</div><div id="chart1" class="chart-container"></div></div>
+<div class="chart-card"><div class="chart-title">项目等级分布及占比</div><div id="chart2" class="chart-container"></div></div>
+<div class="chart-card"><div class="chart-title">项目状态占比</div><div id="chart4" class="chart-container"></div></div>
 </div>
 
-<div class="footer">
-  临床数据部二室 · 项目汇总报告 · 数据截止至2026年6月8日 · 仅供内部管理使用
+<!-- 适应症大类 + 项目阶段 -->
+<div class="chart-grid col2">
+<div class="chart-card"><div class="chart-title">适应症（大类）项目分布</div><div id="chartIndication" class="chart-container-md"></div></div>
+<div class="chart-card"><div class="chart-title">项目阶段分布</div><div id="chartStage" class="chart-container-md"></div></div>
+</div>
+
+<!-- 治疗领域构成：左侧肿瘤领域树图 + 右侧非肿瘤领域环形图 -->
+<div class="chart-card full-width" style="margin-bottom:24px;">
+<div class="chart-title">治疗领域构成</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:0 12px;">
+<div>
+<div class="tab-buttons" id="tumorTabs" style="margin-bottom:10px;justify-content:center;"><button class="tab-btn active" data-dim="big">适应症大类</button><button class="tab-btn" data-dim="small">适应症小类</button></div>
+<div id="chartTumorTreemap" class="chart-container-tm"></div>
+<div style="text-align:center;font-size:11px;color:var(--text-muted);margin-top:6px;">肿瘤领域亚型分布</div>
+</div>
+<div>
+<div id="chartNonTumorDonut" class="chart-container-tm"></div>
+<div style="text-align:center;font-size:11px;color:var(--text-muted);margin-top:6px;">非肿瘤领域分布</div>
+</div>
+</div>
+</div>
+
+<!-- ═══════════ 二、小组对比 ═══════════ -->
+<div class="section-label"><span class="num">二</span>小组对比</div>
+
+<div class="chart-row-split">
+<div class="chart-card"><div class="chart-title">各小组项目数量旭日图</div><div id="chartSunburst" class="chart-container-sb"></div></div>
+<div class="chart-card"><div class="chart-title">各小组分布详情</div><div id="chartGroupDist" class="chart-container-sb"></div>
+<div class="tab-buttons" id="groupDistTabs"><button class="tab-btn active" data-dim="phase">试验分期</button><button class="tab-btn" data-dim="grade">项目等级</button><button class="tab-btn" data-dim="status">项目状态</button></div>
+</div>
+</div>
+
+<!-- ═══════════ 三、个人层面 ═══════════ -->
+<div class="section-label"><span class="num">三</span>个人层面</div>
+
+<div class="chart-grid col2">
+<div class="chart-card"><div class="chart-title">各LDM项目负荷（项目数 & 入组病例）</div><div id="chartLDMWorkload" class="chart-container-md"></div></div>
+<div class="chart-card"><div class="chart-title">各LDM负责项目数量（按等级区分，标注入组病例数）</div><div id="chart3" class="chart-container-tall"></div></div>
+</div>
+<div class="chart-grid">
+<div class="chart-card full-width"><div class="chart-title">各LDM负责分期项目分布</div><div id="chart5" class="chart-container-tall"></div></div>
+</div>
+
+<!-- ═══════════ 四、项目明细 ═══════════ -->
+<div class="section-label"><span class="num">四</span>项目明细</div>
+
+<div class="detail-section">
+<div class="detail-header"><div class="detail-title">项目明细表</div><button class="export-btn" onclick="exportToExcel()">导出Excel</button></div>
+<div class="filter-row">
+<div class="filter-item"><label>方案编号</label><input type="text" id="filterCode" placeholder="搜索…" oninput="applyFilters()"></div>
+<div class="filter-item"><label>所属小组</label><select id="filterGroup" onchange="applyFilters()"><option value="">全部</option></select></div>
+<div class="filter-item"><label>试验分期</label><select id="filterPhase" onchange="applyFilters()"><option value="">全部</option></select></div>
+<div class="filter-item"><label>项目等级</label><select id="filterGrade" onchange="applyFilters()"><option value="">全部</option></select></div>
+<div class="filter-item"><label>治疗领域</label><select id="filterTherapy" onchange="applyFilters()"><option value="">全部</option></select></div>
+<div class="filter-item"><label>项目阶段</label><select id="filterStage" onchange="applyFilters()"><option value="">全部</option></select></div>
+<div class="filter-item"><label>LDM</label><select id="filterLDM" onchange="applyFilters()"><option value="">全部</option></select></div>
+<div class="filter-item"><label>项目状态</label><select id="filterStatus" onchange="applyFilters()"><option value="">全部</option></select></div>
+<div class="filter-item"><label>&nbsp;</label><button class="reset-btn" onclick="resetFilters()">重置</button></div>
+</div>
+<div class="table-container"><table class="data-table" id="dataTable"><thead><tr>
+<th onclick="sortTable('方案编号')">序号<span class="sort-icon">↕</span></th><th onclick="sortTable('方案编号')">方案编号<span class="sort-icon">↕</span></th><th onclick="sortTable('所属小组')">所属小组<span class="sort-icon">↕</span></th><th onclick="sortTable('试验分期')">试验分期<span class="sort-icon">↕</span></th><th onclick="sortTable('项目等级')">项目等级<span class="sort-icon">↕</span></th><th onclick="sortTable('治疗领域')">治疗领域<span class="sort-icon">↕</span></th><th onclick="sortTable('适应症（大类）')">适应症大类<span class="sort-icon">↕</span></th><th onclick="sortTable('适应症（小类）')">适应症小类<span class="sort-icon">↕</span></th><th onclick="sortTable('项目阶段')">项目阶段<span class="sort-icon">↕</span></th><th onclick="sortTable('实际入组病例数')">实际入组<span class="sort-icon">↕</span></th><th onclick="sortTable('LDM')">LDM<span class="sort-icon">↕</span></th><th onclick="sortTable('LDM所属科室')">科室<span class="sort-icon">↕</span></th><th onclick="sortTable('项目状态')">项目状态<span class="sort-icon">↕</span></th>
+</tr></thead><tbody id="tableBody"></tbody></table></div>
+<div class="record-count">共 <strong id="totalCount">0</strong> 条记录，显示 <strong id="filteredCount">0</strong> 条</div>
+<div class="pagination"><div class="pagination-info">第 <span id="currentPage">1</span> / <span id="totalPages">1</span> 页 · 每页30条</div>
+<div class="pagination-controls"><button class="pagination-btn" onclick="prevPage()" id="prevBtn">上一页</button><button class="pagination-btn" onclick="nextPage()" id="nextBtn">下一页</button><span style="font-size:11px;color:var(--text-secondary);">跳转</span><input type="number" class="page-input" id="pageInput" min="1" value="1" onchange="goToPage()"><span style="font-size:11px;color:var(--text-secondary);">页</span></div></div>
+</div>
+
+<div class="footer"><p>临床数据管理二室 · 项目汇总可视化分析报告 · v2.0</p></div>
 </div>
 
 <script>
-var projectData = [{"protocol": "TQH2722-III-01", "phase": "III", "tumor": "自免", "indication_large": "自免", "indication_small": "特应性皮炎", "protocol_name": "评价TQH2722注射液治疗中重度特应性皮炎受试者的有效性和安全性的多中心、随机、双盲、安慰剂对照III期临床试验", "level": "S", "enrolled": "500", "status": "在研", "ldm": "袁文英", "pm": "王栋", "mm": "谭鸿", "plan_centers": "76", "plan_cases": "500", "enroll_complete": "2025-05-20 00:00:00", "milestone_2026": "NDA", "lock_time": "计划2026-06-19锁完", "notes": "2026-05-12确定BLA的timeline计划：\n截断日期=2026.05.22\n①末例W52随访（V28/W52）：2026.05.20\n②数据冻结时间 2026.06.10；\n③数据审核报告定稿 2026.06.17；\n④EDC电子签完成 2026.06.12；\n⑤锁定完成数据编码后传输统计 2026.06.23；\n⑥BLA资料递交 2026.08.23."}, {"protocol": "TQB3122-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "晚期恶性肿瘤", "indication_small": "晚期恶性肿瘤", "protocol_name": "评价TQB3122胶囊在晚期恶性肿瘤受试者中的安全性、耐受性、药代动力学和初步疗效的I期临床研究", "level": "A", "enrolled": "3", "status": "在研", "ldm": "袁文英", "pm": "粟倩", "mm": "刘嘉伟", "plan_centers": "多中心", "plan_cases": "14~26", "enroll_complete": "2026-12-31 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQH2722-I-02", "phase": "I", "tumor": "自免", "indication_large": "自免", "indication_small": "其他", "protocol_name": "评价TQH2722注射液在健康成人研究参与者中的随机、开放、单次给药、两制剂、平行设计的药代动力学比对试验", "level": "B", "enrolled": "216", "status": "在研", "ldm": "袁文英", "pm": "姚伟强", "mm": "王欣", "plan_centers": "1", "plan_cases": "216", "enroll_complete": "2026-03-10 00:00:00", "milestone_2026": "结题不申报", "lock_time": "计划2026-06-18锁完", "notes": "2026-01-02至2026-03-07完成入组；\n2026-06-18锁定"}, {"protocol": "TQB2934-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "多发性骨髓瘤", "protocol_name": "评估注射用TQB2934在多发性骨髓瘤受试者中耐受性和药代动力学的I期临床试验", "level": "C", "enrolled": "60", "status": "在研", "ldm": "李银萍", "pm": "张倩倩", "mm": "李文君", "plan_centers": "14", "plan_cases": "60", "enroll_complete": "2025-05-28 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": "2026-06完成写文章清理"}, {"protocol": "TQC3721-D8-I-01", "phase": "I", "tumor": "呼吸", "indication_large": "COPD", "indication_small": "COPD", "protocol_name": "TQC3721吸入粉雾剂在慢性阻塞性肺疾病患者中单次/多次剂量递增安全性、耐受性和药代/药效动力学特征的I期临床研究", "level": "A", "enrolled": "101", "status": "在研", "ldm": "徐露露", "pm": "杨蒙", "mm": "李卫国", "plan_centers": "7", "plan_cases": "48-72", "enroll_complete": "2026-07-15 00:00:00", "milestone_2026": "结题不申报", "lock_time": "计划2026-11-02完成锁库", "notes": ""}, {"protocol": "TQC2731-III-02", "phase": "III", "tumor": "呼吸", "indication_large": "鼻窦炎", "indication_small": "鼻窦炎", "protocol_name": "评价TQC2731注射液治疗慢性鼻窦炎伴鼻息肉患者的有效性、安全性的多中心、随机、双盲、安慰剂平行对照的III期临床试验", "level": "S", "enrolled": "198", "status": "在研", "ldm": "徐露露", "pm": "张浅", "mm": "朱冬伊", "plan_centers": "60", "plan_cases": "246", "enroll_complete": "2026-09-30 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQH3906-II-03", "phase": "II", "tumor": "自免", "indication_large": "自免", "indication_small": "系统性红斑狼疮", "protocol_name": "评估TQH3906治疗系统性红斑狼疮的有效性与安全性的随机、双盲、安慰剂对照、多中心II期临床试验", "level": "A", "enrolled": "0", "status": "在研", "ldm": "徐露露", "pm": "邱洁", "mm": "张佳薇", "plan_centers": "30", "plan_cases": "198", "enroll_complete": "2027-02-28 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB3002-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "肺癌", "indication_small": "非小细胞肺癌", "protocol_name": "评估TQB3002片在晚期恶性肿瘤中的安全性、耐受性和药代动力学I期临床试验", "level": "C", "enrolled": "14", "status": "终止", "ldm": "许童瑶", "pm": "汤少男", "mm": "苏楠", "plan_centers": "10", "plan_cases": "130", "enroll_complete": "2026-12-31 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": "2026年3月终止"}, {"protocol": "TQB2102-II-02", "phase": "II", "tumor": "肿瘤", "indication_large": "乳腺肿瘤", "indication_small": "乳腺肿瘤", "protocol_name": "评估注射用TQB2102在HER2阴性复发/转移性乳腺癌中的有效性和安全性的II期临床试验", "level": "B", "enrolled": "38", "status": "在研", "ldm": "许童瑶", "pm": "张鸿鹍", "mm": "董新军", "plan_centers": "17", "plan_cases": "42", "enroll_complete": "2025/9/31", "milestone_2026": "结题不申报", "lock_time": "", "notes": "2026.05.15完成截止2026.04.15数据清洗及冻结，数据交由统计分析后续用于文章发表"}, {"protocol": "LM-108-II-01", "phase": "II", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "肠癌", "protocol_name": "评估注射用 LM-108联合特瑞普利单抗注射液用于经至少一线系统治疗（含靶向PD-1或PD-L1类药物）失败的不可切除或转移性微卫星高度不稳定(MSI-H) 的晚期恶性实体瘤患者的II期、单臂、多中心、开放标签临床研究", "level": "S", "enrolled": "14", "status": "在研", "ldm": "邓巧红", "pm": "郭可可", "mm": "李杰", "plan_centers": "45", "plan_cases": "84", "enroll_complete": "2026-07-01 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB3909-Ib/II-02", "phase": "Ib/II", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "血液肿瘤", "protocol_name": "TQB3909片在复发或难治性CLL/SLL受试者中的安全性及有效性的Ib/II期临床试验", "level": "S", "enrolled": "97", "status": "结题申报", "ldm": "邓巧红", "pm": "李鑫", "mm": "陈晶", "plan_centers": "56", "plan_cases": "95", "enroll_complete": "2025-10-12 00:00:00", "milestone_2026": "pre-NDA", "lock_time": "2026-04-03 00:00:00", "notes": ""}, {"protocol": "TQB2825-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "淋巴瘤", "protocol_name": "评估TQB2825注射液对比免疫化疗治疗复发/难治性滤泡性淋巴瘤的有效性与安全性的随机、开放、多中心III期临床试验", "level": "S", "enrolled": "51", "status": "在研", "ldm": "邓巧红", "pm": "董姣姣", "mm": "张文君", "plan_centers": "60", "plan_cases": "228", "enroll_complete": "2027-04-01 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "ALTN-II-02", "phase": "IIT", "tumor": "呼吸", "indication_large": "肺纤维化", "indication_small": "肺纤维化", "protocol_name": "盐酸安罗替尼胶囊治疗IPF/PF-ILDs 的多中心、随机、双盲、安慰剂对照临床试验", "level": "C", "enrolled": "32", "status": "在研", "ldm": "季梦雪", "pm": "朱源锋", "mm": "赵玉", "plan_centers": "4", "plan_cases": "30", "enroll_complete": "2024-06-30 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2102-II-03", "phase": "II", "tumor": "肿瘤", "indication_large": "肺癌", "indication_small": "非小细胞肺癌", "protocol_name": "评价注射用TQB2102在HER2基因异常局部晚期或转移性非小细胞肺癌中的有效性和安全性II期临床试验", "level": "B", "enrolled": "104", "status": "结题不申报", "ldm": "赵力利", "pm": "程俊", "mm": "申丽丽", "plan_centers": "22", "plan_cases": "150", "enroll_complete": "2025-07-30 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": "后续工作：\n1.研究者发文章数据清理（时间未定）\n2.HER2过表达的患者申请突破性疗法（时间未定）"}, {"protocol": "TQB2450-ALTN-II-04", "phase": "II", "tumor": "肿瘤", "indication_large": "其他肿瘤", "indication_small": "软组织肉瘤", "protocol_name": "评价贝莫苏拜单抗注射液联合盐酸安罗替尼胶囊治疗晚期或不可切除腺泡状软组织肉瘤的单臂、多中心II期临床试验", "level": "B", "enrolled": "4", "status": "在研", "ldm": "邓巧红", "pm": "陈尧", "mm": "汤湧", "plan_centers": "10", "plan_cases": "33", "enroll_complete": "NA", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "D1553-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "肺癌", "indication_small": "非小细胞肺癌", "protocol_name": "一项评估D1553对比多西他赛治疗既往标准治疗失败的KRAS G12C突变阳性局部晚期或转移性非小细胞肺癌的随机、对照、双盲双模拟、多中心III期临床研究", "level": "A", "enrolled": "156", "status": "在研", "ldm": "刘梦珊", "pm": "郑景霁", "mm": "潘虹", "plan_centers": "90", "plan_cases": "522", "enroll_complete": "2027-10-01 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB3019-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "淋巴瘤", "protocol_name": "评价TQB3019胶囊在晚期恶性肿瘤受试者中的安全耐受性、药代动力学及初步有效性的I期临床试验", "level": "A", "enrolled": "23", "status": "在研", "ldm": "刘梦珊", "pm": "吴嘉", "mm": "郭婉晶", "plan_centers": "15", "plan_cases": "80", "enroll_complete": "2026-03-30 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": "已完成爬坡"}, {"protocol": "TQA2225-II-01", "phase": "II", "tumor": "肝病", "indication_large": "非酒精性脂肪性肝炎NASH", "indication_small": "非酒精性脂肪性肝炎NASH", "protocol_name": "评价TQA2225/AP025在成人非酒精性脂肪性肝炎（NASH）受试者中的有效性和安全性的Ⅱ期随机、双盲、安慰剂对照研究", "level": "A", "enrolled": "160", "status": "在研", "ldm": "刘梦珊", "pm": "宗婷婷", "mm": "刘宇", "plan_centers": "60", "plan_cases": "174", "enroll_complete": "2025-12-15 00:00:00", "milestone_2026": "结题不申报", "lock_time": "2026-05-13 00:00:00", "notes": "主队列154例单独锁库揭盲"}, {"protocol": "LNDA-II-01", "phase": "IIT", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "淋巴瘤", "protocol_name": "奥布替尼联合来那度胺、利妥昔单抗用于初治套细胞淋巴瘤患者的前瞻性、多中心、单臂、开放II期临床研究", "level": "C", "enrolled": "29", "status": "结题不申报", "ldm": "刘梦珊", "pm": "刘彩红", "mm": " - ", "plan_centers": "4", "plan_cases": "29", "enroll_complete": "2023-09-28 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2868-ALTN-II-01", "phase": "II", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "胰腺癌", "protocol_name": "TQB2868注射液联合安罗替尼胶囊与化疗一线治疗转移性胰腺癌的单臂、开放、II期临床研究", "level": "A", "enrolled": "80", "status": "在研", "ldm": "周治文", "pm": "夏莹", "mm": "李杰", "plan_centers": "2", "plan_cases": "80", "enroll_complete": "2025-03", "milestone_2026": "正常运行", "lock_time": "", "notes": "不定期BD数据清理"}, {"protocol": "TQ-A3334-II-03", "phase": "II", "tumor": "肝病", "indication_large": "乙肝", "indication_small": "乙肝", "protocol_name": "评估TQ-A3334片联合核苷（酸）类似物在初治/经治慢性HBV感染受试者中的有效性和安全性的随机、双盲、安慰剂对照的II期临床试验", "level": "B", "enrolled": "116", "status": "在研", "ldm": "周治文", "pm": "张路", "mm": "张小平", "plan_centers": "14", "plan_cases": "116", "enroll_complete": "2025-08", "milestone_2026": "正常运行", "lock_time": "2025-12-29 00:00:00", "notes": "2025-12-29已锁定受试者前24周数据"}, {"protocol": "TQB3205-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "晚期恶性肿瘤", "indication_small": "晚期恶性肿瘤", "protocol_name": "评估 TQB3205 胶囊在晚期恶性肿瘤受试者中耐受性、药代动力学\n和初步有效性的 I 期临床试验", "level": "A", "enrolled": "3", "status": "在研", "ldm": "周治文", "pm": "兰晓彤", "mm": "郭婉晶", "plan_centers": "1", "plan_cases": "剂量递增阶段例数：根据剂量递增\n情况确定， 暂定不超过 36 例；\n剂量扩展阶段： 40 ~ 120 例", "enroll_complete": "-", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "LM-108-Ib/II-01-A", "phase": "Ib/II", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "胃癌", "protocol_name": "评估LM-108±派安普利单抗+化疗在晚期实体瘤患者中的安全性、耐受性以及初步疗效的开放标签Ib/II期临床研究-队列A组", "level": "A", "enrolled": "142", "status": "在研", "ldm": "孟雪情", "pm": "赵茜茜", "mm": "汤湧", "plan_centers": "30", "plan_cases": "185", "enroll_complete": "2026-06-30 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "LM-108-Ib/II-01-C", "phase": "Ib/II", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "胰腺癌", "protocol_name": "评估LM-108±派安普利单抗+化疗在晚期实体瘤患者中的安全性、耐受性以及初步疗效的开放标签Ib/II期临床研究-队列C组", "level": "A", "enrolled": "64", "status": "在研", "ldm": "孟雪情", "pm": "武国东", "mm": "李杰", "plan_centers": "20", "plan_cases": "64", "enroll_complete": "2025-09-23 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2102-Ib/II-01", "phase": "Ib/II", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "胆道癌", "protocol_name": "评估注射用TQB2102治疗HER2阳性局部晚期或转移性胆道癌有效性和安全性的Ib/II期临床试验", "level": "A", "enrolled": "15", "status": "在研", "ldm": "鞠千禧", "pm": "朱源锋", "mm": "李杰", "plan_centers": "25", "plan_cases": "57", "enroll_complete": "2026-07-31 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": "预计2026.07.31末例受试者入组，入组进度不达预期"}, {"protocol": "TQB2102-II-05", "phase": "II", "tumor": "肿瘤", "indication_large": "妇科肿瘤", "indication_small": "卵巢癌", "protocol_name": "评价注射用 TQB2102 治疗复发/转移性晚期妇科肿瘤患者的安全性和有效性的 II 期临床试验", "level": "A", "enrolled": "56", "status": "在研", "ldm": "鞠千禧", "pm": "许坚镇", "mm": "刘嘉伟", "plan_centers": "25", "plan_cases": "60", "enroll_complete": "2025/07", "milestone_2026": "结题不申报", "lock_time": "", "notes": "2026.3.15冻结截至的2026.1.20卵巢癌项目受试者基线、疗效、安全性数据，数据交付统计，预计2026.09.15文章发表"}, {"protocol": "TQB3909-TQB3702-IB-01", "phase": "Ib", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "血液肿瘤", "protocol_name": "评估TQB3909片联合TQB3702片在恶性血液肿瘤受试者中安全性、有效性和药代动力学的Ib期临床试验", "level": "A", "enrolled": "73", "status": "在研", "ldm": "李银萍", "pm": "肖婷", "mm": "陈晶", "plan_centers": "28", "plan_cases": "73", "enroll_complete": "2025-7", "milestone_2026": "正常运行", "lock_time": "", "notes": "2026-06完成CDE沟通清理，数据截断2026-02-28\nTQB3909-ISS项目之一，数据截断2025-12-01"}, {"protocol": "NLB-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "白血病", "protocol_name": "奈拉滨注射液治疗儿童和成人难治或复发的T淋巴母细胞白血病（T-ALL）和T 淋巴母细胞淋巴瘤（T-LBL）患者的有效性及安全性研究", "level": "B", "enrolled": "29", "status": "在研", "ldm": "李银萍", "pm": "张硕钰", "mm": "陈晶", "plan_centers": "30", "plan_cases": "83", "enroll_complete": "2027年", "milestone_2026": "正常运行", "lock_time": "", "notes": "2026-05开了全国研究者会推进入组，期望在2026年底完成入组"}, {"protocol": "TQB6411-IB/II-02", "phase": "Ib/II", "tumor": "肿瘤", "indication_large": "肺癌", "indication_small": "晚期肺癌", "protocol_name": "评估注射用TQB6411 在晚期肺癌受试者中有效性和安全性的Ib/Ⅱ\n期临床试验", "level": "A", "enrolled": "22", "status": "在研", "ldm": "李银萍", "pm": "金穗", "mm": "汤湧", "plan_centers": "35", "plan_cases": "190-405", "enroll_complete": "2026-11-30 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB3909-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "淋巴瘤", "protocol_name": "评估TQB3909片对比研究者选择的方案治疗复发/难治性慢性淋巴细胞白血病/小淋巴细胞淋巴瘤（CLL/SLL）有效性与安全性的随机、开放、多中心III期临床试验", "level": "B", "enrolled": "0", "status": "在研", "ldm": "李银萍", "pm": "李鑫", "mm": "陈晶", "plan_centers": "13", "plan_cases": "128", "enroll_complete": "", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQC2731-III-01", "phase": "III", "tumor": "呼吸", "indication_large": "哮喘", "indication_small": "哮喘", "protocol_name": "评价TQC2731注射液在控制不佳的重度哮喘患者中的有效性和安全性的多中心、随机、双盲、安慰剂对照的ⅡI期临床试验", "level": "S", "enrolled": "293", "status": "在研", "ldm": "季梦雪", "pm": "吴若男", "mm": "梅丽", "plan_centers": "110", "plan_cases": "660", "enroll_complete": "2026-12", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQC2731-II-04", "phase": "II", "tumor": "呼吸", "indication_large": "COPD", "indication_small": "COPD", "protocol_name": "评价 TQC2731 注射液在中度至极重度慢性阻塞性 肺疾病患者的有效性、安全性和药代动力学的多 中心、随机、双盲、安慰剂对照 II 期临床研究", "level": "A", "enrolled": "258", "status": "在研", "ldm": "季梦雪", "pm": "罗韵丽", "mm": "朱冬伊", "plan_centers": "45", "plan_cases": "队列一：198\n 队列二：60 ", "enroll_complete": "2025-10/2025-12", "milestone_2026": "期中分析", "lock_time": "预计2026-04-13", "notes": ""}, {"protocol": "TQB2102-II-04", "phase": "II", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "胃癌/胃食管结合部癌", "protocol_name": "评价注射用TQB2102联合贝莫苏拜单抗/派安普利单抗±卡培他滨在不可切除的局部晚期、复发性或转移性HER2阳性胃食管腺癌患者中有效性和安全性的Ⅱ期临床试验", "level": "B", "enrolled": "86", "status": "在研", "ldm": "赵力利", "pm": "刘日东", "mm": "李杰", "plan_centers": "38", "plan_cases": "方案中样本量为三个队列共需要 204 例；实际队列1入组50例，队列2计划入组不超过40例。（队列3不再入组）", "enroll_complete": "2026/6/1项目组已明确后续不再入组", "milestone_2026": "正常运行", "lock_time": "", "notes": "预计在2026.12还会再进行一次文章发表"}, {"protocol": "TQ05105-TQB3617-Ib/II-01", "phase": "Ib/II", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "骨髓纤维化", "protocol_name": "TQ05105片联合TQB3617胶囊\n治疗中高危骨髓纤维化的Ib/II期临床研究", "level": "B", "enrolled": "52", "status": "在研", "ldm": "赵力利", "pm": "劳珊莉", "mm": "张婷", "plan_centers": "20", "plan_cases": "52", "enroll_complete": "2025-07-25 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB3454-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "胆道癌", "protocol_name": "评估TQB3454片治疗伴 IDH1突变晚期胆道癌有效性和安全性的随机、双盲、安慰剂对照、多中心 III期临床研究", "level": "B", "enrolled": "115", "status": "结题申报", "ldm": "赵力利", "pm": "张弛", "mm": "李杰", "plan_centers": "59", "plan_cases": "165", "enroll_complete": "2026-12", "milestone_2026": "NDA", "lock_time": "2026-05-08 00:00:00", "notes": "2026.2.11已递交preNDA；\n2026.5.8已完成NDA数据清理锁库。"}, {"protocol": "TQC3302-I-01", "phase": "I", "tumor": "呼吸", "indication_large": "COPD", "indication_small": "COPD", "protocol_name": "评价TQC3302吸入喷雾剂在中国健康参与者中的安全性、耐受性及药代动力学的I期临床研究", "level": "A", "enrolled": "17", "status": "在研", "ldm": "赵力利", "pm": "郭静雯", "mm": "朱冬伊", "plan_centers": "1", "plan_cases": "44", "enroll_complete": "2026.9.30", "milestone_2026": "正常运行", "lock_time": "", "notes": "组1和组2入组完成，组3在入组中。计划2026.9.30入组完成，2026.11.30完成数据清理。"}, {"protocol": "TQB2934-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "多发性骨髓瘤", "protocol_name": "评估注射用TQB2934对比研究者选择的方案治疗复发/难治性多发性骨髓瘤的有效性与安全性的随机、开放、多中心III期临床试验", "level": "A", "enrolled": "0", "status": "在研", "ldm": "赵力利", "pm": "黄剑强", "mm": "李文君", "plan_centers": "", "plan_cases": "260", "enroll_complete": "", "milestone_2026": "正常运行", "lock_time": "", "notes": "目前EDC暂未上线，计划近期上线。"}, {"protocol": "TQB2102-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "乳腺肿瘤", "indication_small": "乳腺肿瘤", "protocol_name": "评价注射用TQB2102对比研究者选择的化疗在HER2低表达复发/转移性乳腺癌中有效性和安全性的随机、开放、平行对照的III期临床试验", "level": "S", "enrolled": "543", "status": "在研", "ldm": "孙姝琦", "pm": "闫振", "mm": "封帆", "plan_centers": "119", "plan_cases": "542", "enroll_complete": "2026-02-09 00:00:00", "milestone_2026": "期中分析", "lock_time": "", "notes": ""}, {"protocol": "TQB2102-Ib-01", "phase": "Ib", "tumor": "肿瘤", "indication_large": "乳腺肿瘤", "indication_small": "乳腺肿瘤", "protocol_name": "评估注射用TQB2102在HER2表达复发/转移性乳腺癌中的有效性和安全性的Ib期临床试验", "level": "C", "enrolled": "153", "status": "结题不申报", "ldm": "徐金莲", "pm": "陈杰", "mm": "封帆", "plan_centers": "21", "plan_cases": "150", "enroll_complete": "2024-07-31 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB3911-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "白血病", "protocol_name": "评价TQB3911片在BCR::ABL融合基因阳性白血病患者中的安全性和耐受性的I期临床试验", "level": "A", "enrolled": "13", "status": "在研", "ldm": "程永梅", "pm": "郭方方", "mm": "陈晶", "plan_centers": "10", "plan_cases": "剂量递增阶段：约15~30例；\n剂量扩展阶段：每个队列约20~30例", "enroll_complete": "2026-06-30 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB3454-I-02", "phase": "I", "tumor": "肿瘤", "indication_large": "晚期恶性肿瘤", "indication_small": "晚期恶性肿瘤", "protocol_name": "TQB3454片耐受性和药代动力学I期临床试验", "level": "C", "enrolled": "57", "status": "结题申报", "ldm": "程永梅", "pm": "邹云飞", "mm": "李杰", "plan_centers": "14", "plan_cases": "18~116", "enroll_complete": "2023-04-14 00:00:00", "milestone_2026": "结题不申报", "lock_time": "2026.03.31", "notes": ""}, {"protocol": "TQC2938-II-01", "phase": "II", "tumor": "呼吸", "indication_large": "COPD", "indication_small": "COPD", "protocol_name": "在中重度慢性阻塞性肺疾病患者中评估TQC2938的有效性、安全性、耐受性和药代动力学特征的随机、双盲、安慰剂对照的II期临床研究", "level": "A", "enrolled": "256", "status": "在研", "ldm": "程永梅", "pm": "王赫", "mm": "梅丽", "plan_centers": "48", "plan_cases": "256", "enroll_complete": "2025-09-16 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "LM302-03-201", "phase": "III", "tumor": "肿瘤", "indication_large": "消化道肿瘤", "indication_small": "胃癌/胃食管结合部癌", "protocol_name": "一项比较注射用LM-302联合替雷利珠单抗与替雷利珠单抗联合化疗在既往未接受过系统性治疗的CLDN18.2阳性的局部晚期不可切除或者转移性胃或胃食管交界处腺癌中有效性和安全性的随机、开放、多中心、阳性对照的III期临床研究", "level": "S", "enrolled": "0", "status": "在研", "ldm": "程永梅", "pm": "闫云霞", "mm": "窦林斌", "plan_centers": "106", "plan_cases": "742", "enroll_complete": "", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2930-Ib/II-01", "phase": "II", "tumor": "肿瘤", "indication_large": "乳腺肿瘤", "indication_small": "乳腺肿瘤", "protocol_name": "评估注射用TQB2930单药或联合治疗HER2阳性复发/转移性乳腺癌的安全性和有效性Ib/II期临床试验", "level": "C", "enrolled": "144", "status": "结题申报", "ldm": "孙姝琦", "pm": "金穗", "mm": "屠礼凡", "plan_centers": "21", "plan_cases": "Ib期阶段：单药34例，联合用药15-20例。\nII期阶段：队列3入组30-50例，队列4入组30-50例。", "enroll_complete": "2025/6", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "CSABTL(II)-II-01", "phase": "II", "tumor": "肿瘤", "indication_large": "泌尿生殖系统肿瘤", "indication_small": "前列腺癌", "protocol_name": "基于生物标志物比较醋酸阿比特龙片(II)与Zytiga®等效性的随机对照、开放、多中心II期临床研究", "level": "B", "enrolled": "29", "status": "在研", "ldm": "陈逸涛", "pm": "胡荣", "mm": "李许", "plan_centers": "14", "plan_cases": "60", "enroll_complete": "2026/12", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2029-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "骨髓瘤", "protocol_name": "评估注射用TQB2029在多发性骨髓瘤受试者中耐受性和药代动力学的I期临床研究", "level": "A", "enrolled": "16", "status": "在研", "ldm": "陈逸涛", "pm": "张波", "mm": "李文君", "plan_centers": "5", "plan_cases": "136", "enroll_complete": "2026-03-01 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2934-Ib/II-01", "phase": "Ib/II", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "其他", "protocol_name": "评估注射用TQB2934在系统性轻链型淀粉样变受试者中有效性、安全性和药代动力学的Ib/II期临床研究", "level": "A", "enrolled": "10", "status": "在研", "ldm": "陈逸涛", "pm": "欧惠根", "mm": "李文君", "plan_centers": "30", "plan_cases": "70", "enroll_complete": "2026-07-01 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2930-III-01", "phase": "III", "tumor": "肿瘤", "indication_large": "乳腺肿瘤", "indication_small": "乳腺肿瘤", "protocol_name": "评估TQB2930联合研究者选择的化疗对比曲妥珠单抗联合研究者选择的化疗治疗HER2阳性晚期乳腺癌的随机、开放、平行对照、多中心III期临床研究", "level": "A", "enrolled": "106", "status": "在研", "ldm": "徐静", "pm": "薛金玲", "mm": "屠礼凡", "plan_centers": "66", "plan_cases": "416", "enroll_complete": "2027/4/30/NA", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2102-III-02", "phase": "III", "tumor": "肿瘤", "indication_large": "乳腺肿瘤", "indication_small": "乳腺肿瘤", "protocol_name": "评价注射用 TQB2102 对比注射用恩美曲妥珠单抗在 HER2 阳性晚期乳腺癌中有效性和安全性的随机、开 放、平行对照的 III 期临床试验 ", "level": "A", "enrolled": "246", "status": "在研", "ldm": "孟雪情", "pm": "李金花", "mm": "李许", "plan_centers": "84", "plan_cases": "246", "enroll_complete": "2026-03-24 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": "预计26年10月初到达期中分析事件数"}, {"protocol": "SCHBCC-N044", "phase": "IIT", "tumor": "肿瘤", "indication_large": "乳腺肿瘤", "indication_small": "三阴性乳腺癌", "protocol_name": "基于分子分型的难治性三阴性乳腺癌精准治疗的平台研究", "level": "C", "enrolled": "0", "status": "在研", "ldm": "徐静", "pm": "黄涛", "mm": "李许", "plan_centers": "", "plan_cases": "", "enroll_complete": "", "milestone_2026": "正常运行", "lock_time": "", "notes": "此项目已停止EDC配置，改为线下收集数据"}, {"protocol": "TQB3142-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "晚期恶性肿瘤", "indication_small": "晚期恶性肿瘤", "protocol_name": "评价注射用TQB3142在晚期恶性肿瘤受试者中的安全耐受性、药代动力学及有效性的I期临床试验", "level": "A", "enrolled": "1", "status": "在研", "ldm": "徐静", "pm": "张波", "mm": "毛静诚", "plan_centers": "5", "plan_cases": "66", "enroll_complete": "NA", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQF3250-Ia-01", "phase": "I", "tumor": "内分泌", "indication_large": "2型糖尿病", "indication_small": "2型糖尿病", "protocol_name": "评价TQF3250 胶囊在健康成人受试者中单次给药、剂量递增", "level": "B", "enrolled": "0", "status": "在研", "ldm": "孙姝琦", "pm": "张倩倩", "mm": "张佳薇/赵宵丹", "plan_centers": "1", "plan_cases": "66", "enroll_complete": "NA", "milestone_2026": "结题不申报", "lock_time": "", "notes": ""}, {"protocol": "TQ-B3101-I-03", "phase": "I", "tumor": "肿瘤", "indication_large": "肺癌", "indication_small": "肺癌", "protocol_name": "[14C] TQ-B3101 在中国健康受试者体内的 物质平衡临床试验", "level": "B", "enrolled": "0", "status": "在研", "ldm": "孙姝琦", "pm": "胡雯雯", "mm": "李许", "plan_centers": "1", "plan_cases": "6~8", "enroll_complete": "NA", "milestone_2026": "结题不申报", "lock_time": "", "notes": ""}, {"protocol": "TQ-B3101-I-05", "phase": "I", "tumor": "肿瘤", "indication_large": "肺癌", "indication_small": "非小细胞肺癌", "protocol_name": "评价富马酸安奈克替尼胶囊在肝功能不全和肝功能正常受试者中药代动力学和安全性的I期临床研究", "level": "B", "enrolled": "0", "status": "在研", "ldm": "鞠千禧", "pm": "刘聪", "mm": "苏楠", "plan_centers": "3", "plan_cases": "24", "enroll_complete": "2027.01.31", "milestone_2026": "正常运行", "lock_time": "", "notes": "已上线"}, {"protocol": "TQ05105-II-08", "phase": "II", "tumor": "肿瘤", "indication_large": "血液肿瘤", "indication_small": "骨髓纤维化", "protocol_name": "评价TQ05105片在中高危骨髓纤维化患者中的疗效、安全性以及药代动力学的单臂、开放、多中心II期临床试验", "level": "S", "enrolled": "0", "status": "在研", "ldm": "鞠千禧", "pm": "劳珊莉", "mm": "李许", "plan_centers": "30", "plan_cases": "54", "enroll_complete": "", "milestone_2026": "正常运行", "lock_time": "", "notes": "待完成量表采购后上线"}, {"protocol": "TQC5524-I-01", "phase": "I", "tumor": "呼吸", "indication_large": "COPD", "indication_small": "COPD", "protocol_name": "评价TQC5524 吸入粉雾剂在健康试验参与者和COPD\n试验参与者中安全性、耐受性、药代、药效动力学特征\n的I 期临床试验", "level": "A", "enrolled": "0", "status": "在研", "ldm": "季梦雪", "pm": "张波", "mm": "梅丹", "plan_centers": "", "plan_cases": "99", "enroll_complete": "", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB6426-I-01", "phase": "I", "tumor": "肿瘤", "indication_large": "晚期恶性肿瘤", "indication_small": "晚期恶性肿瘤", "protocol_name": "评估注射用TQB6426治疗晚期恶性肿瘤的耐受性和药代动力学的I 期临床试验", "level": "S", "enrolled": "0", "status": "在研", "ldm": "许童瑶", "pm": "张浅", "mm": "", "plan_centers": "5", "plan_cases": "106-151", "enroll_complete": "", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}, {"protocol": "TQB2450-III-11", "phase": "III", "tumor": "肿瘤", "indication_large": "肺癌", "indication_small": "非小细胞肺癌", "protocol_name": "评价 TQB2450 注射液联合含铂化疗后序贯 TQB2450 注射液联合盐酸安罗替尼胶囊对比替雷利珠单抗注射液联合含铂化疗一线治疗晚期非鳞非小细胞肺癌的有效性和安全性的随机、 开放、 平行对照、 多中心 III 期临床试验", "level": "A", "enrolled": "596", "status": "在研", "ldm": "徐静", "pm": "闫云霞", "mm": "申丽丽", "plan_centers": "105", "plan_cases": "596", "enroll_complete": "2023-05-08 00:00:00", "milestone_2026": "pre-NDA", "lock_time": "", "notes": "本项目计划近期再次进行pre-NDA沟通，数据已于2026-01-01冻结并提交数据集给统计"}, {"protocol": "TQH2722-III-03", "phase": "III", "tumor": "自免", "indication_large": "自免", "indication_small": "季节性过敏性鼻炎", "protocol_name": "评价TQH2722注射液联合背景治疗在季节性过敏性鼻炎患者中的有效性与安全性的随机、双盲、安慰剂对照、多中心III期临床试验", "level": "A", "enrolled": "0", "status": "在研", "ldm": "周治文", "pm": "贾璐", "mm": "张琴", "plan_centers": "31", "plan_cases": "178", "enroll_complete": "-", "milestone_2026": "正常运行", "lock_time": "", "notes": "注：本项目暂未进行公司立项会（预计4月底5月初上会）。为了推进项目的注册上市进度，确保在2026年秋季如期启动本研究，现提前走筹备工作。"}, {"protocol": "TQH3906-II-02", "phase": "II", "tumor": "自免", "indication_large": "自免", "indication_small": "银屑病", "protocol_name": "评估TQH3906胶囊治疗活动性银屑病关节炎的有效性和安全性的随机、安慰剂及阳性药物对照、双盲、多中心、平行设计的II期临床试验", "level": "A", "enrolled": "0", "status": "在研", "ldm": "陈逸涛", "pm": "邓思雨", "mm": "张佳薇", "plan_centers": "42", "plan_cases": "156", "enroll_complete": "2027-08-07 00:00:00", "milestone_2026": "正常运行", "lock_time": "", "notes": ""}];
-var themeColors = ['#3182ce','#2f855a','#d69e2e','#e53e3e','#805ad5','#0891b2','#dd6b20','#38a169','#6b46c1','#c53030','#2c7a7b','#9b2c2c','#b7791f','#276749','#553c9a'];
+/* ═══════════ EMBEDDED DATA ═══════════ */
+const EMBEDDED_EXCEL_DATA=[
+["项目信息","","","","","","","","","","",""],
+["方案编号","试验分期","项目等级","肿瘤/非肿瘤","适应症（大类）","适应症（小类）","项目阶段","项目状态","实际入组病例数","LDM","LDM所属科室","所属小组"],
+["TQH2722-III-01","III","S","自免","自免","特应性皮炎","结题阶段","在研","500","袁文英","二室","袁文英"],
+["TQB3122-I-01","I","A","肿瘤","晚期恶性肿瘤","晚期恶性肿瘤","入组阶段","在研","3","袁文英","二室","袁文英"],
+["TQH2722-I-02","I","B","自免","自免","其他","结题阶段","在研","216","袁文英","二室","袁文英"],
+["TQB2934-I-01","I","C","肿瘤","血液肿瘤","多发性骨髓瘤","结题阶段","在研","60","李银萍","二室","徐静"],
+["TQC3721-D8-I-01","I","A","呼吸","COPD","COPD","入组阶段","在研","101","徐露露","二室","袁文英"],
+["TQC2731-III-02","III","S","呼吸","鼻窦炎","鼻窦炎","入组阶段","在研","198","徐露露","二室","袁文英"],
+["TQH3906-II-03","II","A","自免","自免","系统性红斑狼疮","入组阶段","在研","0","徐露露","二室","袁文英"],
+["TQB3002-I-01","I","C","肿瘤","肺癌","非小细胞肺癌","结题阶段","终止","14","许童瑶","二室","程永梅"],
+["TQB2102-II-02","II","B","肿瘤","乳腺肿瘤","乳腺肿瘤","随访阶段","在研","38","许童瑶","二室","程永梅"],
+["LM-108-II-01","II","S","肿瘤","消化道肿瘤","肠癌","入组阶段","在研","14","邓巧红","二室","邓巧红"],
+["TQB3909-Ib/II-02","Ib/II","S","肿瘤","血液肿瘤","血液肿瘤","结题阶段","结题-申报","97","邓巧红","二室","邓巧红"],
+["TQB2825-III-01","III","S","肿瘤","血液肿瘤","淋巴瘤","入组阶段","在研","51","邓巧红","二室","邓巧红"],
+["ALTN-II-02","IIT","C","呼吸","肺纤维化","肺纤维化","结题阶段","在研","32","季梦雪","二室","季梦雪"],
+["TQB2102-II-03","II","B","肿瘤","肺癌","非小细胞肺癌","结题阶段","结题-不申报","104","赵力利","二室","季梦雪"],
+["TQB2450-ALTN-II-04","II","B","肿瘤","其他肿瘤","软组织肉瘤","入组阶段","在研","4","邓巧红","二室","邓巧红"],
+["D1553-III-01","III","A","肿瘤","肺癌","非小细胞肺癌","入组阶段","在研","156","刘梦珊","二室","程永梅"],
+["TQB3019-I-01","I","A","肿瘤","血液肿瘤","淋巴瘤","入组阶段","在研","23","刘梦珊","二室","程永梅"],
+["TQA2225-II-01","II","A","肝病","非酒精性脂肪性肝炎NASH","非酒精性脂肪性肝炎NASH","结题阶段","在研","160","刘梦珊","二室","程永梅"],
+["LNDA-II-01","IIT","C","肿瘤","血液肿瘤","淋巴瘤","结题阶段","结题-不申报","29","刘梦珊","二室","程永梅"],
+["TQB2868-ALTN-II-01","II","A","肿瘤","消化道肿瘤","胰腺癌","结题阶段","在研","80","周治文","二室","邓巧红"],
+["TQ-A3334-II-03","II","B","肝病","乙肝","乙肝","结题阶段","在研","116","周治文","二室","邓巧红"],
+["TQB3205-I-01","I","A","肿瘤","晚期恶性肿瘤","晚期恶性肿瘤","入组阶段","在研","3","周治文","二室","邓巧红"],
+["LM-108-Ib/II-01-A","Ib/II","A","肿瘤","消化道肿瘤","胃癌","随访阶段","在研","142","孟雪情","二室","袁文英"],
+["LM-108-Ib/II-01-C","Ib/II","A","肿瘤","消化道肿瘤","胰腺癌","随访阶段","在研","64","孟雪情","二室","袁文英"],
+["TQB2102-Ib/II-01","Ib/II","A","肿瘤","消化道肿瘤","胆道癌","结题阶段","在研","15","鞠千禧","二室","徐静"],
+["TQB2102-II-05","II","A","肿瘤","妇科肿瘤","卵巢癌","结题阶段","在研","56","鞠千禧","二室","徐静"],
+["TQB3909-TQB3702-IB-01","Ib","A","肿瘤","血液肿瘤","血液肿瘤","结题阶段","在研","73","李银萍","二室","徐静"],
+["NLB-III-01","III","B","肿瘤","血液肿瘤","白血病","入组阶段","在研","29","李银萍","二室","徐静"],
+["TQB6411-IB/II-02","Ib/II","A","肿瘤","肺癌","晚期肺癌","入组阶段","在研","22","李银萍","二室","徐静"],
+["TQB3909-III-01","III","B","肿瘤","血液肿瘤","淋巴瘤","SSU阶段","在研","0","李银萍","二室","徐静"],
+["TQC2731-III-01","III","S","呼吸","哮喘","哮喘","入组阶段","在研","293","季梦雪","二室","季梦雪"],
+["TQC2731-II-04","II","A","呼吸","COPD","COPD","结题阶段","在研","258","季梦雪","二室","季梦雪"],
+["TQB2102-II-04","II","B","肿瘤","消化道肿瘤","胃癌/胃食管结合部癌","结题阶段","在研","86","赵力利","二室","季梦雪"],
+["TQ05105-TQB3617-Ib/II-01","Ib/II","B","肿瘤","血液肿瘤","骨髓纤维化","结题阶段","在研","52","赵力利","二室","季梦雪"],
+["TQB3454-III-01","III","B","肿瘤","消化道肿瘤","胆道癌","结题阶段","结题-申报","115","赵力利","二室","季梦雪"],
+["TQC3302-I-01","I","A","呼吸","COPD","COPD","入组阶段","在研","17","赵力利","二室","季梦雪"],
+["TQB2934-III-01","III","A","肿瘤","血液肿瘤","多发性骨髓瘤","SSU阶段","在研","0","赵力利","二室","季梦雪"],
+["TQB2102-III-01","III","S","肿瘤","乳腺肿瘤","乳腺肿瘤","随访阶段","在研","543","孙姝琦","二室","季梦雪"],
+["TQB2102-Ib-01","Ib","C","肿瘤","乳腺肿瘤","乳腺肿瘤","结题阶段","结题-不申报","153","徐金莲","二室","徐金莲"],
+["TQB3911-I-01","I","A","肿瘤","血液肿瘤","白血病","入组阶段","在研","13","程永梅","二室","程永梅"],
+["TQB3454-I-02","I","C","肿瘤","晚期恶性肿瘤","晚期恶性肿瘤","结题阶段","结题-申报","57","程永梅","二室","程永梅"],
+["TQC2938-II-01","II","A","呼吸","COPD","COPD","随访阶段","在研","256","程永梅","二室","程永梅"],
+["LM302-03-201","III","S","肿瘤","消化道肿瘤","胃癌/胃食管结合部癌","入组阶段","在研","0","程永梅","二室","程永梅"],
+["TQB2930-Ib/II-01","II","C","肿瘤","乳腺肿瘤","乳腺肿瘤","结题阶段","结题-申报","144","孙姝琦","二室","季梦雪"],
+["CSABTL(II)-II-01","II","B","肿瘤","泌尿生殖系统肿瘤","前列腺癌","入组阶段","在研","29","陈逸涛","二室","季梦雪"],
+["TQB2029-I-01","I","A","肿瘤","血液肿瘤","骨髓瘤","入组阶段","在研","16","陈逸涛","二室","季梦雪"],
+["TQB2934-Ib/II-01","Ib/II","A","肿瘤","血液肿瘤","其他","入组阶段","在研","10","陈逸涛","二室","季梦雪"],
+["TQB2930-III-01","III","A","肿瘤","乳腺肿瘤","乳腺肿瘤","入组阶段","在研","106","徐静","二室","徐静"],
+["TQB2102-III-02","III","A","肿瘤","乳腺肿瘤","乳腺肿瘤","随访阶段","在研","246","孟雪情","二室","袁文英"],
+["SCHBCC-N044","IIT","C","肿瘤","乳腺肿瘤","三阴性乳腺癌","入组阶段","在研","0","徐静","二室","徐静"],
+["TQB3142-I-01","I","A","肿瘤","晚期恶性肿瘤","晚期恶性肿瘤","入组阶段","在研","1","徐静","二室","徐静"],
+["TQF3250-Ia-01","I","B","内分泌","2型糖尿病","2型糖尿病","结题阶段","在研","0","孙姝琦","二室","季梦雪"],
+["TQ-B3101-I-03","I","B","肿瘤","肺癌","肺癌","结题阶段","在研","0","孙姝琦","二室","季梦雪"],
+["TQ-B3101-I-05","I","B","肿瘤","肺癌","非小细胞肺癌","入组阶段","在研","0","鞠千禧","二室","徐静"],
+["TQ05105-II-08","II","S","肿瘤","血液肿瘤","骨髓纤维化","SSU阶段","在研","0","鞠千禧","二室","徐静"],
+["TQC5524-I-01","I","A","呼吸","COPD","COPD","SSU阶段","在研","0","季梦雪","二室","季梦雪"],
+["TQB6426-I-01","I","S","肿瘤","晚期恶性肿瘤","晚期恶性肿瘤","SSU阶段","在研","0","许童瑶","二室","程永梅"],
+["TQB2450-III-11","III","A","肿瘤","肺癌","非小细胞肺癌","随访阶段","在研","596","徐静","二室","徐静"],
+["TQH2722-III-03","III","A","自免","自免","季节性过敏性鼻炎","SSU阶段","在研","0","周治文","二室","邓巧红"],
+["TQH3906-II-02","II","A","自免","自免","银屑病","入组阶段","在研","0","陈逸涛","二室","季梦雪"]
+];</script>
+<script>
+/* ═══════════ GLOBALS ═══════════ */
+let projectData=[],filteredData=[];let currentPage=1;const pageSize=30;let sortColumn=null,sortDirection='asc';
+let chart1,chart2,chart3,chart4,chart5,chartSunburst,chartGroupDist,chartLDMWorkload,chartIndication,chartStage,chartTumorTreemap,chartNonTumorDonut;
+let groupDistDimension='phase',tumorTreemapDimension='big';
+let phaseColorMap={},statusColorMap={},therapyColorMap={},stageColorMap={};
 
-function initChart(domId, option) {
-  var dom = document.getElementById(domId);
-  if (!dom) return;
-  var chart = echarts.init(dom);
-  chart.setOption(option);
-  window.addEventListener('resize', function(){ chart.resize(); });
+const PAL=['#7b95c6','#49c2d9','#a1d8e8','#67a583','#a2c986','#d0e2c0','#fded95','#ffc1a6','#f59c7c','#f47254','#c85e62'];
+const gradeColors={'S':PAL[10],'A':PAL[9],'B':PAL[8],'C':PAL[3],'D':PAL[0],'未分级':PAL[2]};
+const gradeOrder=['S','A','B','C','D','未分级'];
+const phaseOrder=['I期','II期','I/II期','III期','IV期','CS','BE/BA','IIT','其他'];
+const stageOrder=['SSU阶段','入组阶段','随访阶段','结题阶段'];
+const groupColorPool=[PAL[0],PAL[1],PAL[3],PAL[8],PAL[10],PAL[7],PAL[2],PAL[4]];
+let globalGroupColorMap={};
+
+function parseNumeric(v){if(v===undefined||v===null||v==='')return 0;const s=String(v).trim();if(s==='')return 0;const n=parseInt(s.replace(/[^0-9]/g,''),10);return isNaN(n)?0:n;}
+function getFieldValueByIndex(row,m,names){for(const n of names){const i=m[n];if(i!==undefined&&row[i]!==undefined&&row[i]!==null&&String(row[i]).trim()!=='')return String(row[i]).trim();}return'';}
+
+function processRawData(jd){if(jd.length<2)return;const fn=jd[1];const dr=jd.slice(2).filter(r=>r&&r.some(c=>c!==undefined&&c!==null&&String(c).trim()!==''));if(dr.length>0){const cm={};fn.forEach((n,i)=>{if(n!==undefined&&n!==null&&String(n).trim()!=='')cm[String(n).trim()]=i;});projectData=dr.map(r=>{
+const rawTherapy=getFieldValueByIndex(r,cm,['肿瘤/非肿瘤','治疗领域','therapy_area']);
+const therapy=rawTherapy.replace(/^[\s\n\r]+/,'').replace(/[\s\n\r]+$/,'');
+const bigInd=getFieldValueByIndex(r,cm,['适应症（大类）','适应症大类']).replace(/^[\s\n\r]+/,'').replace(/[\s\n\r]+$/,'');
+const smallInd=getFieldValueByIndex(r,cm,['适应症（小类）','适应症小类']).replace(/^[\s\n\r]+/,'').replace(/[\s\n\r]+$/,'');
+const grade=String(getFieldValueByIndex(r,cm,['项目等级','项目分类','grade'])).replace(/^[\s\n\r]+/,'').replace(/[\s\n\r]+$/,'');
+const status=String(getFieldValueByIndex(r,cm,['项目状态','status'])).replace(/^[\s\n\r]+/,'').replace(/[\s\n\r]+$/,'');
+const group=String(getFieldValueByIndex(r,cm,['所属小组','group','team'])).replace(/^[\s\n\r]+/,'').replace(/[\s\n\r]+$/,'')||'未分配';
+const phase=String(getFieldValueByIndex(r,cm,['试验分期','phase'])).replace(/^[\s\n\r]+/,'').replace(/[\s\n\r]+$/,'');
+const stage=String(getFieldValueByIndex(r,cm,['项目阶段','stage'])).replace(/^[\s\n\r]+/,'').replace(/[\s\n\r]+$/,'');
+return {
+'方案编号':getFieldValueByIndex(r,cm,['方案编号','protocol_no']),
+'试验分期':phase,
+'项目等级':grade,
+'治疗领域':therapy,
+'适应症（大类）':bigInd,
+'适应症（小类）':smallInd,
+'项目阶段':stage,
+'项目状态':status,
+'实际入组病例数':getFieldValueByIndex(r,cm,['实际入组病例数','actual_cases']),
+'LDM':getFieldValueByIndex(r,cm,['LDM','ldm']),
+'LDM所属科室':getFieldValueByIndex(r,cm,['LDM所属科室','ldm_dept'])||'二室',
+'所属小组':group
+};});
+filteredData=[...projectData];initAllFilters();updateStats();updateCharts();renderTable();}}
+
+function updateStats(){const t=projectData.length;const sa=projectData.filter(p=>p['项目等级']==='S'||p['项目等级']==='A').length;const ldms=[...new Set(projectData.map(p=>p.LDM).filter(l=>l))];const avg=ldms.length>0?(t/ldms.length).toFixed(1):0;const tc=projectData.reduce((s,p)=>s+parseNumeric(p['实际入组病例数']),0);const ongoing=projectData.filter(p=>p['项目状态']==='在研').length;document.getElementById('totalProjects').textContent=t;document.getElementById('totalSA').textContent=sa;document.getElementById('totalLDM').textContent=17;document.getElementById('avgPerLDM').textContent=avg;document.getElementById('totalCases').textContent=tc;document.getElementById('totalOngoing').textContent=ongoing;}
+
+function initAllFilters(){const fs={'filterPhase':'试验分期','filterGrade':'项目等级','filterTherapy':'治疗领域','filterStage':'项目阶段','filterLDM':'LDM','filterStatus':'项目状态','filterGroup':'所属小组'};Object.keys(fs).forEach(id=>{const f=fs[id],sel=document.getElementById(id);sel.innerHTML='<option value="">全部</option>';[...new Set(projectData.map(p=>p[f]).filter(v=>v&&v.trim()!==''))].sort().forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o);});});}
+
+function getStatusClass(s){const m={'在研':'status-ongoing','未开展':'status-notstarted','结题-申报':'status-filing','结题-不申报':'status-nofiling','终止':'status-terminated'};return m[s]||'status-notstarted';}
+
+function applyFilters(){const fc=document.getElementById('filterCode').value.toLowerCase(),fp=document.getElementById('filterPhase').value,fca=document.getElementById('filterGrade').value,ft=document.getElementById('filterTherapy').value,fsg=document.getElementById('filterStage').value,fl=document.getElementById('filterLDM').value,fs=document.getElementById('filterStatus').value,fg=document.getElementById('filterGroup').value;filteredData=projectData.filter(i=>(!fc||(i.方案编号&&i.方案编号.toLowerCase().includes(fc)))&&(!fp||i.试验分期===fp)&&(!fca||i.项目等级===fca)&&(!ft||i.治疗领域===ft)&&(!fsg||i.项目阶段===fsg)&&(!fl||i.LDM===fl)&&(!fs||i.项目状态===fs)&&(!fg||i.所属小组===fg));currentPage=1;updateCharts();renderTable();}
+
+function resetFilters(){['filterCode','filterPhase','filterGrade','filterTherapy','filterStage','filterLDM','filterStatus','filterGroup'].forEach(id=>document.getElementById(id).value='');filteredData=[...projectData];currentPage=1;updateCharts();renderTable();}
+
+function sortTable(c){const hs=document.querySelectorAll('.data-table th');hs.forEach(h=>h.classList.remove('sorted'));if(sortColumn===c)sortDirection=sortDirection==='asc'?'desc':'asc';else{sortColumn=c;sortDirection='asc';}const hi=Array.from(hs).findIndex(h=>h.getAttribute('onclick')?.includes(`'${c}'`));if(hi>=0)hs[hi].classList.add('sorted');filteredData.sort((a,b)=>{let va=a[c]||'',vb=b[c]||'';if(c==='实际入组病例数'){va=parseNumeric(va);vb=parseNumeric(vb);return sortDirection==='asc'?va-vb:vb-va;}return sortDirection==='asc'?String(va).localeCompare(String(vb)):String(vb).localeCompare(String(va));});currentPage=1;renderTable();}
+
+function renderTable(){const tb=document.getElementById('tableBody');tb.innerHTML='';const s=(currentPage-1)*pageSize,pd=filteredData.slice(s,s+pageSize);pd.forEach((item,i)=>{const r=document.createElement('tr');const cv=item['实际入组病例数'];const dc=(cv!==undefined&&cv!==null&&cv!=='')?cv:'-';r.innerHTML=`<td>${s+i+1}</td><td><strong>${item.方案编号||''}</strong></td><td>${item.所属小组||''}</td><td>${item.试验分期||''}</td><td>${item.项目等级||''}</td><td>${item.治疗领域||''}</td><td>${item['适应症（大类）']||''}</td><td>${item['适应症（小类）']||''}</td><td>${item.项目阶段||''}</td><td>${dc}</td><td>${item.LDM||''}</td><td>${item['LDM所属科室']||''}</td><td><span class="status-tag ${getStatusClass(item.项目状态)}">${item.项目状态||''}</span></td>`;tb.appendChild(r);});document.getElementById('totalCount').textContent=projectData.length;document.getElementById('filteredCount').textContent=filteredData.length;document.getElementById('currentPage').textContent=currentPage;document.getElementById('totalPages').textContent=Math.ceil(filteredData.length/pageSize)||1;document.getElementById('pageInput').value=currentPage;document.getElementById('prevBtn').disabled=currentPage<=1;document.getElementById('nextBtn').disabled=currentPage>=Math.ceil(filteredData.length/pageSize);}
+
+function prevPage(){if(currentPage>1){currentPage--;renderTable();}}
+function nextPage(){if(currentPage<Math.ceil(filteredData.length/pageSize)){currentPage++;renderTable();}}
+function goToPage(){const p=parseInt(document.getElementById('pageInput').value),tp=Math.ceil(filteredData.length/pageSize);if(p>=1&&p<=tp){currentPage=p;renderTable();}else document.getElementById('pageInput').value=currentPage;}
+
+function exportToExcel(){const ed=filteredData.map((item,i)=>({'序号':i+1,'方案编号':item.方案编号||'','所属小组':item.所属小组||'','试验分期':item.试验分期||'','项目等级':item.项目等级||'','治疗领域':item.治疗领域||'','适应症大类':item['适应症（大类）']||'','适应症小类':item['适应症（小类）']||'','项目阶段':item.项目阶段||'','实际入组病例数':item['实际入组病例数']!==undefined?item['实际入组病例数']:'','LDM':item.LDM||'','LDM所属科室':item['LDM所属科室']||'','项目状态':item.项目状态||''}));const ws=XLSX.utils.json_to_sheet(ed),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"项目明细");XLSX.writeFile(wb,`项目明细表_${new Date().toLocaleDateString('zh-CN').replace(/\//g,'-')}.xlsx`);}
+
+function assignGroupColors(gns){const a={};gns.forEach((n,i)=>{a[n]=groupColorPool[i%groupColorPool.length];});return a;}
+function hexToRgba(h,a){const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return`rgba(${r},${g},${b},${a})`;}
+function buildLDMGroupMap(){const m={};projectData.forEach(item=>{const l=item.LDM,g=item.所属小组||'未分配';if(l&&!m[l])m[l]=g;});return m;}
+function adjustColor(hex,f){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return'#'+Math.round(r+(255-r)*(1-f)).toString(16).padStart(2,'0')+Math.round(g+(255-g)*(1-f)).toString(16).padStart(2,'0')+Math.round(b+(255-b)*(1-f)).toString(16).padStart(2,'0');}
+
+/* ═══════════ UPDATE ALL CHARTS ═══════════ */
+function updateCharts(){
+/* 颜色映射与一室2保持一致，同名同色 */
+const phasePal=[PAL[0],PAL[9],PAL[8],PAL[7],PAL[3],PAL[1],PAL[10],PAL[2],PAL[4]];
+phaseColorMap={'I期':PAL[0],'II期':PAL[9],'I/II期':PAL[8],'III期':PAL[7],'IV期':PAL[3],'CS':PAL[1],'BE/BA':PAL[10],'IIT':PAL[2],'其他':PAL[4],'I':PAL[0],'II':PAL[9],'III':PAL[7],'Ib/II':PAL[8],'Ib':PAL[3]};
+const allPh=[...new Set(filteredData.map(p=>p['试验分期']||'其他'))];allPh.forEach((p,i)=>{if(!phaseColorMap[p])phaseColorMap[p]=phasePal[i%phasePal.length];});
+
+statusColorMap={'在研':PAL[1],'未开展':PAL[3],'终止':PAL[8],'结题-不申报':PAL[0],'结题-申报':PAL[2]};
+const allSt=[...new Set(filteredData.map(p=>p['项目状态']||'其他'))];allSt.forEach((s,i)=>{if(!statusColorMap[s])statusColorMap[s]=PAL[(i+5)%11];});
+
+therapyColorMap={'其他':PAL[10],'内分泌':PAL[3],'呼吸':PAL[8],'抗感染':PAL[9],'消化':PAL[1],'肝病':PAL[0],'肿瘤':PAL[2],'自免':PAL[4],'血液病':PAL[7]};
+const allTh=[...new Set(filteredData.map(p=>p['治疗领域']||'其他'))];allTh.forEach((t,i)=>{if(!therapyColorMap[t])therapyColorMap[t]=PAL[(i+6)%11];});
+
+stageColorMap={'SSU阶段':PAL[0],'入组阶段':PAL[3],'随访阶段':PAL[8],'结题阶段':PAL[9]};
+const allSg=[...new Set(filteredData.map(p=>p['项目阶段']||'其他'))];allSg.forEach((s,i)=>{if(!stageColorMap[s])stageColorMap[s]=PAL[(i+4)%11];});
+
+/* C1 Phase */
+const pd={};filteredData.forEach(item=>{const p=item.试验分期||'其他';pd[p]=(pd[p]||0)+1;});const pe=Object.entries(pd).sort((a,b)=>b[1]-a[1]);
+chart1.setOption({tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},grid:{left:'3%',right:'12%',bottom:'3%',top:'3%',containLabel:true},xAxis:{type:'value',name:'项目数量',axisLabel:{color:'#5b5f6b',fontSize:10}},yAxis:{type:'category',data:pe.map(e=>e[0]),axisLabel:{color:'#5b5f6b',fontSize:10},inverse:true},series:[{type:'bar',data:pe.map(e=>({value:e[1],itemStyle:{color:phaseColorMap[e[0]]||PAL[0]}})),label:{show:true,position:'right',color:'#5b5f6b',fontWeight:600},barWidth:'50%',itemStyle:{borderRadius:[0,3,3,0]}}],animation:true,animationDuration:1000});
+
+/* C2 Grade */
+const gd={};filteredData.forEach(item=>{const c=item.项目等级||'未分级';gd[c]=(gd[c]||0)+1;});const gl=gradeOrder.filter(c=>gd[c]!==undefined);
+chart2.setOption({tooltip:{trigger:'item',formatter:'{a}<br/>{b}: {c} ({d}%)'},legend:{orient:'vertical',right:'5%',top:'center',textStyle:{color:'#5b5f6b',fontSize:10}},series:[{name:'项目等级',type:'pie',radius:['35%','70%'],center:['40%','50%'],itemStyle:{borderRadius:6,borderColor:'#fff',borderWidth:2},label:{show:true,formatter:'{b}\n{c}个',color:'#5b5f6b',fontSize:9},emphasis:{label:{show:true,fontSize:12,fontWeight:'bold'}},data:gl.map(c=>({name:c+'类',value:gd[c],itemStyle:{color:gradeColors[c]||PAL[2]}}))}],animation:true});
+
+/* C4 Status */
+const sd2={};filteredData.forEach(item=>{const s=item.项目状态||'其他';sd2[s]=(sd2[s]||0)+1;});const sl=Object.keys(sd2).sort((a,b)=>sd2[b]-sd2[a]);
+chart4.setOption({tooltip:{trigger:'item',formatter:'{a}<br/>{b}: {c} ({d}%)'},legend:{orient:'vertical',right:'5%',top:'center',textStyle:{color:'#5b5f6b',fontSize:10}},series:[{name:'项目状态',type:'pie',radius:'60%',center:['40%','50%'],roseType:'radius',itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2},label:{show:true,formatter:'{b}\n{c}个',color:'#5b5f6b',fontSize:9},emphasis:{label:{show:true,fontSize:12,fontWeight:'bold'}},data:sl.map(s=>({name:s,value:sd2[s],itemStyle:{color:statusColorMap[s]||PAL[0]}}))}],animation:true});
+
+/* Indication Big Category */
+renderIndicationChart();
+
+/* Stage */
+renderStageChart();
+
+/* Therapy: Tumor Treemap + Non-Tumor Donut */
+renderTumorTreemap();renderNonTumorDonut();
+
+/* Group Radar */
+
+/* Group Grade Distribution */
+
+/* Sunburst */
+const gsd={};filteredData.forEach(item=>{const g=item.所属小组||'未分配',l=item.LDM||'未知';if(!gsd[g])gsd[g]={_total:0,members:{}};gsd[g]._total++;gsd[g].members[l]=(gsd[g].members[l]||0)+1;});const gn=Object.keys(gsd);globalGroupColorMap=assignGroupColors(gn);
+const sbd=gn.map(g=>({name:g,value:gsd[g]._total,itemStyle:{color:globalGroupColorMap[g]},children:Object.keys(gsd[g].members).map(l=>({name:l,value:gsd[g].members[l],itemStyle:{color:adjustColor(globalGroupColorMap[g],0.7)}}))}));
+chartSunburst.setOption({series:[{type:'sunburst',data:sbd,radius:['15%','80%'],center:['50%','50%'],sort:undefined,emphasis:{focus:'ancestor'},levels:[{},{r0:'15%',r:'45%',itemStyle:{borderWidth:2,borderColor:'#fff'},label:{show:true,rotate:'tangential',fontSize:11,fontWeight:'bold',color:'#fff',textShadowColor:'rgba(0,0,0,0.5)',textShadowBlur:3}},{r0:'45%',r:'80%',itemStyle:{borderWidth:2,borderColor:'#fff'},label:{show:true,align:'right',fontSize:10,color:'#5b5f6b'}}],itemStyle:{borderRadius:3}}],tooltip:{trigger:'item',formatter:function(p){return p.data.children&&p.data.children.length>0?'<b>'+p.name+'</b><br/>共 '+p.value+' 个项目<br/>'+p.data.children.length+' 名组员':p.name+': '+p.value+' 个项目';}}},true);
+renderGroupDistribution();
+
+/* C3 LDM by Grade */
+const ldmD={},lgm=buildLDMGroupMap(),allL=[...new Set(filteredData.map(p=>p.LDM).filter(l=>l))];allL.forEach(l=>{ldmD[l]={S:0,A:0,B:0,C:0,D:0,'未分级':0,_cases:0,_total:0,_group:lgm[l]||'未分配'};});filteredData.forEach(item=>{if(ldmD[item.LDM]){const c=item.项目等级||'未分级';ldmD[item.LDM][c]=(ldmD[item.LDM][c]||0)+1;ldmD[item.LDM]._cases+=parseNumeric(item['实际入组病例数']);ldmD[item.LDM]._total++;}});const go2={};allL.forEach(l=>{const g=ldmD[l]._group;if(!go2[g])go2[g]=0;go2[g]+=ldmD[l]._total;});const sg2=Object.keys(go2).sort((a,b)=>go2[b]-go2[a]);const ls=[],grs=[];let cii=0;sg2.forEach(g=>{const gl=allL.filter(l=>ldmD[l]._group===g).sort((a,b)=>ldmD[b]._total-ldmD[a]._total);const si=cii;ls.push(...gl);cii+=gl.length;if(gl.length>0)grs.push({group:g,start:si,end:cii-1,color:globalGroupColorMap[g]||PAL[0]});});const stk=[];gradeOrder.forEach((cat,ci2)=>{const vs=ls.map(l=>ldmD[l]?.[cat]||0);const il=ci2===gradeOrder.length-1;stk.push({name:cat+'级',type:'bar',stack:'total',data:vs,barWidth:'40%',label:{show:true,position:il?'top':'insideTop',color:il?'#1c1e24':'#fff',fontWeight:'bold',fontSize:il?10:8,formatter:function(p){if(il){const t=ls.map(l=>ldmD[l]?._total||0);return t[p.dataIndex]>0?t[p.dataIndex]:'';}return p.value>0?p.value:'';}},itemStyle:{color:gradeColors[cat],borderRadius:il?[3,3,0,0]:[0,0,0,0]}});});const csd=ls.map(l=>ldmD[l]._cases);stk.push({name:'入组病例数',type:'scatter',yAxisIndex:1,data:csd,symbol:'circle',symbolSize:8,itemStyle:{color:PAL[10],borderColor:'#fff',borderWidth:1.5},label:{show:true,position:'top',color:PAL[10],fontWeight:'bold',fontSize:10,formatter:function(p){return p.value+'例';}}});const ma=[];grs.forEach(r=>{ma.push([{xAxis:r.start-0.4,itemStyle:{color:hexToRgba(r.color,0.1),borderColor:r.color,borderWidth:1,borderType:'dashed'},label:{show:false}},{xAxis:r.end+0.4}]);});
+chart3.setOption({tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){let r=p[0].axisValue+'<br/>',tc=0;p.forEach(x=>{if(x.value>0&&x.seriesName!=='入组病例数'&&x.seriesName!=='分组标记')r+=x.marker+x.seriesName+': '+x.value+'<br/>';if(x.seriesName==='入组病例数')tc=x.value;});if(tc>0)r+='<strong>累计入组: '+tc+'例</strong>';return r;}},grid:{left:'3%',right:'8%',bottom:'15%',top:'18%',containLabel:true},xAxis:{type:'category',data:ls,axisLabel:{color:'#5b5f6b',fontSize:9,rotate:30,interval:0},axisTick:{alignWithLabel:true}},yAxis:[{type:'value',name:'项目数量',position:'left',axisLabel:{color:'#5b5f6b',fontSize:10}},{type:'value',name:'入组病例数',position:'right',axisLabel:{color:'#5b5f6b',fontSize:10},splitLine:{show:false}}],legend:{bottom:0,textStyle:{color:'#5b5f6b',fontSize:10},itemWidth:12,itemHeight:8},series:[{name:'分组标记',type:'bar',stack:'total',data:ls.map(()=>0),markArea:{silent:true,data:ma},itemStyle:{color:'transparent'},label:{show:false}},...stk],animation:true,animationDuration:1000},true);
+
+/* C5 LDM Phase */
+const ldpd={},alp=[...new Set(filteredData.map(p=>p.LDM).filter(l=>l))];alp.forEach(l=>{ldpd[l]={_group:lgm[l]||'未分配',_total:0};});const aps=new Set();filteredData.forEach(item=>{if(ldpd[item.LDM]){const ph=item.试验分期||'其他';ldpd[item.LDM][ph]=(ldpd[item.LDM][ph]||0)+1;ldpd[item.LDM]._total++;aps.add(ph);}});const apa=Array.from(aps);apa.sort((a,b)=>{const ai=phaseOrder.indexOf(a),bi=phaseOrder.indexOf(b);if(ai>=0&&bi>=0)return ai-bi;if(ai>=0)return-1;if(bi>=0)return 1;return a.localeCompare(b);});const pgt={};alp.forEach(l=>{const g=ldpd[l]._group;if(!pgt[g])pgt[g]=0;pgt[g]+=ldpd[l]._total;});const spg=Object.keys(pgt).sort((a,b)=>pgt[b]-pgt[a]);const lps=[],pgr=[];let pdx=0;spg.forEach(g=>{const gl=alp.filter(l=>ldpd[l]._group===g).sort((a,b)=>ldpd[b]._total-ldpd[a]._total);const si=pdx;lps.push(...gl);pdx+=gl.length;if(gl.length>0)pgr.push({group:g,start:si,end:pdx-1,color:globalGroupColorMap[g]||PAL[0]});});const phs=[];apa.forEach((ph,i)=>{const vs=lps.map(l=>ldpd[l]?.[ph]||0);const il=i===apa.length-1;phs.push({name:ph,type:'bar',stack:'phaseTotal',data:vs,barWidth:'40%',label:{show:true,position:il?'top':'insideTop',color:il?'#1c1e24':'#fff',fontWeight:'bold',fontSize:il?10:8,formatter:function(p){if(il){const t=lps.map(l=>ldpd[l]?._total||0);return t[p.dataIndex]>0?t[p.dataIndex]:'';}return p.value>0?p.value:'';}},itemStyle:{color:phaseColorMap[ph]||PAL[0],borderRadius:il?[3,3,0,0]:[0,0,0,0]}});});const pma=[];pgr.forEach(r=>{pma.push([{xAxis:r.start-0.4,itemStyle:{color:hexToRgba(r.color,0.1),borderColor:r.color,borderWidth:1,borderType:'dashed'},label:{show:false}},{xAxis:r.end+0.4}]);});
+chart5.setOption({tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){let r=p[0].axisValue+'<br/>',t=0;p.forEach(x=>{if(x.seriesName!=='总计'&&x.seriesName!=='分组标记'){r+=x.marker+x.seriesName+': '+x.value+'<br/>';t+=x.value;}});r+='<strong>合计: '+t+'个</strong>';return r;}},grid:{left:'3%',right:'4%',bottom:'15%',top:'18%',containLabel:true},xAxis:{type:'category',data:lps,axisLabel:{color:'#5b5f6b',fontSize:9,rotate:30,interval:0},axisTick:{alignWithLabel:true}},yAxis:{type:'value',name:'项目数量',axisLabel:{color:'#5b5f6b',fontSize:10}},legend:{bottom:0,textStyle:{color:'#5b5f6b',fontSize:9},itemWidth:10,itemHeight:7},series:[{name:'分组标记',type:'bar',stack:'phaseTotal',data:lps.map(()=>0),markArea:{silent:true,data:pma},itemStyle:{color:'transparent'},label:{show:false}},...phs],animation:true,animationDuration:1000},true);
+
+/* LDM Workload */
+renderLDMWorkload();
 }
 
-function getUniqueVals(field) {
-  var vals = [];
-  var seen = {};
-  projectData.forEach(function(p){
-    var v = p[field]||'';
-    if (!v) v = '未定义';
-    if (!seen[v]){ seen[v]=true; vals.push(v); }
-  });
-  return vals;
+/* ═══════════ INDICATION CHART ═══════════ */
+function renderIndicationChart(){
+const indD={};filteredData.forEach(item=>{const b=item['适应症（大类）']||'其他';indD[b]=(indD[b]||0)+1;});const ie=Object.entries(indD).sort((a,b)=>b[1]-a[1]);
+chartIndication.setOption({tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},grid:{left:'3%',right:'12%',bottom:'5%',top:'3%',containLabel:true},xAxis:{type:'value',name:'项目数量',axisLabel:{color:'#5b5f6b',fontSize:10}},yAxis:{type:'category',data:ie.map(e=>e[0]),axisLabel:{color:'#5b5f6b',fontSize:9},inverse:true},series:[{type:'bar',data:ie.map((e,i)=>({value:e[1],itemStyle:{color:PAL[i%11]}})),label:{show:true,position:'right',color:'#5b5f6b',fontWeight:600},barWidth:'50%',itemStyle:{borderRadius:[0,3,3,0]}}],animation:true});
 }
 
-function countBy(field) {
-  var m = {};
-  projectData.forEach(function(p){
-    var v = p[field]||'';
-    if (!v) v = '未定义';
-    m[v] = (m[v]||0) + 1;
-  });
-  return m;
+/* ═══════════ STAGE CHART ═══════════ */
+function renderStageChart(){
+const sgD={};filteredData.forEach(item=>{const s=item.项目阶段||'其他';sgD[s]=(sgD[s]||0)+1;});const se=stageOrder.filter(s=>sgD[s]!==undefined).concat(Object.keys(sgD).filter(s=>!stageOrder.includes(s)).sort());
+chartStage.setOption({tooltip:{trigger:'item',formatter:'{a}<br/>{b}: {c} ({d}%)'},legend:{orient:'vertical',right:'5%',top:'center',textStyle:{color:'#5b5f6b',fontSize:10}},series:[{name:'项目阶段',type:'pie',radius:['40%','70%'],center:['40%','50%'],itemStyle:{borderRadius:6,borderColor:'#fff',borderWidth:2},label:{show:true,formatter:'{b}\n{c}个',color:'#5b5f6b',fontSize:9},emphasis:{label:{show:true,fontSize:12,fontWeight:'bold'}},data:se.map(s=>({name:s,value:sgD[s],itemStyle:{color:stageColorMap[s]||PAL[0]}}))}],animation:true});
 }
 
-function countBy2(f1, v1s, f2, v2s) {
-  var result = [];
-  v1s.forEach(function(v1, i1){
-    v2s.forEach(function(v2, i2){
-      var cnt=0;
-      projectData.forEach(function(p){ if((p[f1]||'')===v1&&(p[f2]||'')===v2) cnt++; });
-      result.push([i2, i1, cnt]);
-    });
-  });
-  return result;
+/* ═══════════ THERAPY: TUMOR TREEMAP ═══════════ */
+function renderTumorTreemap(){
+const dim=tumorTreemapDimension;
+let dimField=dim==='big'?'适应症（大类）':'适应症（小类）';
+const tumorItems=filteredData.filter(p=>p.治疗领域==='肿瘤');
+const tmD={};tumorItems.forEach(item=>{const v=item[dimField]||'其他';tmD[v]=(tmD[v]||0)+1;});
+const tmData=Object.entries(tmD).map(([name,value])=>({name,value}));
+chartTumorTreemap.setOption({
+tooltip:{trigger:'item',formatter:function(p){return p.name+': '+p.value+'个项目';}},
+series:[{type:'treemap',data:tmData,width:'92%',height:'85%',left:'4%',top:'5%',roam:false,nodeClick:false,breadcrumb:{show:false},label:{show:true,fontSize:11,fontWeight:'bold',color:'#fff',formatter:function(p){if(p.value>=2)return p.name+'\n'+p.value+'个';return p.name;}},itemStyle:{borderColor:'#fff',borderWidth:2,gapWidth:2},levels:[{colorMappingBy:'value',color:['#e89892','#e07a74','#d45c55','#c43e3d','#a8071a']}],upperLabel:{show:true,height:25,color:'#5b5f6b',fontSize:10}}],
+animation:true},true);
 }
 
-// ===== Chart: Indication Bar =====
-var indData = Object.entries(countBy('indication_large')).sort(function(a,b){return b[1]-a[1];});
-initChart('chart-indication', {
-  tooltip: { trigger:'axis', axisPointer:{type:'shadow'} },
-  grid: { left:'3%', right:'8%', bottom:'3%', top:'3%', containLabel:true },
-  xAxis: { type:'value', name:'项目数' },
-  yAxis: { type:'category', data:indData.map(function(d){return d[0];}).reverse(), inverse:true, axisLabel:{fontSize:10} },
-  series: [{
-    type:'bar', data:indData.map(function(d){return d[1];}).reverse(),
-    itemStyle:{ color:function(p){ return themeColors[p.dataIndex%15]; } },
-    label:{show:true, position:'right', fontSize:11, fontWeight:'bold'},
-    barMaxWidth:22
-  }]
-});
+/* ═══════════ NON-TUMOR DONUT ═══════════ */
+function renderNonTumorDonut(){
+const nonTumorItems=filteredData.filter(p=>p.治疗领域!=='肿瘤');
+const ntD={};nonTumorItems.forEach(item=>{const t=item.治疗领域||'其他';ntD[t]=(ntD[t]||0)+1;});
+const ntData=Object.entries(ntD).sort((a,b)=>b[1]-a[1]).map(([name,value])=>({name,value}));
+chartNonTumorDonut.setOption({
+tooltip:{trigger:'item',formatter:'{a}<br/>{b}: {c}个 ({d}%)'},
+legend:{orient:'vertical',right:'5%',top:'center',textStyle:{color:'#5b5f6b',fontSize:10}},
+series:[{name:'非肿瘤领域',type:'pie',radius:['42%','68%'],center:['38%','50%'],avoidLabelOverlap:false,itemStyle:{borderRadius:6,borderColor:'#fff',borderWidth:3},label:{show:true,position:'outside',formatter:function(p){return p.name+'\n'+p.value+'个';},fontSize:11,fontWeight:600,color:'#5b5f6b',lineHeight:18},emphasis:{label:{show:true,fontSize:13,fontWeight:'bold'}},data:ntData.map(d=>({name:d.name,value:d.value,itemStyle:{color:therapyColorMap[d.name]||PAL[2]}}))}],
+animation:true},true);
+}
 
-// ===== Chart: Tumor vs Non-tumor =====
-var tcData = countBy('tumor');
-var tcColorMap = {'肿瘤':'#e53e3e','呼吸':'#3182ce','健康人':'#2f855a','自免':'#805ad5','肝病':'#d69e2e','呼吸/健康人':'#0891b2','非肿':'#dd6b20','非肿瘤':'#38a169','内分泌':'#dd6b20'};
-var tumorPieData = Object.entries(tcData).map(function(d){return {value:d[1],name:d[0],itemStyle:{color:tcColorMap[d[0]]||themeColors[0]}};});
-initChart('chart-tumor-pie', {
-  tooltip: { trigger:'item', formatter:'{b}: {c}个 ({d}%)' },
-  legend: { orient:'vertical', right:'5%', top:'center', textStyle:{fontSize:11} },
-  series: [{
-    type:'pie', radius:['45%','70%'], center:['35%','50%'], avoidLabelOverlap:false,
-    label:{show:false},
-    emphasis:{label:{show:true, fontSize:14, fontWeight:'bold'}},
-    data:tumorPieData
-  }]
-});
+/* ═══════════ GROUP ═══════════ */
+function renderGroupDistribution(){
+const dim=groupDistDimension;const groups=[...new Set(filteredData.map(p=>p.所属小组||'未分配'))];let dimVals,colorMap,dimField,defVal;
+if(dim==='phase'){dimField='试验分期';defVal='其他';dimVals=[...new Set(filteredData.map(p=>p[dimField]||defVal))];dimVals.sort((a,b)=>{const ai=phaseOrder.indexOf(a),bi=phaseOrder.indexOf(b);if(ai>=0&&bi>=0)return ai-bi;if(ai>=0)return-1;if(bi>=0)return 1;return a.localeCompare(b);});colorMap=phaseColorMap;}
+else if(dim==='grade'){dimField='项目等级';defVal='未分级';const ac=[...new Set(filteredData.map(p=>p[dimField]||defVal))];dimVals=[...gradeOrder.filter(c=>ac.includes(c)),...ac.filter(c=>!gradeOrder.includes(c)).sort()];colorMap=gradeColors;}
+else{dimField='项目状态';defVal='其他';dimVals=[...new Set(filteredData.map(p=>p[dimField]||defVal))].sort();colorMap=statusColorMap;}
+const gTot=groups.map(g=>filteredData.filter(p=>(p.所属小组||'未分配')===g).length);const gE=groups.map((g,i)=>({name:g,total:gTot[i]})).sort((a,b)=>b.total-a.total);const sGrps=gE.map(e=>e.name);
+const sdata=dimVals.map(dv=>({name:dv,type:'bar',stack:'total',data:sGrps.map(g=>filteredData.filter(p=>{const pg=p.所属小组||'未分配',dv2=p[dimField]||defVal;return pg===g&&dv2===dv;}).length),label:{show:true,fontSize:9,color:'#5b5f6b',formatter:function(p){return p.value>0?p.value:'';}},itemStyle:{color:(colorMap[dv]||PAL[0])}}));
+chartGroupDist.setOption({tooltip:{trigger:'axis',axisPointer:{type:'shadow'},formatter:function(p){let r=p[0].axisValue+'<br/>',t=0;p.forEach(x=>{if(x.value>0){r+=x.marker+x.seriesName+': '+x.value+'<br/>';t+=x.value;}});r+='<strong>合计: '+t+'个</strong>';return r;}},legend:{top:0,textStyle:{fontSize:9},itemWidth:10,itemHeight:7},grid:{left:'3%',right:'8%',bottom:'3%',top:'14%',containLabel:true},xAxis:{type:'value',name:'项目数量',axisLabel:{fontSize:10,color:'#5b5f6b'}},yAxis:{type:'category',data:sGrps,axisLabel:{fontSize:10,color:'#5b5f6b'},inverse:true},series:sdata,animation:true},true);
+}
 
-// ===== Chart: Tumor Sub-type TreeMap =====
-var tumorIndList = ['血液肿瘤','消化道肿瘤','乳腺肿瘤','肺癌','晚期恶性肿瘤','晚期实体瘤','软组织肉瘤','妇科肿瘤','泌尿生殖系统肿瘤','多发性骨髓瘤','血液肿瘤-其他','血液瘤','晚期肺癌','其他肿瘤'];
-var tumorTreeData = [];
-tumorIndList.forEach(function(ti){
-  var cnt=0;
-  projectData.forEach(function(p){ if((p.indication_large||'')===ti) cnt++; });
-  if(cnt>0) tumorTreeData.push({name:ti, value:cnt});
-});
-initChart('chart-tumor-sub', {
-  tooltip: { trigger:'item', formatter:'{b}: {c}个项目' },
-  series: [{
-    type:'treemap', data:tumorTreeData,
-    label:{show:true, fontSize:11, formatter:function(p){return p.name+'\n'+p.value+'个';}},
-    upperLabel:{show:true, height:24},
-    roam:false, width:'100%', height:'100%'
-  }]
-});
+/* ═══════════ LDM ═══════════ */
+function renderLDMWorkload(){
+const ldms=[...new Set(filteredData.map(p=>p.LDM).filter(l=>l))];const lW=ldms.map(l=>{const items=filteredData.filter(p=>p.LDM===l);return{name:l,pCnt:items.length,cases:items.reduce((s,p)=>s+parseNumeric(p.实际入组病例数),0),group:items[0]?.所属小组||'未分配'};});const groups=[...new Set(lW.map(d=>d.group))];
+chartLDMWorkload.setOption({tooltip:{trigger:'item',formatter:function(p){return'<b>'+p.name+'</b><br/>项目数: '+p.data[0]+'<br/>入组病例: '+p.data[1]+'例<br/>小组: '+p.data[2];}},grid:{left:'3%',right:'8%',bottom:'14%',top:'8%',containLabel:true},xAxis:{type:'value',name:'项目数量',axisLabel:{color:'#5b5f6b',fontSize:10},splitLine:{lineStyle:{color:'#eef0f5'}}},yAxis:{type:'value',name:'入组病例数',axisLabel:{color:'#5b5f6b',fontSize:10},splitLine:{lineStyle:{color:'#eef0f5'}}},series:groups.map(g=>({name:g,type:'scatter',data:lW.filter(d=>d.group===g).map(d=>[d.pCnt,d.cases,d.name]),symbolSize:function(d){return Math.max(10,Math.min(40,Math.sqrt(d[1])*2.5));},itemStyle:{color:globalGroupColorMap[g]||PAL[0],opacity:0.8},label:{show:true,formatter:function(p){return p.data[2];},position:'top',fontSize:9,color:'#5b5f6b'},emphasis:{scale:1.5}})),legend:{bottom:0,textStyle:{fontSize:9,color:'#5b5f6b'}},animation:true},true);
+}
 
-// ===== Chart: Non-tumor Rose =====
-var nonTumorMap = {};
-projectData.forEach(function(p){ var ind=p.indication_large||''; if(tumorIndList.indexOf(ind)===-1) nonTumorMap[ind]=(nonTumorMap[ind]||0)+1; });
-var nonTumorData = Object.entries(nonTumorMap).map(function(d,i){return {value:d[1],name:d[0],itemStyle:{color:themeColors[i%15]}};});
-initChart('chart-nontumor', {
-  tooltip: { trigger:'item', formatter:'{b}: {c}个项目' },
-  series: [{
-    type:'pie', radius:['38%','72%'], roseType:'area',
-    label:{formatter:'{b}\n{c}个', fontSize:10},
-    data:nonTumorData
-  }]
-});
+/* ═══════════ INIT ═══════════ */
+function initCharts(){
+chartSunburst=echarts.init(document.getElementById('chartSunburst'));chart1=echarts.init(document.getElementById('chart1'));chart2=echarts.init(document.getElementById('chart2'));chart3=echarts.init(document.getElementById('chart3'));chart4=echarts.init(document.getElementById('chart4'));chart5=echarts.init(document.getElementById('chart5'));chartGroupDist=echarts.init(document.getElementById('chartGroupDist'));chartLDMWorkload=echarts.init(document.getElementById('chartLDMWorkload'));chartIndication=echarts.init(document.getElementById('chartIndication'));chartStage=echarts.init(document.getElementById('chartStage'));chartTumorTreemap=echarts.init(document.getElementById('chartTumorTreemap'));chartNonTumorDonut=echarts.init(document.getElementById('chartNonTumorDonut'));
 
-// ===== Chart: Phase Distribution =====
-var phaseOrder = ['I','Ib','Ib/II','II','III','IIT'];
-var phaseData = countBy('phase');
-var phaseVals = phaseOrder.map(function(p){return phaseData[p]||0;});
-initChart('chart-phase', {
-  tooltip: { trigger:'axis' },
-  grid: { left:'3%', right:'8%', bottom:'3%', top:'3%', containLabel:true },
-  xAxis: { type:'category', data:phaseOrder.map(function(p){return p+'期';}) },
-  yAxis: { type:'value', name:'项目数' },
-  series: [{
-    type:'bar', data:phaseVals,
-    itemStyle:{color:'#3182ce', borderRadius:[4,4,0,0]},
-    label:{show:true, position:'top', fontSize:12, fontWeight:'bold'},
-    barMaxWidth:40,
-    markLine:{ silent:true, data:[{type:'average', name:'均值'}], lineStyle:{color:'#e53e3e', type:'dashed'} }
-  }]
-});
+chartSunburst.setOption({series:[{type:'sunburst',data:[],radius:['15%','80%'],center:['50%','50%'],sort:undefined,emphasis:{focus:'ancestor'},levels:[{},{r0:'15%',r:'45%',itemStyle:{borderWidth:2,borderColor:'#fff'},label:{show:true,rotate:'tangential',fontSize:11,fontWeight:'bold',color:'#fff',textShadowColor:'rgba(0,0,0,0.5)',textShadowBlur:3}},{r0:'45%',r:'80%',itemStyle:{borderWidth:2,borderColor:'#fff'},label:{show:true,align:'right',fontSize:10,color:'#5b5f6b'}}],itemStyle:{borderRadius:3}}],tooltip:{trigger:'item',formatter:function(p){return p.name+': '+p.value+' 个项目';}}});
+chart1.setOption({tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},grid:{left:'3%',right:'12%',bottom:'3%',top:'3%',containLabel:true},xAxis:{type:'value',name:'项目数量',axisLabel:{color:'#5b5f6b',fontSize:10}},yAxis:{type:'category',axisLabel:{color:'#5b5f6b',fontSize:10},inverse:true},series:[{type:'bar',label:{show:true,position:'right',color:'#5b5f6b',fontWeight:600},barWidth:'50%',itemStyle:{borderRadius:[0,3,3,0]}}],animation:true});
+chart2.setOption({tooltip:{trigger:'item',formatter:'{a}<br/>{b}: {c} ({d}%)'},legend:{orient:'vertical',right:'5%',top:'center',textStyle:{color:'#5b5f6b',fontSize:10}},series:[{name:'项目等级',type:'pie',radius:['35%','70%'],center:['40%','50%'],itemStyle:{borderRadius:6,borderColor:'#fff',borderWidth:2},label:{show:true,formatter:'{b}\n{c}个',color:'#5b5f6b',fontSize:9},emphasis:{label:{show:true,fontSize:12,fontWeight:'bold'}}}],animation:true});
+chart3.setOption({tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},grid:{left:'3%',right:'8%',bottom:'15%',top:'18%',containLabel:true},xAxis:{type:'category',axisLabel:{color:'#5b5f6b',fontSize:9,rotate:30,interval:0},axisTick:{alignWithLabel:true}},yAxis:[{type:'value',name:'项目数量',position:'left',axisLabel:{color:'#5b5f6b',fontSize:10}},{type:'value',name:'入组病例数',position:'right',axisLabel:{color:'#5b5f6b',fontSize:10},splitLine:{show:false}}],legend:{bottom:0,textStyle:{color:'#5b5f6b',fontSize:10},itemWidth:12,itemHeight:8},series:[],animation:true});
+chart4.setOption({tooltip:{trigger:'item',formatter:'{a}<br/>{b}: {c} ({d}%)'},legend:{orient:'vertical',right:'5%',top:'center',textStyle:{color:'#5b5f6b',fontSize:10}},series:[{name:'项目状态',type:'pie',radius:'60%',center:['40%','50%'],roseType:'radius',itemStyle:{borderRadius:4,borderColor:'#fff',borderWidth:2},label:{show:true,formatter:'{b}\n{c}个',color:'#5b5f6b',fontSize:9},emphasis:{label:{show:true,fontSize:12,fontWeight:'bold'}}}],animation:true});
+chart5.setOption({tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},grid:{left:'3%',right:'4%',bottom:'15%',top:'18%',containLabel:true},xAxis:{type:'category',axisLabel:{color:'#5b5f6b',fontSize:9,rotate:30,interval:0},axisTick:{alignWithLabel:true}},yAxis:{type:'value',name:'项目数量',axisLabel:{color:'#5b5f6b',fontSize:10}},legend:{bottom:0,textStyle:{color:'#5b5f6b',fontSize:9},itemWidth:10,itemHeight:7},series:[],animation:true});
+chartGroupDist.setOption({tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},grid:{left:'3%',right:'8%',bottom:'3%',top:'14%',containLabel:true},xAxis:{type:'value',name:'项目数量',axisLabel:{fontSize:10,color:'#5b5f6b'}},yAxis:{type:'category',data:[],axisLabel:{fontSize:10,color:'#5b5f6b'},inverse:true},legend:{top:0,textStyle:{fontSize:9},itemWidth:10,itemHeight:7},series:[],animation:true});
+chartIndication.setOption({tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},grid:{left:'3%',right:'12%',bottom:'5%',top:'3%',containLabel:true},xAxis:{type:'value',name:'项目数量',axisLabel:{color:'#5b5f6b',fontSize:10}},yAxis:{type:'category',axisLabel:{color:'#5b5f6b',fontSize:9},inverse:true},series:[{type:'bar',label:{show:true,position:'right',color:'#5b5f6b',fontWeight:600},barWidth:'50%',itemStyle:{borderRadius:[0,3,3,0]}}],animation:true});
+chartStage.setOption({tooltip:{trigger:'item',formatter:'{a}<br/>{b}: {c} ({d}%)'},legend:{orient:'vertical',right:'5%',top:'center',textStyle:{color:'#5b5f6b',fontSize:10}},series:[{name:'项目阶段',type:'pie',radius:['40%','70%'],center:['40%','50%'],itemStyle:{borderRadius:6,borderColor:'#fff',borderWidth:2},label:{show:true,formatter:'{b}\n{c}个',color:'#5b5f6b',fontSize:9}}],animation:true});
+chartTumorTreemap.setOption({tooltip:{trigger:'item',formatter:function(p){return p.name+': '+p.value+'个项目';}},series:[{type:'treemap',data:[],width:'92%',height:'85%',left:'4%',top:'5%',roam:false,nodeClick:false,breadcrumb:{show:false},label:{show:true,fontSize:11,fontWeight:'bold',color:'#fff'},itemStyle:{borderColor:'#fff',borderWidth:2,gapWidth:2},levels:[{colorMappingBy:'value',color:['#e89892','#e07a74','#d45c55','#c43e3d','#a8071a']}]}],animation:true});
+chartNonTumorDonut.setOption({tooltip:{trigger:'item',formatter:'{a}<br/>{b}: {c}个 ({d}%)'},legend:{orient:'vertical',right:'5%',top:'center',textStyle:{color:'#5b5f6b',fontSize:10}},series:[{name:'非肿瘤领域',type:'pie',radius:['42%','68%'],center:['38%','50%'],itemStyle:{borderRadius:6,borderColor:'#fff',borderWidth:3},label:{show:true,position:'outside',formatter:function(p){return p.name+'\n'+p.value+'个';},fontSize:11,fontWeight:600,color:'#5b5f6b'},data:[]}],animation:true});
 
-// ===== Chart: Level Distribution =====
-var levelOrder = ['S','A','B','C'];
-var levelColors = {'S':'#e53e3e','A':'#d69e2e','B':'#3182ce','C':'#718096'};
-var lvData = countBy('level');
-var levelPie = levelOrder.map(function(l){return {value:lvData[l]||0, name:l+'级', itemStyle:{color:levelColors[l]}};});
-initChart('chart-level', {
-  tooltip: { trigger:'item', formatter:'{b}: {c}个 ({d}%)' },
-  series: [{
-    type:'pie', radius:['50%','75%'], center:['50%','50%'],
-    label:{formatter:'{b}\n{c}个 ({d}%)', fontSize:12},
-    emphasis:{label:{fontSize:16, fontWeight:'bold'}},
-    data:levelPie
-  }]
-});
+document.querySelectorAll('#groupDistTabs .tab-btn').forEach(b=>{b.addEventListener('click',function(){document.querySelectorAll('#groupDistTabs .tab-btn').forEach(x=>x.classList.remove('active'));this.classList.add('active');groupDistDimension=this.getAttribute('data-dim');if(projectData.length>0)renderGroupDistribution();});});
+document.querySelectorAll('#tumorTabs .tab-btn').forEach(b=>{b.addEventListener('click',function(){document.querySelectorAll('#tumorTabs .tab-btn').forEach(x=>x.classList.remove('active'));this.classList.add('active');tumorTreemapDimension=this.getAttribute('data-dim');if(projectData.length>0)renderTumorTreemap();});});
+}
 
-// ===== Chart: Status (dynamic from data) =====
-var stData = countBy('status');
-var stColors = {'在研':'#3182ce','随访':'#d69e2e','终止':'#c53030','结题不申报':'#2f855a','结题申报':'#805ad5'};
-var statusPie = Object.entries(stData).map(function(d){return {value:d[1],name:d[0],itemStyle:{color:stColors[d[0]]||'#a0aec0'}};});
-initChart('chart-status', {
-  tooltip: { trigger:'item', formatter:'{b}: {c}个 ({d}%)' },
-  series: [{
-    type:'pie', radius:['45%','72%'], center:['50%','50%'],
-    label:{formatter:'{b}\n{c}个 ({d}%)', fontSize:11},
-    emphasis:{label:{fontSize:15, fontWeight:'bold'}},
-    data:statusPie
-  }]
-});
-
-// ===== Chart: Level x Status Heatmap (dynamic statuses) =====
-var levelList = ['S','A','B','C'];
-var statusList = getUniqueVals('status');
-var heatData = countBy2('level', levelList, 'status', statusList);
-var maxHeat = Math.max.apply(null, heatData.map(function(d){return d[2];})||[0]);
-initChart('chart-level-status', {
-  tooltip: { formatter:function(p){return statusList[p.value[0]]+' · '+levelList[p.value[1]]+'级: <b>'+p.value[2]+'个</b>';} },
-  grid: { left:'15%', right:'10%', bottom:'10%', top:'5%' },
-  xAxis: { type:'category', data:statusList, axisLabel:{fontSize:11}, position:'top' },
-  yAxis: { type:'category', data:levelList.map(function(l){return l+'级';}), axisLabel:{fontSize:11} },
-  visualMap: { min:0, max:maxHeat||1, calculable:true, orient:'vertical', right:'2%', bottom:'20%', inRange:{color:['#ebf8ff','#90cdf4','#3182ce','#1a3a5c']} },
-  series: [{
-    type:'heatmap', data:heatData,
-    label:{show:true, fontSize:13, fontWeight:'bold', color:function(p){return p.value[2]>(maxHeat/2||1)?'#fff':'#1a3a5c';}},
-    emphasis:{itemStyle:{shadowBlur:10, shadowColor:'rgba(0,0,0,0.3)'}}
-  }]
-});
-
-// ===== Chart: Level x Phase Stacked Bar =====
-var phasesForBar = ['I','Ib','Ib/II','II','III','IIT'];
-var phaseColorMap = {'I':'#3182ce','Ib':'#0891b2','Ib/II':'#2f855a','II':'#d69e2e','III':'#e53e3e','IIT':'#805ad5'};
-var lpSeries = phasesForBar.map(function(ph){
-  return {
-    name: ph+'期', type:'bar', stack:'total', barMaxWidth:40,
-    data: levelList.map(function(lv){
-      var cnt=0;
-      projectData.forEach(function(p){ if((p.level||'')===lv && (p.phase||'')===ph) cnt++; });
-      return cnt;
-    }),
-    itemStyle:{color:phaseColorMap[ph]}
-  };
-});
-initChart('chart-level-phase', {
-  tooltip: { trigger:'axis', axisPointer:{type:'shadow'} },
-  legend: { bottom:0, textStyle:{fontSize:11} },
-  grid: { left:'3%', right:'4%', bottom:'12%', top:'3%', containLabel:true },
-  xAxis: { type:'category', data:levelList.map(function(l){return l+'级';}) },
-  yAxis: { type:'value', name:'项目数' },
-  series: lpSeries
-});
-
-// ===== Chart: Milestone =====
-var msOrder = ['NDA','pre-NDA','期中分析','正常运行','结题不申报'];
-var msColors = {'NDA':'#e53e3e','pre-NDA':'#dd6b20','期中分析':'#805ad5','正常运行':'#3182ce','结题不申报':'#2f855a','未定义':'#a0aec0'};
-var msData = countBy('milestone_2026');
-initChart('chart-milestone', {
-  tooltip: { trigger:'axis' },
-  grid: { left:'3%', right:'4%', bottom:'3%', top:'8%', containLabel:true },
-  xAxis: { type:'category', data:msOrder, axisLabel:{fontSize:11} },
-  yAxis: { type:'value', name:'项目数' },
-  series: [{
-    type:'bar', data:msOrder.map(function(m){return {value:msData[m]||0, itemStyle:{color:msColors[m], borderRadius:[4,4,0,0]}};}),
-    label:{show:true, position:'top', fontSize:12, fontWeight:'bold'},
-    barMaxWidth:40,
-    markLine:{ silent:true, data:[{type:'average', name:'均值'}], lineStyle:{color:'#e53e3e', type:'dashed'} }
-  }]
-});
-
-// ===== Chart: NDA/Pre-NDA/期中分析 Timeline =====
-var keyNodeProjects = projectData.filter(function(p){
-  var m = p.milestone_2026||'';
-  return m==='NDA'||m==='pre-NDA'||m==='期中分析';
-});
-initChart('chart-nda-timeline', {
-  tooltip: { trigger:'item', formatter:function(p){return '<b>'+p.name+'</b><br/>等级: '+p.data._level+'级 · '+p.data._phase+'<br/>入组: '+p.value+'例<br/>节点: '+p.data._ms;} },
-  grid: { left:'3%', right:'10%', bottom:'3%', top:'3%', containLabel:true },
-  xAxis: { type:'value', name:'已完成入组例数' },
-  yAxis: { type:'category', data:keyNodeProjects.map(function(p){return p.protocol;}).reverse(), axisLabel:{fontSize:10} },
-  series: [{
-    type:'bar',
-    data: keyNodeProjects.map(function(p){
-      var enrolled = parseInt(p.enrolled)||0;
-      var m = p.milestone_2026||'';
-      var color = m==='NDA'?'#e53e3e':(m==='pre-NDA'?'#dd6b20':'#805ad5');
-      return {value:enrolled, itemStyle:{color:color}, _level:p.level, _phase:p.phase, _ms:m};
-    }).reverse(),
-    label:{show:true, position:'right', formatter:function(p){return p.value+'例';}, fontSize:11},
-    barMaxWidth:20
-  }]
-});
-
-// ===== Chart: LDM Workload =====
-var ldmData = Object.entries(countBy('ldm')).sort(function(a,b){return b[1]-a[1];});
-initChart('chart-ldm', {
-  tooltip: { trigger:'axis' },
-  grid: { left:'3%', right:'6%', bottom:'3%', top:'3%', containLabel:true },
-  xAxis: { type:'value', name:'项目数' },
-  yAxis: { type:'category', data:ldmData.map(function(d){return d[0];}).reverse(), axisLabel:{fontSize:11} },
-  series: [{
-    type:'bar', data:ldmData.map(function(d){return d[1];}).reverse(),
-    itemStyle:{color:'#3182ce', borderRadius:[0,4,4,0]},
-    label:{show:true, position:'right', fontSize:11, fontWeight:'bold'},
-    barMaxWidth:18,
-    markLine:{ silent:true, data:[{type:'average', name:'人均', label:{formatter:'人均: {c}'}}], lineStyle:{color:'#e53e3e', type:'dashed'} }
-  }]
-});
-
-// ===== Chart: LDM x Level =====
-var ldmNames = ldmData.map(function(d){return d[0];});
-var ldmLevelSeries = ['S','A','B','C'].map(function(lv,li){
-  return {
-    name: lv+'级', type:'bar', stack:'total', barMaxWidth:16,
-    data: ldmNames.map(function(name){
-      var cnt=0;
-      projectData.forEach(function(p){ if((p.ldm||'')===name && (p.level||'')===lv) cnt++; });
-      return cnt;
-    }),
-    itemStyle:{color:['#e53e3e','#d69e2e','#3182ce','#a0aec0'][li]}
-  };
-});
-initChart('chart-ldm-level', {
-  tooltip: { trigger:'axis', axisPointer:{type:'shadow'} },
-  legend: { bottom:0, textStyle:{fontSize:11} },
-  grid: { left:'3%', right:'4%', bottom:'12%', top:'3%', containLabel:true },
-  xAxis: { type:'category', data:ldmNames, axisLabel:{fontSize:10, rotate:30} },
-  yAxis: { type:'value', name:'项目数' },
-  series: ldmLevelSeries
-});
-
-// ===== Key Projects Table =====
-var keyProjects = projectData.filter(function(p){
-  return (p.level||'')==='S'||(p.milestone_2026||'')==='NDA'||(p.milestone_2026||'')==='pre-NDA'||(p.milestone_2026||'')==='期中分析';
-});
-var seen = {};
-keyProjects = keyProjects.filter(function(p){var k=p.protocol; if(seen[k]) return false; seen[k]=true; return true;});
-var tbl = '<table><thead><tr><th>方案编号</th><th>适应症（大类）</th><th>适应症（小类）</th><th>分期</th><th>等级</th><th>已入组</th><th>计划例数</th><th>状态</th><th>2026节点</th><th>LDM</th><th>PM</th></tr></thead><tbody>';
-keyProjects.forEach(function(p){
-  var lbMap = {'S':'badge-s','A':'badge-a','B':'badge-b','C':'badge-c'};
-  var mbMap = {'NDA':'badge-nda','pre-NDA':'badge-nda','期中分析':'badge-follow','正常运行':'badge-normal','结题不申报':'badge-close','结题申报':'badge-report'};
-  tbl += '<tr>';
-  tbl += '<td><strong>'+p.protocol+'</strong></td>';
-  tbl += '<td>'+p.indication_large+'</td>';
-  tbl += '<td>'+p.indication_small+'</td>';
-  tbl += '<td>'+(p.phase||'')+'</td>';
-  tbl += '<td><span class="badge '+(lbMap[p.level]||'badge-c')+'">'+(p.level||'')+'级</span></td>';
-  tbl += '<td>'+p.enrolled+'</td>';
-  tbl += '<td>'+p.plan_cases+'</td>';
-  tbl += '<td>'+(p.status||'')+'</td>';
-  tbl += '<td><span class="badge '+(mbMap[p.milestone_2026]||'badge-normal')+'">'+(p.milestone_2026||'未定义')+'</span></td>';
-  tbl += '<td>'+(p.ldm||'')+'</td>';
-  tbl += '<td>'+(p.pm||'')+'</td>';
-  tbl += '</tr>';
-});
-tbl += '</tbody></table>';
-document.getElementById('key-table-container').innerHTML = tbl;
+window.addEventListener('resize',function(){[chartSunburst,chart1,chart2,chart3,chart4,chart5,chartGroupDist,chartLDMWorkload,chartIndication,chartStage,chartTumorTreemap,chartNonTumorDonut].forEach(c=>c.resize());});
+document.addEventListener('DOMContentLoaded',function(){initCharts();if(typeof EMBEDDED_EXCEL_DATA!=='undefined'&&EMBEDDED_EXCEL_DATA.length>0){processRawData(EMBEDDED_EXCEL_DATA);}});
 </script>
 </body>
 </html>

@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center">
     <!-- Card -->
     <div
-      class="bg-white border-2 border-[#1E293B] rounded-[16px] px-5 py-3 flex items-center gap-3.5 w-[200px] transition-all duration-200 hover:scale-105"
+      class="bg-white border-2 border-[#1E293B] rounded-[16px] px-5 py-3 flex items-center gap-3.5 w-[200px] mb-1 transition-all duration-200 hover:scale-105"
       :style="{ boxShadow: `4px 4px 0 ${shadowColor}` }"
     >
       <!-- Left: Avatar -->

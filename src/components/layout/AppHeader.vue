@@ -73,6 +73,7 @@ const route = useRoute()
 // ── Team name mapping ──────────────────────────────────────────
 const teamNames: Record<string, string> = {
   '/':             '临床数据部',
+  '/department':   '部门概览',
   '/ds-team':      '临床科学编程室',
   '/cdm-team1':    '临床数据管理一室',
   '/cdm-team2':    '临床数据管理二室',

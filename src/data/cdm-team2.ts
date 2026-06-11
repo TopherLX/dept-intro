@@ -93,7 +93,7 @@ export const orgChart: OrgNode = {
       photo: '袁文英.png',
       children: [
         { name: '徐露露', title: '助理数据经理', photo: '徐露露.png' },
-        { name: '孟雪晴', title: '数据经理', photo: '孟雪情.png' },
+        { name: '孟雪情', title: '数据经理', photo: '孟雪情.png' },
         { name: '胡昊宇', title: '数据管理员', photo: '胡昊宇.png' },
       ],
     },

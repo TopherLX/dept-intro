@@ -86,13 +86,13 @@ const iconColor = computed(() => cfg.value.icon)
   animation: flow-right 1.5s linear infinite;
 }
 @keyframes flow-down {
-  to { background-position: 0 -12px; }
+  to { background-position: 0 12px; }
 }
 @keyframes flow-left {
-  to { background-position: 12px 0; }
+  to { background-position: -12px 0; }
 }
 @keyframes flow-right {
-  to { background-position: -12px 0; }
+  to { background-position: 12px 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .flow-v, .flow-h-left, .flow-h-right {
